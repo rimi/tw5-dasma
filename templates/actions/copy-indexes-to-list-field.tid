@@ -1,0 +1,11 @@
+caption: Copy Indexes to List-Field Action
+created: 20201123190145929
+modified: 20201123190335750
+tags: 
+title: $:/plugins/rimir/dasma/templates/actions/copy-indexes-to-list-field
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/actions
+type: text/vnd.tiddlywiki
+
+<$wikify name="theValue" text="""<$list filter="[<rimir:dasma:stateTiddler>indexes[]]" variable="index"><$list filter="[<rimir:dasma:stateTiddler>getindex<index>match[selected]]"><<index>> </$list></$list>""">
+<$action-setfield $tiddler=<<rimir:dasma:targetTiddler>> $field=<<rimir:dasma:targetField>> $value=<<theValue>>/>
+</$wikify>
