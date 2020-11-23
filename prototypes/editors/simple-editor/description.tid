@@ -1,0 +1,25 @@
+caption: Simple Editor: Description (MultiLinedText)
+created: 20201123180643011
+modified: 20201123181617487
+tags: 
+title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/description
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
+type: text/vnd.tiddlywiki
+
+
+\define stateFieldName-description() tmp_description
+\define targetFieldName-description() description
+\define name-description() Description
+\define narrow-description() -TBD NARROW-
+\define validate-description() -TBD VALIDATE--
+\define info-description() -TBD INFO-
+\define edit-description()
+<$vars rimir:dasma:stateTiddler=<<stateTiddler>>  rimir:dasma:stateField=<<stateFieldName-description>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/edittextwidget-mulitlined"/>
+</$vars>
+\end
+\define save-description()
+<$vars rimir:dasma:targetTiddler=<<targetTiddler>> rimir:dasma:targetField=<<targetFieldName-description>> rimir:dasma:stateTiddler=<<stateTiddler>> rimir:dasma:stateField=<<stateFieldName-description>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-state-field"/>
+</$vars>
+\end
