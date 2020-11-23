@@ -1,0 +1,24 @@
+caption: Simple Editor: Proto (MultiSelect)
+created: 20201123183050878
+modified: 20201123191035038
+tags: 
+title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/proto-multi-select
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
+type: text/vnd.tiddlywiki
+
+\define stateFieldName-proto.refs() tmp_proto.refs
+\define targetFieldName-proto.refs() proto.refs
+\define name-proto.refs() Prototype Elements (proto.refs)
+\define narrow-proto.refs() -TBD NARROW-
+\define validate-proto.refs() -TBD VALIDATE--
+\define info-proto.refs() -TBD INFO-
+\define edit-proto.refs() 
+<$vars rimir:dasma:stateTiddler=<<stateTiddler>> rimir:dasma:stateField=<<stateFieldName-proto.refs>> rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]" rimir:dasma:custom:numOfVisibleElements="3">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget"/>
+</$vars>
+\end
+\define save-proto.refs()
+<$vars rimir:dasma:targetTiddler=<<targetTiddler>> rimir:dasma:targetField=<<targetFieldName-proto.refs>> rimir:dasma:stateTiddler=<<stateTiddler>> rimir:dasma:stateField=<<stateFieldName-proto.refs>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-state-field"/>
+</$vars>
+\end
