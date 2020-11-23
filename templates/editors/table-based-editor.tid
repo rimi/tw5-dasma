@@ -1,0 +1,37 @@
+caption: Table-based Editor
+created: 20201123165722393
+modified: 20201123175811643
+tags: 
+title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editors
+type: text/vnd.tiddlywiki
+
+\define editorRow(fieldName)
+<tr>
+<th><<name-$fieldName$>></th>
+<td><<edit-$fieldName$>></td>
+<td><<narrow-$fieldName$>></td>
+<td><<validate-$fieldName$>></td>
+<td><<info-$fieldName$>></td>
+</tr>
+\end
+
+\define editor()
+<h2><<headline>></h2>
+<table>
+<tr>
+<th>Field</th>
+<th>Value</th>
+<th>Narrow</th>
+<th>Validation</th>
+<th>Info</th>
+</tr>
+<$list filter="[enlist<fields>]" variable="field">
+<$macrocall $name="editorRow" fieldName=<<field>>/>
+</$list>
+</table>
+<$button>
+<<store-actions>>
+SAVE
+</$button>
+\end
