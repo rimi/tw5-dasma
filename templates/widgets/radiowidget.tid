@@ -1,6 +1,6 @@
 caption: RadioWidget
 created: 20201123191316446
-modified: 20201123192058854
+modified: 20201126065356778
 tags: 
 title: $:/plugins/rimir/dasma/templates/widgets/radiowidget
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/widgets
@@ -8,6 +8,6 @@ type: text/vnd.tiddlywiki
 
 <$tiddler tiddler=<<rimir:dasma:stateTiddler>>>
 <$list filter=<<rimir:dasma:filter>> variable="element">
-<$radio field=<<rimir:dasma:stateField>> value=<<element>>> <<element>></$radio>
+<$radio field=<<rimir:dasma:stateField>> value=<<element>>> <<element>></$radio><br/>
 </$list>
 </$tiddler>
