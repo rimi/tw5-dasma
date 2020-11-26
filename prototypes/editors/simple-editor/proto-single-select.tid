@@ -1,6 +1,6 @@
 caption: Simple Editor: Proto (SingleSelect)
 created: 20201123184550923
-modified: 20201123191115403
+modified: 20201126070502920
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/proto-single-select
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
@@ -12,6 +12,12 @@ type: text/vnd.tiddlywiki
 \define narrow-proto.ref() -TBD NARROW-
 \define validate-proto.ref() -TBD VALIDATE--
 \define info-proto.ref() -TBD INFO-
+
+\define display-previous-proto.ref() yes
+\define previous-proto.ref() -TBD PREV VALUE-
+\define display-current-proto.ref() no
+\define current-proto.ref() -TBD CURR VALUE-
+
 \define edit-proto.ref() 
 <$vars rimir:dasma:stateTiddler=<<stateTiddler>> rimir:dasma:stateField=<<stateFieldName-proto.ref>> rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/single-selectwidget"/>
