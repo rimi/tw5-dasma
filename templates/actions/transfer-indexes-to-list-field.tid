@@ -1,8 +1,8 @@
-caption: Copy Indexes to List-Field Action
+caption: Transfer Indexes to List-Field Action
 created: 20201123190145929
-modified: 20201127132306217
+modified: 20201127184742370
 tags: 
-title: $:/plugins/rimir/dasma/templates/actions/copy-indexes-to-list-field
+title: $:/plugins/rimir/dasma/templates/actions/transfer-indexes-to-list-field
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/actions
 type: text/vnd.tiddlywiki
 
