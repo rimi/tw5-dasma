@@ -1,6 +1,6 @@
 caption: Simple Editor: Proto (Radio)
 created: 20201123191534572
-modified: 20201127131941028
+modified: 20201127133411825
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/proto-radio
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
@@ -25,6 +25,6 @@ type: text/vnd.tiddlywiki
 \end
 \define save-proto.ref2()
 <$vars rimir:dasma:sourceTiddler=<<stateTiddler>> rimir:dasma:sourceField=<<stateFieldName-proto.ref2>> rimir:dasma:targetTiddler=<<targetTiddler>> rimir:dasma:targetField=<<targetFieldName-proto.ref2>>>
-<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-state-field"/>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
 \end

@@ -1,6 +1,6 @@
 caption: Simple Editor: Caption (SingleLinedText)
 created: 20201123180259260
-modified: 20201127131732302
+modified: 20201127133318752
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/caption
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
@@ -25,13 +25,13 @@ type: text/vnd.tiddlywiki
 \end
 
 \define save-caption()
-<$vars rimir:dasma:targetTiddler=<<targetTiddler>> rimir:dasma:targetField=<<targetFieldName-caption>> rimir:dasma:sourceTiddler=<<stateTiddler>> rimir:dasma:sourceField=<<stateFieldName-caption>>>
-<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-state-field"/>
+<$vars rimir:dasma:sourceTiddler=<<stateTiddler>> rimir:dasma:sourceField=<<stateFieldName-caption>> rimir:dasma:targetTiddler=<<targetTiddler>> rimir:dasma:targetField=<<targetFieldName-caption>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
 \end
 
 \define load-caption()
 <$vars rimir:dasma:sourceTiddler=<<targetTiddler>> rimir:dasma:sourceField=<<stateFieldName-caption>> rimir:dasma:targetTiddler=<<stateTiddler>> rimir:dasma:targetField=<<targetFieldName-caption>>>
-<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-state-field"/>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
 \end
