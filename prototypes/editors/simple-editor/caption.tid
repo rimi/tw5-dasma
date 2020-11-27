@@ -1,6 +1,6 @@
-caption: Simple Editor: Caption (SingleLinedText)
+caption: Simple Editor: caption (SingleLinedText)
 created: 20201123180259260
-modified: 20201127134409717
+modified: 20201127182423962
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/caption
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
