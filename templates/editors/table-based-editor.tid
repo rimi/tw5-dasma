@@ -1,6 +1,6 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201127130556254
+modified: 20201127133800889
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editors
@@ -10,9 +10,19 @@ type: text/vnd.tiddlywiki
 <<save-$fieldName$>>
 \end
 
+\define loadAction(fieldName)
+<<load-$fieldName$>>
+\end
+
 \define store-actions()
 <$list filter="[enlist<fields>]" variable="field">
 <$macrocall $name="saveAction" fieldName=<<field>>/>
+</$list>
+\end
+
+\define load-actions()
+<$list filter="[enlist<fields>]" variable="field">
+<$macrocall $name="loadAction" fieldName=<<field>>/>
 </$list>
 \end
 
@@ -43,5 +53,9 @@ type: text/vnd.tiddlywiki
 <$button>
 <<store-actions>>
 SAVE
+</$button>
+<$button>
+<<load-actions>>
+LOAD
 </$button>
 \end

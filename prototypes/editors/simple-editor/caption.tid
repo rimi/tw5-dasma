@@ -1,6 +1,6 @@
 caption: Simple Editor: Caption (SingleLinedText)
 created: 20201123180259260
-modified: 20201127133318752
+modified: 20201127134409717
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/caption
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
@@ -31,7 +31,7 @@ type: text/vnd.tiddlywiki
 \end
 
 \define load-caption()
-<$vars rimir:dasma:sourceTiddler=<<targetTiddler>> rimir:dasma:sourceField=<<stateFieldName-caption>> rimir:dasma:targetTiddler=<<stateTiddler>> rimir:dasma:targetField=<<targetFieldName-caption>>>
+<$vars rimir:dasma:sourceTiddler=<<targetTiddler>> rimir:dasma:sourceField=<<targetFieldName-caption>> rimir:dasma:targetTiddler=<<stateTiddler>> rimir:dasma:targetField=<<stateFieldName-caption>>>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
 \end
