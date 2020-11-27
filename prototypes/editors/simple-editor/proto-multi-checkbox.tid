@@ -1,6 +1,6 @@
 caption: Simple Editor: Proto (MultiCheckbox)
 created: 20201123185704634
-modified: 20201126070848876
+modified: 20201127132322805
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/proto-multi-checkbox
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
@@ -27,7 +27,7 @@ type: text/vnd.tiddlywiki
 \end
 \define save-proto.refs2()
 <$wikify name="indexTiddler" text="<<stateTiddler>>/<<stateFieldName-proto.refs2>>">
-<$vars rimir:dasma:targetTiddler=<<targetTiddler>> rimir:dasma:targetField=<<targetFieldName-proto.refs2>> rimir:dasma:stateTiddler=<<indexTiddler>> rimir:dasma:stateField=<<stateFieldName-proto.refs2>>>
+<$vars rimir:dasma:sourceTiddler=<<indexTiddler>> rimir:dasma:targetTiddler=<<targetTiddler>> rimir:dasma:targetField=<<targetFieldName-proto.refs2>>>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-indexes-to-list-field"/>
 </$vars>
 </$wikify>
