@@ -1,8 +1,0 @@
-caption: Legacy DASMA Data-Editor
-created: 20201120193854882
-disabled.module-type: widget
-modified: 20201127063632054
-tags: 
-title: $:/plugins/rimir/dasma/modules/widget/legacy-data-editor
-tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/modules/widget
-type: application/javascript
