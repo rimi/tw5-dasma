@@ -1,6 +1,6 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201127133800889
+modified: 20201128111254412
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editors
@@ -31,6 +31,7 @@ type: text/vnd.tiddlywiki
 <th><<name-$fieldName$>></th>
 <td><$wikify name="theDisplayPrevious" text="<<display-previous-$fieldName$>>"><$list filter="[<theDisplayPrevious>match[yes]]">''Previous value: <<previous-$fieldName$>>''<br/></$list></$wikify><<edit-$fieldName$>><$wikify name="theDisplayCurrent" text="<<display-current-$fieldName$>>"><$list filter="[<theDisplayCurrent>match[yes]]"><br/>''Current value: <<current-$fieldName$>>''</$list></$wikify></td>
 <td><<narrow-$fieldName$>></td>
+<td><<group-$fieldName$>></td>
 <td><<validate-$fieldName$>></td>
 <td><<info-$fieldName$>></td>
 </tr>
@@ -43,6 +44,7 @@ type: text/vnd.tiddlywiki
 <th>Field</th>
 <th>Value</th>
 <th>Narrow</th>
+<th>Grouping</th>
 <th>Validation</th>
 <th>Info</th>
 </tr>
