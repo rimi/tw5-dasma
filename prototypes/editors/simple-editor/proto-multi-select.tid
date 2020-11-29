@@ -1,19 +1,21 @@
 caption: Simple Editor: proto.refs (MultiSelect)
 created: 20201123183050878
-modified: 20201128112719959
+modified: 20201128175003181
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/proto-multi-select
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
 type: text/vnd.tiddlywiki
+
+\define stateTiddler-proto.refs() $(stateTiddler)$
 
 \define stateFieldName-proto.refs() tmp_proto.refs
 \define targetFieldName-proto.refs() proto.refs
 \define name-proto.refs() Prototype Elements (proto.refs)
 
 \define narrow-proto.refs() 
-Filter by caption: <$edit-text tiddler="$(stateTiddler)$/narrowTiddlers/$(stateFieldName-proto.refs)$" tag="input" default=""/>
+Filter by caption: <$edit-text tiddler="$(stateTiddler-proto.refs)$/narrowTiddlers/$(stateFieldName-proto.refs)$" tag="input" default=""/>
 \end
-\define narrow-filter-proto.refs() [search:caption:literal{$(stateTiddler)$/narrowTiddlers/$(stateFieldName-proto.refs)$}]
+\define narrow-filter-proto.refs() [search:caption:literal{$(stateTiddler-proto.refs)$/narrowTiddlers/$(stateFieldName-proto.refs)$}]
 
 \define validate-proto.refs() -TBD VALIDATE--
 \define info-proto.refs() -TBD INFO-
@@ -24,19 +26,19 @@ Filter by caption: <$edit-text tiddler="$(stateTiddler)$/narrowTiddlers/$(stateF
 \define current-proto.refs() -TBD CURR VALUE-
 
 \define edit-proto.refs() 
-<$vars rimir:dasma:stateTiddler=<<stateTiddler>> rimir:dasma:stateField=<<stateFieldName-proto.refs>> rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]subfilter<narrow-filter-proto.refs>]" rimir:dasma:custom:numOfVisibleElements="3">
+<$vars rimir:dasma:stateTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:stateField="$(stateFieldName-proto.refs)$" rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]subfilter<narrow-filter-proto.refs>]" rimir:dasma:custom:numOfVisibleElements="3">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget"/>
 </$vars>
 \end
 
 \define save-proto.refs()
-<$vars rimir:dasma:sourceTiddler=<<stateTiddler>> rimir:dasma:sourceField=<<stateFieldName-proto.refs>> rimir:dasma:targetTiddler=<<targetTiddler>> rimir:dasma:targetField=<<targetFieldName-proto.refs>>>
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:sourceField="$(stateFieldName-proto.refs)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-proto.refs)$">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
 \end
 
 \define load-proto.refs()
-<$vars rimir:dasma:sourceTiddler=<<targetTiddler>> rimir:dasma:sourceField=<<targetFieldName-proto.refs>> rimir:dasma:targetTiddler=<<stateTiddler>> rimir:dasma:targetField=<<stateFieldName-proto.refs>>>
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-proto.refs)$" rimir:dasma:targetTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:targetField="$(stateFieldName-proto.refs)$">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
 \end
