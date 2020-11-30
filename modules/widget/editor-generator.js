@@ -215,7 +215,7 @@ GeneratorWidget.prototype.generateFieldComponent = function(fieldDescription, cu
 		bag: "default",
 		type: "text/vnd.tiddlywiki"
 	};
-	$tw.wiki.addTiddler(new $tw.Tiddler(deepmerge.all([fields, customFieldOverwrites]);));
+	$tw.wiki.addTiddler(new $tw.Tiddler(deepmerge.all([fields, customFieldOverwrites])));
 }
 	
 GeneratorWidget.prototype.createFilterExpression = function(description) {
