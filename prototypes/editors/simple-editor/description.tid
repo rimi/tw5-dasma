@@ -1,6 +1,6 @@
 caption: Simple Editor: description (MultiLinedText)
 created: 20201123180643011
-modified: 20201128174630855
+modified: 20201129172144664
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/description
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
@@ -11,12 +11,20 @@ type: text/vnd.tiddlywiki
 \define stateFieldName-description() tmp_description
 \define targetFieldName-description() description
 \define name-description() Description
-\define narrow-description() -TBD NARROW-
-\define validate-description() -TBD VALIDATE--
+
+\define display-narrow-description() no
+
+\define display-group-description() no
+\define group-description() -NO GROUP-
+
+\define display-validate-description() no
+\define validate-description() -NO VALIDATION!--
+
 \define info-description() -TBD INFO-
 
 \define display-previous-description() yes
 \define previous-description() -TBD PREV VALUE-
+
 \define display-current-description() no
 \define current-description() -TBD CURR VALUE-
 

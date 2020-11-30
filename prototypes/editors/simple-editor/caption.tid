@@ -1,6 +1,6 @@
 caption: Simple Editor: caption (SingleLinedText)
 created: 20201123180259260
-modified: 20201128174419143
+modified: 20201129172109010
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/caption
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
@@ -11,12 +11,20 @@ type: text/vnd.tiddlywiki
 \define stateFieldName-caption() tmp_caption
 \define targetFieldName-caption() caption
 \define name-caption() Caption
-\define narrow-caption() -TBD NARROW-
+
+\define display-narrow-caption() no
+
+\define display-group-caption() no
+\define group-caption() -NO GROUP-
+
+\define display-validate-caption() yes
 \define validate-caption() -TBD VALIDATE-
+
 \define info-caption() -TBD INFO-
 
 \define display-previous-caption() yes
 \define previous-caption() <$view tiddler=<<targetTiddler>> field=<<targetFieldName-caption>>/>
+
 \define display-current-caption() no
 \define current-caption() -TBD CURR VALUE-
 

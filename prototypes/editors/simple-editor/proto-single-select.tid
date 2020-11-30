@@ -1,6 +1,6 @@
 caption: Simple Editor: proto.ref (SingleSelect)
 created: 20201123184550923
-modified: 20201128175350612
+modified: 20201129172324794
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/proto-single-select
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
@@ -12,16 +12,26 @@ type: text/vnd.tiddlywiki
 \define targetFieldName-proto.ref() proto.ref
 \define name-proto.ref() Prototype Elements (proto.ref)
 
-\define narrow-proto.ref() 
-Filter by caption: <$edit-text tiddler="$(stateTiddler-proto.ref)$/narrowTiddlers/$(stateFieldName-proto.ref)$" tag="input" default=""/>
+\define display-narrow-proto.ref() yes
+\define narrowStateTiddler-proto.ref() $(stateTiddler-proto.ref)$/narrowTiddlers/$(targetFieldName-proto.ref)$
+\define narrow-proto.ref()
+<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-proto.ref)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/narrowers/caption-only"/>
+</$vars>
 \end
-\define narrow-filter-proto.ref() [search:caption:literal{$(stateTiddler-proto.ref)$/narrowTiddlers/$(stateFieldName-proto.ref)$}]
+\define narrow-filter-proto.ref() [search:caption:literal{$(narrowStateTiddler-proto.ref)$!!caption}]
 
+\define display-group-proto.ref() no
+\define group-proto.ref() -NO GROUP-
+
+\define display-validate-proto.ref() yes
 \define validate-proto.ref() -TBD VALIDATE--
+
 \define info-proto.ref() -TBD INFO-
 
 \define display-previous-proto.ref() yes
 \define previous-proto.ref() -TBD PREV VALUE-
+
 \define display-current-proto.ref() no
 \define current-proto.ref() -TBD CURR VALUE-
 
