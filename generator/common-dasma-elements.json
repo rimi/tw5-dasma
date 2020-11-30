@@ -1,0 +1,64 @@
+{
+	"fields": [
+		{
+			"id": "dasma/field/caption",
+			"fieldName": "caption",
+			"caption": "Caption",
+			"editor": {
+				"component": "dasma/component/singleline"
+			}
+		},
+		{
+			"id": "dasma/field/description",
+			"fieldName": "description",
+			"caption": "Description",
+			"editor": {
+				"component": "dasma/component/multiline"
+			}
+		},
+		{
+			"id": "PROTO/dasma/stakeholder_checkbox.refs",
+			"fieldName": "stakeholder_checkbox.refs",
+			"caption": "Stakeholders as Checkbox",
+			"options": {
+				"filter": "prefix[$:/plugins/rimir/dasma/prototypes]"
+			},
+			"editor": {
+				"component": "dasma/component/checkboxes"
+			}
+		},
+		{
+			"id": "PROTO/dasma/stakeholder_multiselect.refs",
+			"fieldName": "stakeholder_multiselect.refs",
+			"caption": "Stakeholders as MultiSelect-Box",
+			"options": {
+				"filter": "prefix[$:/plugins/rimir/dasma/prototypes]"
+			},
+			"editor": {
+				"component": "dasma/component/multiselect"
+			}
+		},
+		{
+			"id": "PROTO/dasma/stakeholder_radio.ref",
+			"fieldName": "stakeholder_radio.ref",
+			"caption": "Stakeholders as Radio",
+			"options": {
+				"filter": "prefix[$:/plugins/rimir/dasma/prototypes]"
+			},
+			"editor": {
+				"component": "dasma/component/radio"
+			}
+		},
+		{
+			"id": "PROTO/dasma/stakeholder_select.ref",
+			"fieldName": "stakeholder_select.ref",
+			"caption": "Stakeholders as Select-Box",
+			"options": {
+				"filter": "prefix[$:/plugins/rimir/dasma/prototypes]"
+			},
+			"editor": {
+				"component": "dasma/component/select"
+			}
+		}
+	]
+}

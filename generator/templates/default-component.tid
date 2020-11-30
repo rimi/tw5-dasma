@@ -1,0 +1,80 @@
+caption: Default Component
+created: 20201128153716321
+modified: 20201130122236381
+tags: 
+title: $:/plugins/rimir/dasma/generator/templates/default-component
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/generator/templates
+type: text/vnd.tiddlywiki
+
+\\define stateTiddler-${this.fieldName}() ${this.stateTiddlerName}
+
+\\define stateFieldName-${this.fieldName}() tmp_${this.fieldName}
+\\define targetFieldName-${this.fieldName}() ${this.fieldName}
+\\define name-${this.fieldName}() ${this.caption}
+
+\\define display-narrow-${this.fieldName}() ${this.narrowing.display}
+\\define narrowStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/narrowTiddlers/$(targetFieldName-${this.fieldName})$
+\\define narrow-${this.fieldName}()
+<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-${this.fieldName})$">
+<$transclude tiddler="${this.narrowing.component}"/>
+</$vars>
+\\end
+\\define narrow-filter-${this.fieldName}() [search:caption:literal{$(narrowStateTiddler-${this.fieldName})$!!caption}]
+
+\\define display-group-${this.fieldName}() ${this.grouping.display}
+\\define groupStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/groupTiddlers/$(targetFieldName-${this.fieldName})$
+\\define group-${this.fieldName}()
+<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-${this.fieldName})$">
+<$transclude tiddler="${this.grouping.component}"/>
+</$vars>
+\\end
+
+\\define display-validate-${this.fieldName}() ${this.validation.display}
+\\define validateStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/validateTiddlers/$(targetFieldName-${this.fieldName})$
+\\define validate-${this.fieldName}()
+<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-${this.fieldName})$">
+<$transclude tiddler="${this.validation.component}"/>
+</$vars>
+\\end
+
+\\define display-info-${this.fieldName}() ${this.information.display}
+\\define infoStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/infoTiddlers/$(targetFieldName-${this.fieldName})$
+\\define info-${this.fieldName}()
+<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-${this.fieldName})$">
+<$transclude tiddler="${this.information.component}"/>
+</$vars>
+\\end
+
+\\define display-previous-${this.fieldName}() ${this.previousValue.display}
+\\define previousValueStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/previousValueTiddlers/$(targetFieldName-${this.fieldName})$
+\\define previous-${this.fieldName}()
+<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-${this.fieldName})$">
+<$transclude tiddler="${this.previousValue.component}"/>
+</$vars>
+\\end
+
+\\define display-current-${this.fieldName}() ${this.currentValue.display}
+\\define currentValueStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/currentValueTiddlers/$(targetFieldName-${this.fieldName})$
+\\define current-${this.fieldName}()
+<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-${this.fieldName})$">
+<$transclude tiddler="${this.currentValue.component}"/>
+</$vars>
+\\end
+
+\\define edit-${this.fieldName}() 
+<$vars rimir:dasma:stateTiddler="$(stateTiddler)$" rimir:dasma:stateField="$(stateFieldName-${this.fieldName})$" rimir:dasma:filter="${this.edit.filter}" ${this.edit.customFields}>
+<$transclude tiddler="${this.edit.component}"/>
+</$vars>
+\\end
+
+\\define save-${this.fieldName}()
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler)$" rimir:dasma:sourceField="$(stateFieldName-${this.fieldName})$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-${this.fieldName})$" ${this.save.customFields}>
+<$transclude tiddler="${this.save.component}"/>
+</$vars>
+\\end
+
+\\define load-${this.fieldName}()
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-${this.fieldName})$" rimir:dasma:targetTiddler="$(stateTiddler)$" rimir:dasma:targetField="$(stateFieldName-${this.fieldName})$" ${this.load.customFields}>
+<$transclude tiddler="${this.load.component}"/>
+</$vars>
+\\end
