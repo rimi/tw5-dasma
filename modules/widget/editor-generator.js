@@ -69,7 +69,7 @@ const VALIDATORS = {
 const EDITORS = {
 	"dasma/edit/input": "$:/plugins/rimir/dasma/templates/widgets/edittextwidget-singlelined",
 	"dasma/edit/textarea": "$:/plugins/rimir/dasma/templates/widgets/edittextwidget-mulitlined",
-	"dasma/edit/checkboxes": "$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget",
+	"dasma/edit/checkboxes": "$:/plugins/rimir/dasma/templates/widgets/checkboxwidget",
 	"dasma/edit/multiselect": "$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget",
 	"dasma/edit/radio": "$:/plugins/rimir/dasma/templates/widgets/radiowidget",
 	"dasma/edit/select": "$:/plugins/rimir/dasma/templates/widgets/single-selectwidget"
