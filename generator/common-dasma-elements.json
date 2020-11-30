@@ -17,12 +17,9 @@
 			}
 		},
 		{
-			"id": "PROTO/dasma/stakeholder_checkbox.refs",
-			"fieldName": "stakeholder_checkbox.refs",
-			"caption": "Stakeholders as Checkbox",
-			"options": {
-				"filter": "prefix[$:/plugins/rimir/dasma/prototypes]"
-			},
+			"id": "dasma/field/generic-checkboxes",
+			"fieldName": "GENERIC_checkbox.refs",
+			"caption": "GENERIC Checkbox",
 			"editor": {
 				"component": "dasma/component/checkboxes"
 			}
