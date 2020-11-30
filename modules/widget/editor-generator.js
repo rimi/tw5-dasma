@@ -20,6 +20,8 @@ const COMMON_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/generator/common-dasma
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/$(stateFieldName-${this.fieldName})$";
 
+const BASE_DASMA_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/generated/base-data"
+	
 const COMPONENT_CONFIGURATION = {
 	"dasma/component/singleline": {
 		editComponent: "dasma/edit/input",
@@ -106,6 +108,7 @@ GeneratorWidget.prototype.render = function(parent,nextSibling) {
 	// Add a click event handler
 	domNode.addEventListener("click",function (event) {
 		self.generateCommonEditorTiddlers();
+		self.generateCustomStructs();
 		return true;
 	},false);
 	// Insert element
@@ -120,73 +123,100 @@ We don't allow actions to propagate because we trigger actions ourselves
 GeneratorWidget.prototype.allowActionPropagation = function() {
 	return false;
 };
+	
+GeneratorWidget.prototype.getCommonDasmaDescriptions = function() {
+	const commonDasmaElementsJSON = $tw.wiki.getTiddler(COMMON_DASMA_DESCRIPTIONS).fields["text"];
+	return JSON.parse(commonDasmaElementsJSON);
+}
 
+GeneratorWidget.prototype.generateCustomStructs = function() {
+	var self = this;
+	const commonDasmaElements = this.getCommonDasmaDescriptions();
+	$tw.utils.each($tw.wiki.filterTiddlers("[tag[dasma:struct]]"),function(title) {
+		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
+		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
+		$tw.utils.each(dasmaStruct.fields,function(fieldDescription) {
+			if(fieldDescription["dasma-id.ref"]){
+				const commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["dasma-id.ref"])[0];
+				const mergedDescription = deepmerge.all([commonFieldDescription, fieldDescription]);
+				console.log("FOUND!");
+				console.log(mergedDescription);
+			}
+		});
+	});
+	
+}
+	
 GeneratorWidget.prototype.generateCommonEditorTiddlers = function() {
 	var self = this;
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
-	const commonDasmaElementsJSON = $tw.wiki.getTiddler(COMMON_DASMA_DESCRIPTIONS).fields["text"];
-	const commonDasmaElements = JSON.parse(commonDasmaElementsJSON);
-	console.log(commonDasmaElements);
+	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	commonDasmaElements.fields.forEach(function (fieldDescription, index) {
-		const componentConfiguration = COMPONENT_CONFIGURATION[fieldDescription.editor.component];
-		const fieldConfig = {
-			fieldName: fieldDescription.fieldName,
-			caption: fieldDescription.caption,
-			narrowing: {
-				display: componentConfiguration.narrowComponent ? "yes" : "no",
-				component: componentConfiguration.narrowComponent ? NARROWERS[componentConfiguration.narrowComponent] : "NONE"
-			},
-			validation: {
-				display: componentConfiguration.validationComponent ? "yes" : "no",
-				component: componentConfiguration.validationComponent ? "TBD": "TBD"
-			},
-			grouping: {
-				display: componentConfiguration.groupingComponent ? "yes" : "no",
-				component: componentConfiguration.groupingComponent ? "TBD": "TBD"
-			},
-			information: {
-				display: componentConfiguration.informationComponent ? "yes" : "no",
-				component: componentConfiguration.informationComponent ? "TBD": "TBD"
-			},
-			previousValue: {
-				display: componentConfiguration.previousValueComponent ? "yes" : "no",
-				component: componentConfiguration.previousValueComponent ? "TBD": "TBD"
-			},
-			currentValue: {
-				display: componentConfiguration.currentValueComponent ? "yes" : "no",
-				component: componentConfiguration.currentValueComponent ? "TBD": "TBD"
-			},
-			edit: {
-				filter: self.createFilterExpression(fieldDescription.options) + (componentConfiguration.narrowComponent ? "+[subfilter<narrow-filter-" + fieldDescription.fieldName + ">]" : ""),
-				component: componentConfiguration.editComponent ? EDITORS[componentConfiguration.editComponent]: "NONE",
-				customFields: "rimir:dasma:custom:numOfVisibleElements='3'"
-			},
-			save: {
-				component: componentConfiguration.saveComponent ? TRANSFERERS[componentConfiguration.saveComponent]: "NONE",
-				customFields: "rimir:dasma:custom:numOfVisibleElements='3'"
-			},
-			load: {
-				component: componentConfiguration.loadComponent ? TRANSFERERS[componentConfiguration.loadComponent]: "NONE",
-				customFields: "rimir:dasma:custom:numOfVisibleElements='3'"
-			}
-			
-		};
-		let stateTiddlerName = componentConfiguration.useIndexStateTiddler ? formatTemplate(INDEX_STATETIDDLER_NAME, fieldConfig) : DEFAULT_STATETIDDLER_NAME;
-		fieldConfig.stateTiddlerName = stateTiddlerName;
-		const componentTemplate = $tw.wiki.getTiddler(DEFAULT_COMPONENT_TEMPLATE).fields["text"];
-//		console.log(fieldDescription);
-		var fields = {
-			title: fieldDescription.id,
-			text: formatTemplate(componentTemplate, fieldConfig),
-			created: NOW,
-			modified: NOW,
-			bag: "default",
-			type: "text/vnd.tiddlywiki"
-		};
-//		console.log(fields);
-		$tw.wiki.addTiddler(new $tw.Tiddler(fields));
+		self.generateFieldComponent(fieldDescription, 
+		{
+			title: BASE_DASMA_GENERATOR_NAMESPACE + "/" + fieldDescription.id,
+			"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/generator/generated",
+			caption: "Generated Component: " + fieldDescription.caption
+		});
 	});
 };
+	
+GeneratorWidget.prototype.generateFieldComponent = function(fieldDescription, customFieldOverwrites) {
+	const componentConfiguration = COMPONENT_CONFIGURATION[fieldDescription.editor.component];
+	const fieldConfig = {
+		fieldName: fieldDescription.fieldName,
+		caption: fieldDescription.caption,
+		narrowing: {
+			display: componentConfiguration.narrowComponent ? "yes" : "no",
+			component: componentConfiguration.narrowComponent ? NARROWERS[componentConfiguration.narrowComponent] : "NONE"
+		},
+		validation: {
+			display: componentConfiguration.validationComponent ? "yes" : "no",
+			component: componentConfiguration.validationComponent ? "TBD": "TBD"
+		},
+		grouping: {
+			display: componentConfiguration.groupingComponent ? "yes" : "no",
+			component: componentConfiguration.groupingComponent ? "TBD": "TBD"
+		},
+		information: {
+			display: componentConfiguration.informationComponent ? "yes" : "no",
+			component: componentConfiguration.informationComponent ? "TBD": "TBD"
+		},
+		previousValue: {
+			display: componentConfiguration.previousValueComponent ? "yes" : "no",
+			component: componentConfiguration.previousValueComponent ? "TBD": "TBD"
+		},
+		currentValue: {
+			display: componentConfiguration.currentValueComponent ? "yes" : "no",
+			component: componentConfiguration.currentValueComponent ? "TBD": "TBD"
+		},
+		edit: {
+			filter: self.createFilterExpression(fieldDescription.options) + (componentConfiguration.narrowComponent ? "+[subfilter<narrow-filter-" + fieldDescription.fieldName + ">]" : ""),
+			component: componentConfiguration.editComponent ? EDITORS[componentConfiguration.editComponent]: "NONE",
+			customFields: "rimir:dasma:custom:numOfVisibleElements='3'"
+		},
+		save: {
+			component: componentConfiguration.saveComponent ? TRANSFERERS[componentConfiguration.saveComponent]: "NONE",
+			customFields: "rimir:dasma:custom:numOfVisibleElements='3'"
+		},
+		load: {
+			component: componentConfiguration.loadComponent ? TRANSFERERS[componentConfiguration.loadComponent]: "NONE",
+			customFields: "rimir:dasma:custom:numOfVisibleElements='3'"
+		}
+
+	};
+	let stateTiddlerName = componentConfiguration.useIndexStateTiddler ? formatTemplate(INDEX_STATETIDDLER_NAME, fieldConfig) : DEFAULT_STATETIDDLER_NAME;
+	fieldConfig.stateTiddlerName = stateTiddlerName;
+	const componentTemplate = $tw.wiki.getTiddler(DEFAULT_COMPONENT_TEMPLATE).fields["text"];
+	var fields = {
+		text: formatTemplate(componentTemplate, fieldConfig),
+		created: NOW,
+		modified: NOW,
+		bag: "default",
+		type: "text/vnd.tiddlywiki"
+	};
+	$tw.wiki.addTiddler(new $tw.Tiddler(deepmerge.all([fields, customFieldOverwrites]);));
+}
 	
 GeneratorWidget.prototype.createFilterExpression = function(description) {
 	let result = "[is[]]";
@@ -255,6 +285,8 @@ GeneratorWidget.prototype.refresh = function(changedTiddlers) {
 	}
 	return this.refreshChildren(changedTiddlers);*/
 };
+	
+exports["dasma-generator"] = GeneratorWidget;
 
 // UTILS BEGIN
 
@@ -269,6 +301,78 @@ const formatTemplate = function(templateString, templateVars){
   return new Function("return `"+templateString +"`;").call(templateVars);
 }
 
-exports["dasma-generator"] = GeneratorWidget;
+// DEEPMERGE (https://davidwalsh.name/javascript-deep-merge)
+function isMergeableObject(val) {
+    var nonNullObject = val && typeof val === 'object'
+
+    return nonNullObject
+        && Object.prototype.toString.call(val) !== '[object RegExp]'
+        && Object.prototype.toString.call(val) !== '[object Date]'
+}
+
+function emptyTarget(val) {
+    return Array.isArray(val) ? [] : {}
+}
+
+function cloneIfNecessary(value, optionsArgument) {
+    var clone = optionsArgument && optionsArgument.clone === true
+    return (clone && isMergeableObject(value)) ? deepmerge(emptyTarget(value), value, optionsArgument) : value
+}
+
+function defaultArrayMerge(target, source, optionsArgument) {
+    var destination = target.slice()
+    source.forEach(function(e, i) {
+        if (typeof destination[i] === 'undefined') {
+            destination[i] = cloneIfNecessary(e, optionsArgument)
+        } else if (isMergeableObject(e)) {
+            destination[i] = deepmerge(target[i], e, optionsArgument)
+        } else if (target.indexOf(e) === -1) {
+            destination.push(cloneIfNecessary(e, optionsArgument))
+        }
+    })
+    return destination
+}
+
+function mergeObject(target, source, optionsArgument) {
+    var destination = {}
+    if (isMergeableObject(target)) {
+        Object.keys(target).forEach(function (key) {
+            destination[key] = cloneIfNecessary(target[key], optionsArgument)
+        })
+    }
+    Object.keys(source).forEach(function (key) {
+        if (!isMergeableObject(source[key]) || !target[key]) {
+            destination[key] = cloneIfNecessary(source[key], optionsArgument)
+        } else {
+            destination[key] = deepmerge(target[key], source[key], optionsArgument)
+        }
+    })
+    return destination
+}
+
+function deepmerge(target, source, optionsArgument) {
+    var array = Array.isArray(source);
+    var options = optionsArgument || { arrayMerge: defaultArrayMerge }
+    var arrayMerge = options.arrayMerge || defaultArrayMerge
+
+    if (array) {
+        return Array.isArray(target) ? arrayMerge(target, source, optionsArgument) : cloneIfNecessary(source, optionsArgument)
+    } else {
+        return mergeObject(target, source, optionsArgument)
+    }
+}
+
+deepmerge.all = function deepmergeAll(array, optionsArgument) {
+    if (!Array.isArray(array) || array.length < 2) {
+        throw new Error('first argument should be an array with at least two elements')
+    }
+
+    // we are sure there are at least 2 values, so it is safe to have no initial value
+    return array.reduce(function(prev, next) {
+        return deepmerge(prev, next, optionsArgument)
+    })
+}
+
+// /DEEPMERGE
 
 })();
