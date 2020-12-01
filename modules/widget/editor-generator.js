@@ -149,7 +149,6 @@ GeneratorWidget.prototype.generateCustomStructs = function() {
 	
 GeneratorWidget.prototype.generateCommonEditorTiddlers = function() {
 	var self = this;
-	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	commonDasmaElements.fields.forEach(function (fieldDescription, index) {
 		self.generateFieldComponent(fieldDescription, 
@@ -162,6 +161,7 @@ GeneratorWidget.prototype.generateCommonEditorTiddlers = function() {
 };
 	
 GeneratorWidget.prototype.generateFieldComponent = function(fieldDescription, customFieldOverwrites) {
+	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
 	const componentConfiguration = COMPONENT_CONFIGURATION[fieldDescription.editor.component];
 	const fieldConfig = {
 		fieldName: fieldDescription.fieldName,
@@ -191,7 +191,7 @@ GeneratorWidget.prototype.generateFieldComponent = function(fieldDescription, cu
 			component: componentConfiguration.currentValueComponent ? "TBD": "TBD"
 		},
 		edit: {
-			filter: self.createFilterExpression(fieldDescription.options) + (componentConfiguration.narrowComponent ? "+[subfilter<narrow-filter-" + fieldDescription.fieldName + ">]" : ""),
+			filter: this.createFilterExpression(fieldDescription.options) + (componentConfiguration.narrowComponent ? "+[subfilter<narrow-filter-" + fieldDescription.fieldName + ">]" : ""),
 			component: componentConfiguration.editComponent ? EDITORS[componentConfiguration.editComponent]: "NONE",
 			customFields: "rimir:dasma:custom:numOfVisibleElements='3'"
 		},
