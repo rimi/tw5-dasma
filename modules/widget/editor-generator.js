@@ -107,8 +107,9 @@ GeneratorWidget.prototype.render = function(parent,nextSibling) {
 	var domNode = this.document.createElement("button");
 	// Add a click event handler
 	domNode.addEventListener("click",function (event) {
-		self.generateCommonEditorTiddlers();
-		self.generateCustomStructs();
+		self.generateCommonDasmaDefinitions();
+		self.generatePrototype;
+		self.generateCustomDefinitions();
 		return true;
 	},false);
 	// Insert element
@@ -123,13 +124,19 @@ We don't allow actions to propagate because we trigger actions ourselves
 GeneratorWidget.prototype.allowActionPropagation = function() {
 	return false;
 };
-	
+
+/*
+Loads the common DASMA data (structs etc.) and returns it as Object
+*/
 GeneratorWidget.prototype.getCommonDasmaDescriptions = function() {
 	const commonDasmaElementsJSON = $tw.wiki.getTiddler(COMMON_DASMA_DESCRIPTIONS).fields["text"];
 	return JSON.parse(commonDasmaElementsJSON);
 }
 
-GeneratorWidget.prototype.generateCustomStructs = function() {
+/*
+Loads all custom structs (tagged with 'dasma:struct') and generates the components and the editor
+*/
+GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	var self = this;
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	$tw.utils.each($tw.wiki.filterTiddlers("[tag[dasma:struct]]"),function(title) {
@@ -147,11 +154,11 @@ GeneratorWidget.prototype.generateCustomStructs = function() {
 	
 }
 	
-GeneratorWidget.prototype.generateCommonEditorTiddlers = function() {
+GeneratorWidget.prototype.generateCommonDasmaDefinitions = function() {
 	var self = this;
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	commonDasmaElements.fields.forEach(function (fieldDescription, index) {
-		self.generateFieldComponent(fieldDescription, 
+		self.generateEditorComponent(fieldDescription, 
 		{
 			title: BASE_DASMA_GENERATOR_NAMESPACE + "/" + fieldDescription.id,
 			"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/generator/generated",
@@ -160,7 +167,7 @@ GeneratorWidget.prototype.generateCommonEditorTiddlers = function() {
 	});
 };
 	
-GeneratorWidget.prototype.generateFieldComponent = function(fieldDescription, customFieldOverwrites) {
+GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
 	const componentConfiguration = COMPONENT_CONFIGURATION[fieldDescription.editor.component];
 	const fieldConfig = {
