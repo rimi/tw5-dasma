@@ -1,0 +1,79 @@
+caption: Prototype: Component: description (MultiLinedText)
+created: 20201201151449226
+modified: 20201201151449580
+title: $:/plugins/rimir/dasma/prototypes/simple-editor/description
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
+type: text/vnd.tiddlywiki
+
+\define stateTiddler-description() $(stateTiddler)$
+
+\define stateFieldName-description() tmp_description
+\define targetFieldName-description() description
+\define name-description() Component: description (MultiLinedText)
+
+\define display-narrow-description() no
+\define narrowStateTiddler-description() $(stateTiddler-description)$/narrowTiddlers/$(targetFieldName-description)$
+\define narrow-description()
+<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-description)$">
+<$transclude tiddler="NONE"/>
+</$vars>
+\end
+\define narrow-filter-description() [search:caption:literal{$(narrowStateTiddler-description)$!!caption}]
+
+\define display-group-description() no
+\define groupStateTiddler-description() $(stateTiddler-description)$/groupTiddlers/$(targetFieldName-description)$
+\define group-description()
+<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-description)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-validate-description() no
+\define validateStateTiddler-description() $(stateTiddler-description)$/validateTiddlers/$(targetFieldName-description)$
+\define validate-description()
+<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-description)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-info-description() no
+\define infoStateTiddler-description() $(stateTiddler-description)$/infoTiddlers/$(targetFieldName-description)$
+\define info-description()
+<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-description)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-previous-description() no
+\define previousValueStateTiddler-description() $(stateTiddler-description)$/previousValueTiddlers/$(targetFieldName-description)$
+\define previous-description()
+<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-description)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-current-description() no
+\define currentValueStateTiddler-description() $(stateTiddler-description)$/currentValueTiddlers/$(targetFieldName-description)$
+\define current-description()
+<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-description)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define edit-description() 
+<$vars rimir:dasma:stateTiddler="$(stateTiddler-description)$" rimir:dasma:stateField="$(stateFieldName-description)$" rimir:dasma:filter="[is[]]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/edittextwidget-mulitlined"/>
+</$vars>
+\end
+
+\define save-description()
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-description)$" rimir:dasma:sourceField="$(stateFieldName-description)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-description)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+\end
+
+\define load-description()
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-description)$" rimir:dasma:targetTiddler="$(stateTiddler-description)$" rimir:dasma:targetField="$(stateFieldName-description)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+\end

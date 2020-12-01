@@ -1,0 +1,79 @@
+caption: Prototype: Component: proto.refs (MultiSelect)
+created: 20201201151449227
+modified: 20201201151449693
+title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
+type: text/vnd.tiddlywiki
+
+\define stateTiddler-proto.refs() $(stateTiddler)$
+
+\define stateFieldName-proto.refs() tmp_proto.refs
+\define targetFieldName-proto.refs() proto.refs
+\define name-proto.refs() Component: proto.refs (MultiSelect)
+
+\define display-narrow-proto.refs() yes
+\define narrowStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/narrowTiddlers/$(targetFieldName-proto.refs)$
+\define narrow-proto.refs()
+<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-proto.refs)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/narrowers/caption-only"/>
+</$vars>
+\end
+\define narrow-filter-proto.refs() [search:caption:literal{$(narrowStateTiddler-proto.refs)$!!caption}]
+
+\define display-group-proto.refs() no
+\define groupStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/groupTiddlers/$(targetFieldName-proto.refs)$
+\define group-proto.refs()
+<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-proto.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-validate-proto.refs() no
+\define validateStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/validateTiddlers/$(targetFieldName-proto.refs)$
+\define validate-proto.refs()
+<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-proto.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-info-proto.refs() no
+\define infoStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/infoTiddlers/$(targetFieldName-proto.refs)$
+\define info-proto.refs()
+<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-proto.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-previous-proto.refs() no
+\define previousValueStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/previousValueTiddlers/$(targetFieldName-proto.refs)$
+\define previous-proto.refs()
+<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-proto.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-current-proto.refs() no
+\define currentValueStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/currentValueTiddlers/$(targetFieldName-proto.refs)$
+\define current-proto.refs()
+<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-proto.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define edit-proto.refs() 
+<$vars rimir:dasma:stateTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:stateField="$(stateFieldName-proto.refs)$" rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]+[subfilter<narrow-filter-proto.refs>]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget"/>
+</$vars>
+\end
+
+\define save-proto.refs()
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:sourceField="$(stateFieldName-proto.refs)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-proto.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+\end
+
+\define load-proto.refs()
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-proto.refs)$" rimir:dasma:targetTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:targetField="$(stateFieldName-proto.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+\end

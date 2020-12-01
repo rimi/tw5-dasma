@@ -1,0 +1,56 @@
+{
+	"headline": "Create/Edit Person",
+	"title-template": "${this.realm-prefix}persons/${this.now}",
+	"tagging": {
+		"static": [
+			"person"
+		]
+	},
+	"fields": [
+		{
+			"dasma-id.ref": "dasma/field/caption",
+			"caption": "Component: caption (SingleLinedText)"
+		},
+		{
+			"dasma-id.ref": "dasma/field/description",
+			"caption": "Component: description (MultiLinedText)"
+		},
+		{
+			"dasma-id.ref": "dasma/field/generic-checkboxes",
+			"fieldName": "proto.refs2",
+			"caption": "Component: proto.refs2 (Checkbox)",
+			"options": {
+				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
+			}
+		},
+		{
+			"dasma-id.ref": "dasma/field/generic-multiselect",
+			"fieldName": "proto.refs",
+			"caption": "Component: proto.refs (MultiSelect)",
+			"options": {
+				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
+			}
+		},
+		{
+			"dasma-id.ref": "dasma/field/generic-radio",
+			"fieldName": "proto.ref2",
+			"caption": "Component: proto.ref2 (Radio)",
+			"options": {
+				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
+			}
+		},
+		{
+			"dasma-id.ref": "dasma/field/generic-select",
+			"fieldName": "proto.ref",
+			"caption": "Component: proto.ref (SingleSelect)",
+			"options": {
+				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
+			}
+		}
+	],
+	"actions": {
+		"after-creation" : {
+			"openCreatedTiddler": "true"
+		}
+	}
+}
