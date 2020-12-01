@@ -25,34 +25,25 @@
 			}
 		},
 		{
-			"id": "PROTO/dasma/stakeholder_multiselect.refs",
-			"fieldName": "stakeholder_multiselect.refs",
-			"caption": "Stakeholders as MultiSelect-Box",
-			"options": {
-				"filter": "prefix[$:/plugins/rimir/dasma/prototypes]"
-			},
+			"id": "dasma/field/generic-multiselect",
+			"fieldName": "GENERIC_multiselect.refs",
+			"caption": "GENERIC MultiSelect",
 			"editor": {
 				"component": "dasma/component/multiselect"
 			}
 		},
 		{
-			"id": "PROTO/dasma/stakeholder_radio.ref",
-			"fieldName": "stakeholder_radio.ref",
-			"caption": "Stakeholders as Radio",
-			"options": {
-				"filter": "prefix[$:/plugins/rimir/dasma/prototypes]"
-			},
+			"id": "dasma/field/generic-radio",
+			"fieldName": "GENERIC_radio.ref",
+			"caption": "GENERIC Radio",
 			"editor": {
 				"component": "dasma/component/radio"
 			}
 		},
 		{
-			"id": "PROTO/dasma/stakeholder_select.ref",
-			"fieldName": "stakeholder_select.ref",
-			"caption": "Stakeholders as Select-Box",
-			"options": {
-				"filter": "prefix[$:/plugins/rimir/dasma/prototypes]"
-			},
+			"id": "dasma/field/generic-select",
+			"fieldName": "GENERIC_select.ref",
+			"caption": "GENERIC Select",
 			"editor": {
 				"component": "dasma/component/select"
 			}
