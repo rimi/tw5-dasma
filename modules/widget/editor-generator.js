@@ -15,7 +15,12 @@ DASMA Editor-Generator widget
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
 const DEFAULT_COMPONENT_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/default-component";
+const DEFAULT_EDITOR_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/default-editor";
+	
 const COMMON_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/generator/common-dasma-elements";
+
+const PROTOTYPE_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/prototypes/dasma-definition";
+const PROTOTYPE_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/prototypes/simple-editor";
 	
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/$(stateFieldName-${this.fieldName})$";
@@ -108,7 +113,7 @@ GeneratorWidget.prototype.render = function(parent,nextSibling) {
 	// Add a click event handler
 	domNode.addEventListener("click",function (event) {
 		self.generateCommonDasmaDefinitions();
-		self.generatePrototype;
+		self.regeneratePrototype();
 		self.generateCustomDefinitions();
 		return true;
 	},false);
@@ -132,7 +137,24 @@ GeneratorWidget.prototype.getCommonDasmaDescriptions = function() {
 	const commonDasmaElementsJSON = $tw.wiki.getTiddler(COMMON_DASMA_DESCRIPTIONS).fields["text"];
 	return JSON.parse(commonDasmaElementsJSON);
 }
-
+	
+/*
+Regenerates the Prototype (intented to play with/enhance the current implementation)
+*/
+GeneratorWidget.prototype.regeneratePrototype = function() {
+	var self = this;
+	const commonDasmaElements = this.getCommonDasmaDescriptions();
+	const prototypeStruct = JSON.parse($tw.wiki.getTiddler(PROTOTYPE_DASMA_DESCRIPTIONS).fields["text"]);
+	$tw.utils.each(prototypeStruct.fields, function(fieldDescription) {
+		self.generateCustomDasmaTiddler(fieldDescription, PROTOTYPE_GENERATOR_NAMESPACE, commonDasmaElements, 
+			{
+				"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/prototyping",
+				caption: "Prototype: " + fieldDescription.caption
+			});
+		}
+	);
+}
+	
 /*
 Loads all custom structs (tagged with 'dasma:struct') and generates the components and the editor
 */
@@ -142,23 +164,31 @@ GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	$tw.utils.each($tw.wiki.filterTiddlers("[tag[dasma:struct]]"),function(title) {
 		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
 		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
-		$tw.utils.each(dasmaStruct.fields,function(fieldDescription) {
-			if(fieldDescription["dasma-id.ref"]){
-				const commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["dasma-id.ref"])[0];
-				const mergedDescription = deepmerge.all([commonFieldDescription, fieldDescription]);
-				console.log("FOUND!");
-				console.log(mergedDescription);
-			}
+		$tw.utils.each(dasmaStruct.fields, function(fieldDescription) {
+			self.generateCustomDasmaTiddler(fieldDescription, "TBD", commonDasmaElements, {});
 		});
 	});
-	
 }
-	
+
+/*
+Generates the editor-component tiddlers for the given CUSTOM dasma-elements
+*/
+GeneratorWidget.prototype.generateCustomDasmaTiddler = function(fieldDescription, titleBase, commonDasmaElements, customTiddlerOverwrites) {
+	if(fieldDescription["dasma-id.ref"]){
+		const commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["dasma-id.ref"])[0];
+		const mergedDescription = deepmerge.all([commonFieldDescription, fieldDescription]);
+		this.generateEditorComponent(mergedDescription, titleBase, customTiddlerOverwrites);
+	}
+}
+
+/*
+Generates the editor-component tiddlers for the COMMON dasma-elements
+*/
 GeneratorWidget.prototype.generateCommonDasmaDefinitions = function() {
 	var self = this;
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	commonDasmaElements.fields.forEach(function (fieldDescription, index) {
-		self.generateEditorComponent(fieldDescription, 
+		self.generateEditorComponent(fieldDescription, "IGNORE_THIS", 
 		{
 			title: BASE_DASMA_GENERATOR_NAMESPACE + "/" + fieldDescription.id,
 			"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/generator/generated",
@@ -167,7 +197,7 @@ GeneratorWidget.prototype.generateCommonDasmaDefinitions = function() {
 	});
 };
 	
-GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {
+GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, titleBase, customFieldOverwrites) {
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
 	const componentConfiguration = COMPONENT_CONFIGURATION[fieldDescription.editor.component];
 	const fieldConfig = {
@@ -216,6 +246,7 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 	fieldConfig.stateTiddlerName = stateTiddlerName;
 	const componentTemplate = $tw.wiki.getTiddler(DEFAULT_COMPONENT_TEMPLATE).fields["text"];
 	var fields = {
+		title: titleBase + "/" + fieldDescription.fieldName,
 		text: formatTemplate(componentTemplate, fieldConfig),
 		created: NOW,
 		modified: NOW,
