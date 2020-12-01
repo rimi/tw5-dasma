@@ -19,7 +19,7 @@
 		{
 			"id": "dasma/field/generic-checkboxes",
 			"fieldName": "GENERIC_checkbox.refs",
-			"caption": "GENERIC Checkbox",
+			"caption": "GENERIC Base-Checkbox",
 			"editor": {
 				"component": "dasma/component/checkboxes"
 			}
@@ -27,7 +27,7 @@
 		{
 			"id": "dasma/field/generic-multiselect",
 			"fieldName": "GENERIC_multiselect.refs",
-			"caption": "GENERIC MultiSelect",
+			"caption": "GENERIC Base-MultiSelect",
 			"editor": {
 				"component": "dasma/component/multiselect"
 			}
@@ -35,7 +35,7 @@
 		{
 			"id": "dasma/field/generic-radio",
 			"fieldName": "GENERIC_radio.ref",
-			"caption": "GENERIC Radio",
+			"caption": "GENERIC Base-Radio",
 			"editor": {
 				"component": "dasma/component/radio"
 			}
@@ -43,7 +43,7 @@
 		{
 			"id": "dasma/field/generic-select",
 			"fieldName": "GENERIC_select.ref",
-			"caption": "GENERIC Select",
+			"caption": "GENERIC Base-Select",
 			"editor": {
 				"component": "dasma/component/select"
 			}
