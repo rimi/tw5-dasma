@@ -1,0 +1,79 @@
+caption: Generated Component: GENERIC Base-MultiSelect
+created: 20201201094908828
+modified: 20201201094909192
+title: $:/plugins/rimir/dasma/generated/base-data/dasma/field/generic-multiselect
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/generator/generated
+type: text/vnd.tiddlywiki
+
+\define stateTiddler-GENERIC_multiselect.refs() $(stateTiddler)$
+
+\define stateFieldName-GENERIC_multiselect.refs() tmp_GENERIC_multiselect.refs
+\define targetFieldName-GENERIC_multiselect.refs() GENERIC_multiselect.refs
+\define name-GENERIC_multiselect.refs() GENERIC Base-MultiSelect
+
+\define display-narrow-GENERIC_multiselect.refs() yes
+\define narrowStateTiddler-GENERIC_multiselect.refs() $(stateTiddler-GENERIC_multiselect.refs)$/narrowTiddlers/$(targetFieldName-GENERIC_multiselect.refs)$
+\define narrow-GENERIC_multiselect.refs()
+<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-GENERIC_multiselect.refs)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/narrowers/caption-only"/>
+</$vars>
+\end
+\define narrow-filter-GENERIC_multiselect.refs() [search:caption:literal{$(narrowStateTiddler-GENERIC_multiselect.refs)$!!caption}]
+
+\define display-group-GENERIC_multiselect.refs() no
+\define groupStateTiddler-GENERIC_multiselect.refs() $(stateTiddler-GENERIC_multiselect.refs)$/groupTiddlers/$(targetFieldName-GENERIC_multiselect.refs)$
+\define group-GENERIC_multiselect.refs()
+<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-GENERIC_multiselect.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-validate-GENERIC_multiselect.refs() no
+\define validateStateTiddler-GENERIC_multiselect.refs() $(stateTiddler-GENERIC_multiselect.refs)$/validateTiddlers/$(targetFieldName-GENERIC_multiselect.refs)$
+\define validate-GENERIC_multiselect.refs()
+<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-GENERIC_multiselect.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-info-GENERIC_multiselect.refs() no
+\define infoStateTiddler-GENERIC_multiselect.refs() $(stateTiddler-GENERIC_multiselect.refs)$/infoTiddlers/$(targetFieldName-GENERIC_multiselect.refs)$
+\define info-GENERIC_multiselect.refs()
+<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-GENERIC_multiselect.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-previous-GENERIC_multiselect.refs() no
+\define previousValueStateTiddler-GENERIC_multiselect.refs() $(stateTiddler-GENERIC_multiselect.refs)$/previousValueTiddlers/$(targetFieldName-GENERIC_multiselect.refs)$
+\define previous-GENERIC_multiselect.refs()
+<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-GENERIC_multiselect.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-current-GENERIC_multiselect.refs() no
+\define currentValueStateTiddler-GENERIC_multiselect.refs() $(stateTiddler-GENERIC_multiselect.refs)$/currentValueTiddlers/$(targetFieldName-GENERIC_multiselect.refs)$
+\define current-GENERIC_multiselect.refs()
+<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-GENERIC_multiselect.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define edit-GENERIC_multiselect.refs() 
+<$vars rimir:dasma:stateTiddler="$(stateTiddler-GENERIC_multiselect.refs)$" rimir:dasma:stateField="$(stateFieldName-GENERIC_multiselect.refs)$" rimir:dasma:filter="[is[]]+[subfilter<narrow-filter-GENERIC_multiselect.refs>]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget"/>
+</$vars>
+\end
+
+\define save-GENERIC_multiselect.refs()
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-GENERIC_multiselect.refs)$" rimir:dasma:sourceField="$(stateFieldName-GENERIC_multiselect.refs)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-GENERIC_multiselect.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+\end
+
+\define load-GENERIC_multiselect.refs()
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-GENERIC_multiselect.refs)$" rimir:dasma:targetTiddler="$(stateTiddler-GENERIC_multiselect.refs)$" rimir:dasma:targetField="$(stateFieldName-GENERIC_multiselect.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+\end

@@ -1,0 +1,79 @@
+caption: Generated Component: GENERIC Base-Checkbox
+created: 20201201094908826
+modified: 20201201094909160
+title: $:/plugins/rimir/dasma/generated/base-data/dasma/field/generic-checkboxes
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/generator/generated
+type: text/vnd.tiddlywiki
+
+\define stateTiddler-GENERIC_checkbox.refs() $(stateTiddler)$/indexTiddlers/$(stateFieldName-GENERIC_checkbox.refs)$
+
+\define stateFieldName-GENERIC_checkbox.refs() tmp_GENERIC_checkbox.refs
+\define targetFieldName-GENERIC_checkbox.refs() GENERIC_checkbox.refs
+\define name-GENERIC_checkbox.refs() GENERIC Base-Checkbox
+
+\define display-narrow-GENERIC_checkbox.refs() yes
+\define narrowStateTiddler-GENERIC_checkbox.refs() $(stateTiddler-GENERIC_checkbox.refs)$/narrowTiddlers/$(targetFieldName-GENERIC_checkbox.refs)$
+\define narrow-GENERIC_checkbox.refs()
+<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-GENERIC_checkbox.refs)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/narrowers/caption-only"/>
+</$vars>
+\end
+\define narrow-filter-GENERIC_checkbox.refs() [search:caption:literal{$(narrowStateTiddler-GENERIC_checkbox.refs)$!!caption}]
+
+\define display-group-GENERIC_checkbox.refs() no
+\define groupStateTiddler-GENERIC_checkbox.refs() $(stateTiddler-GENERIC_checkbox.refs)$/groupTiddlers/$(targetFieldName-GENERIC_checkbox.refs)$
+\define group-GENERIC_checkbox.refs()
+<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-GENERIC_checkbox.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-validate-GENERIC_checkbox.refs() no
+\define validateStateTiddler-GENERIC_checkbox.refs() $(stateTiddler-GENERIC_checkbox.refs)$/validateTiddlers/$(targetFieldName-GENERIC_checkbox.refs)$
+\define validate-GENERIC_checkbox.refs()
+<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-GENERIC_checkbox.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-info-GENERIC_checkbox.refs() no
+\define infoStateTiddler-GENERIC_checkbox.refs() $(stateTiddler-GENERIC_checkbox.refs)$/infoTiddlers/$(targetFieldName-GENERIC_checkbox.refs)$
+\define info-GENERIC_checkbox.refs()
+<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-GENERIC_checkbox.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-previous-GENERIC_checkbox.refs() no
+\define previousValueStateTiddler-GENERIC_checkbox.refs() $(stateTiddler-GENERIC_checkbox.refs)$/previousValueTiddlers/$(targetFieldName-GENERIC_checkbox.refs)$
+\define previous-GENERIC_checkbox.refs()
+<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-GENERIC_checkbox.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-current-GENERIC_checkbox.refs() no
+\define currentValueStateTiddler-GENERIC_checkbox.refs() $(stateTiddler-GENERIC_checkbox.refs)$/currentValueTiddlers/$(targetFieldName-GENERIC_checkbox.refs)$
+\define current-GENERIC_checkbox.refs()
+<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-GENERIC_checkbox.refs)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define edit-GENERIC_checkbox.refs() 
+<$vars rimir:dasma:stateTiddler="$(stateTiddler-GENERIC_checkbox.refs)$" rimir:dasma:stateField="$(stateFieldName-GENERIC_checkbox.refs)$" rimir:dasma:filter="[is[]]+[subfilter<narrow-filter-GENERIC_checkbox.refs>]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/checkboxwidget"/>
+</$vars>
+\end
+
+\define save-GENERIC_checkbox.refs()
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-GENERIC_checkbox.refs)$" rimir:dasma:sourceField="$(stateFieldName-GENERIC_checkbox.refs)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-GENERIC_checkbox.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/transfer-indexes-to-list-field"/>
+</$vars>
+\end
+
+\define load-GENERIC_checkbox.refs()
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-GENERIC_checkbox.refs)$" rimir:dasma:targetTiddler="$(stateTiddler-GENERIC_checkbox.refs)$" rimir:dasma:targetField="$(stateFieldName-GENERIC_checkbox.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/transfer-list-field-to-indexes"/>
+</$vars>
+\end
