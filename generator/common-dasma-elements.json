@@ -15,7 +15,9 @@
 			"editor": {
 				"component": "dasma/component/multiline"
 			}
-		},
+		}
+	],
+	"templates": [
 		{
 			"id": "dasma/field/generic-checkboxes",
 			"fieldName": "GENERIC_checkbox.refs",

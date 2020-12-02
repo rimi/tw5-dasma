@@ -25,8 +25,6 @@ const PROTOTYPE_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/prototypes/simple-
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/$(stateFieldName-${this.fieldName})$";
 
-const BASE_DASMA_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/generated/base-data"
-	
 const COMPONENT_CONFIGURATION = {
 	"dasma/component/singleline": {
 		editComponent: "dasma/edit/input",
@@ -112,7 +110,7 @@ GeneratorWidget.prototype.render = function(parent,nextSibling) {
 	var domNode = this.document.createElement("button");
 	// Add a click event handler
 	domNode.addEventListener("click",function (event) {
-		self.generateCommonDasmaDefinitions();
+		//self.generateCommonDasmaDefinitions();
 		self.regeneratePrototype();
 		self.generateCustomDefinitions();
 		return true;
@@ -138,6 +136,34 @@ GeneratorWidget.prototype.getCommonDasmaDescriptions = function() {
 	return JSON.parse(commonDasmaElementsJSON);
 }
 	
+GeneratorWidget.prototype.getBaseGeneratorOutputNamespace = function() {
+	return "$:/rimir/dasma/generated";
+}
+	
+GeneratorWidget.prototype.createCommonFieldOverwrites = function(fieldDescription) {
+	return {
+		title: this.getBaseGeneratorOutputNamespace() + "/dasma-common/" + fieldDescription.id,
+		"tocp.main-parent.ref": "#:/wiki/extensions/dasma/generated/common",
+		caption: "Common Editor-Component: " + fieldDescription.caption
+	}
+}
+	
+GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescription) {
+	return {
+		title: PROTOTYPE_GENERATOR_NAMESPACE + "/" + fieldDescription.fieldName,
+		"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/prototyping",
+		caption: "Prototype: " + fieldDescription.caption
+	}
+}
+	
+GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescription) {
+	return {
+		title: this.getBaseGeneratorOutputNamespace() + "/" + fieldDescription.fieldName,
+		"tocp.main-parent.ref": "#:/wiki/extensions/dasma/generated",
+		caption: "Editor-Component: " + fieldDescription.caption
+	}
+}
+	
 /*
 Regenerates the Prototype (intented to play with/enhance the current implementation)
 */
@@ -146,11 +172,8 @@ GeneratorWidget.prototype.regeneratePrototype = function() {
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	const prototypeStruct = JSON.parse($tw.wiki.getTiddler(PROTOTYPE_DASMA_DESCRIPTIONS).fields["text"]);
 	$tw.utils.each(prototypeStruct.fields, function(fieldDescription) {
-		self.generateCustomDasmaTiddler(fieldDescription, PROTOTYPE_GENERATOR_NAMESPACE, commonDasmaElements, 
-			{
-				"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/prototyping",
-				caption: "Prototype: " + fieldDescription.caption
-			});
+		const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
+		self.generateEditorComponent(finalFieldDescription, self.createPrototypeFieldOverwrites(finalFieldDescription));
 		}
 	);
 }
@@ -165,22 +188,25 @@ GeneratorWidget.prototype.generateCustomDefinitions = function() {
 		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
 		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
 		$tw.utils.each(dasmaStruct.fields, function(fieldDescription) {
-			self.generateCustomDasmaTiddler(fieldDescription, "TBD", commonDasmaElements, {});
+			const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
+			self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription));
 		});
 	});
 }
 
-/*
-Generates the editor-component tiddlers for the given CUSTOM dasma-elements
-*/
-GeneratorWidget.prototype.generateCustomDasmaTiddler = function(fieldDescription, titleBase, commonDasmaElements, customTiddlerOverwrites) {
+GeneratorWidget.prototype.mergeWithCommonDescription = function(fieldDescription, commonDasmaElements) {
+	let result = fieldDescription;
 	if(fieldDescription["dasma-id.ref"]){
-		const commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["dasma-id.ref"])[0];
-		const mergedDescription = deepmerge.all([commonFieldDescription, fieldDescription]);
-		this.generateEditorComponent(mergedDescription, titleBase, customTiddlerOverwrites);
+		let commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["dasma-id.ref"])[0];
+		if(!commonFieldDescription){
+			commonFieldDescription = commonDasmaElements.templates.filter(x => x.id === fieldDescription["dasma-id.ref"])[0];
+		}
+		commonFieldDescription ? commonFieldDescription : {};
+		result = deepmerge.all([commonFieldDescription, fieldDescription]);
 	}
+	return result;
 }
-
+	
 /*
 Generates the editor-component tiddlers for the COMMON dasma-elements
 */
@@ -188,16 +214,11 @@ GeneratorWidget.prototype.generateCommonDasmaDefinitions = function() {
 	var self = this;
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	commonDasmaElements.fields.forEach(function (fieldDescription, index) {
-		self.generateEditorComponent(fieldDescription, "IGNORE_THIS", 
-		{
-			title: BASE_DASMA_GENERATOR_NAMESPACE + "/" + fieldDescription.id,
-			"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/generator/generated",
-			caption: "Generated Component: " + fieldDescription.caption
-		});
+		self.generateEditorComponent(fieldDescription, self.createCommonFieldOverwrites(fieldDescription));
 	});
 };
 	
-GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, titleBase, customFieldOverwrites) {
+GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
 	const componentConfiguration = COMPONENT_CONFIGURATION[fieldDescription.editor.component];
 	const fieldConfig = {
@@ -246,7 +267,7 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, t
 	fieldConfig.stateTiddlerName = stateTiddlerName;
 	const componentTemplate = $tw.wiki.getTiddler(DEFAULT_COMPONENT_TEMPLATE).fields["text"];
 	var fields = {
-		title: titleBase + "/" + fieldDescription.fieldName,
+		title: "DEFINEME/" + fieldDescription.fieldName,
 		text: formatTemplate(componentTemplate, fieldConfig),
 		created: NOW,
 		modified: NOW,
