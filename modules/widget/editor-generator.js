@@ -135,9 +135,25 @@ GeneratorWidget.prototype.getCommonDasmaDescriptions = function() {
 	const commonDasmaElementsJSON = $tw.wiki.getTiddler(COMMON_DASMA_DESCRIPTIONS).fields["text"];
 	return JSON.parse(commonDasmaElementsJSON);
 }
+
+GeneratorWidget.prototype.getEditorRenderTiddlerName = function() {
+	return "$:/plugins/rimir/dasma/templates/editors/table-based-editor";
+}
 	
-GeneratorWidget.prototype.getBaseGeneratorOutputNamespace = function() {
-	return "$:/rimir/dasma/generated";
+GeneratorWidget.prototype.getBaseGeneratorOutputNamespace = function(editorDescription) {
+	return "$:/rimir/dasma/generated" + (editorDescription ? "/" + editorDescription.id : "");
+}
+
+GeneratorWidget.prototype.getBaseTreeLinkingPath = function() {
+	return "#:/wiki/extensions/dasma/generated";
+}
+	
+GeneratorWidget.prototype.getEditorTreeLinkingPath = function(editorDescription) {
+	return this.getBaseTreeLinkingPath() + "/" + editorDescription.id;
+}
+	
+GeneratorWidget.prototype.getFieldsTreeLinkingPath = function(editorDescription) {
+	return this.getEditorTreeLinkingPath(editorDescription) + "/fields";
 }
 	
 GeneratorWidget.prototype.createCommonFieldOverwrites = function(fieldDescription) {
@@ -156,31 +172,70 @@ GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescrip
 	}
 }
 	
-GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescription) {
+GeneratorWidget.prototype.createPrototypeEditorOverwrites = function(editorDescription) {
 	return {
-		title: this.getBaseGeneratorOutputNamespace() + "/" + fieldDescription.fieldName,
-		"tocp.main-parent.ref": "#:/wiki/extensions/dasma/generated",
+		title: PROTOTYPE_GENERATOR_NAMESPACE + "/editor",
+		"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/prototyping",
+		caption: "Prototype-Editor"
+	}
+}
+	
+GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescription, editorDescription) {
+	return {
+		title: this.getBaseGeneratorOutputNamespace(editorDescription) + "/" + fieldDescription.fieldName,
+		"tocp.main-parent.ref": this.getFieldsTreeLinkingPath(editorDescription),
 		caption: "Editor-Component: " + fieldDescription.caption
 	}
 }
-
-GeneratorWidget.prototype.generateEditorEntryPoint = function(editorComponentReferences) {
 	
+GeneratorWidget.prototype.createCustomEditorOverwrites = function(editorDescription) {
+	return {
+		title: this.getBaseGeneratorOutputNamespace(editorDescription),
+		"tocp.main-parent.ref": this.getEditorTreeLinkingPath(editorDescription),
+		caption: "Editor: " + editorDescription.id
+	}
 }
 	
+GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
+	const baseLink = this.getBaseTreeLinkingPath();
+	const editorTreeLink = this.getEditorTreeLinkingPath(editorDescription);
+	const fieldsTreeLink = this.getFieldsTreeLinkingPath(editorDescription);
+	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
+	var editorLink = {
+		title: editorTreeLink,
+		"tocp.main-parent.ref": baseLink,
+		caption: editorDescription.id,
+		created: NOW,
+		modified: NOW,
+		bag: "default",
+		type: "text/vnd.tiddlywiki"
+	};
+	$tw.wiki.addTiddler(new $tw.Tiddler(editorLink));
+	var fieldLink = {
+		title: fieldsTreeLink,
+		"tocp.main-parent.ref": editorTreeLink,
+		caption: "fields",
+		created: NOW,
+		modified: NOW,
+		bag: "default",
+		type: "text/vnd.tiddlywiki"
+	};
+	$tw.wiki.addTiddler(new $tw.Tiddler(fieldLink));
+}
+
 /*
 Regenerates the Prototype (intented to play with/enhance the current implementation)
 */
 GeneratorWidget.prototype.regeneratePrototype = function() {
 	var self = this;
-	var generatedComponents = [];
+	const generatedComponents = [];
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	const prototypeStruct = JSON.parse($tw.wiki.getTiddler(PROTOTYPE_DASMA_DESCRIPTIONS).fields["text"]);
 	$tw.utils.each(prototypeStruct.fields, function(fieldDescription) {
 		const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
 		generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createPrototypeFieldOverwrites(finalFieldDescription)));
 	});
-	this.generateEditorEntryPoint(generatedComponents);
+	this.generateEditorEntryPoint(prototypeStruct, generatedComponents, this.createPrototypeEditorOverwrites(prototypeStruct));
 }
 	
 /*
@@ -188,17 +243,18 @@ Loads all custom structs (tagged with 'dasma:struct') and generates the componen
 */
 GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	var self = this;
-	var generatedComponents = [];
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	$tw.utils.each($tw.wiki.filterTiddlers("[tag[dasma:struct]]"),function(title) {
+		const generatedComponents = [];
 		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
 		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
+		self.ensureContentTreeLinks(dasmaStruct);
 		$tw.utils.each(dasmaStruct.fields, function(fieldDescription) {
 			const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
-			generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription)));
+			generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription, dasmaStruct)));
 		});
+		self.generateEditorEntryPoint(dasmaStruct, generatedComponents, self.createCustomEditorOverwrites(dasmaStruct));
 	});
-	this.generateEditorEntryPoint(generatedComponents);
 }
 
 GeneratorWidget.prototype.mergeWithCommonDescription = function(fieldDescription, commonDasmaElements) {
@@ -225,6 +281,35 @@ GeneratorWidget.prototype.generateCommonDasmaDefinitions = function() {
 		self.generateEditorComponent(fieldDescription, self.createCommonFieldOverwrites(fieldDescription));
 	});
 };
+	
+GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription, editorComponentInfos, customFieldOverwrites) {
+	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
+	const editorTemplate = $tw.wiki.getTiddler(DEFAULT_EDITOR_TEMPLATE).fields["text"];
+	const editorConfig = {
+		headline: editorDescription.headline || "THE PLACEHOLDER-HEADLINE",
+		imports: this.getEditorRenderTiddlerName() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
+		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
+		stateTiddler: "",
+		targetTiddler: ""
+	};
+	var fields = {
+		title: "DEFINEME/" + editorTemplate.id,
+		text: formatTemplate(editorTemplate, editorConfig),
+		created: NOW,
+		modified: NOW,
+		bag: "default",
+		type: "text/vnd.tiddlywiki"
+	};
+	$tw.wiki.addTiddler(new $tw.Tiddler(deepmerge.all([fields, customFieldOverwrites])));
+}
+	
+GeneratorWidget.prototype.createEditorComponentsTitlesList = function(editorComponentInfos) {
+	return editorComponentInfos.map(function(elem){return elem.title;}).join(" ");
+}
+	
+GeneratorWidget.prototype.createEditorComponentsFieldNamesList = function(editorComponentInfos) {
+	return editorComponentInfos.map(function(elem){return elem.fieldName;}).join(" ");
+}
 	
 GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
@@ -282,9 +367,10 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 		bag: "default",
 		type: "text/vnd.tiddlywiki"
 	};
-	$tw.wiki.addTiddler(new $tw.Tiddler(deepmerge.all([fields, customFieldOverwrites])));
+	const mergedFields = deepmerge.all([fields, customFieldOverwrites]);
+	$tw.wiki.addTiddler(new $tw.Tiddler(mergedFields));
 	return {
-		title: fields.title,
+		title: mergedFields.title,
 		fieldName: fieldDescription.fieldName
 	};
 }
