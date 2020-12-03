@@ -381,12 +381,10 @@ GeneratorWidget.prototype.createFilterExpression = function(description) {
 		result = "";
 		let filterStarted = false;
 		if(description.tags) {
-			result += "[";
 			for (var i = 0; i < description.tags.length; i++) {
 				const tag = description.tags[i];
 				result += "[tag[" + tag + "]]";
 			}
-			result += "]";
 			filterStarted = true;
 		}
 		if(description.filter){
