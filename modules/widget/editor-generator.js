@@ -21,6 +21,8 @@ const COMMON_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/generator/common-dasma
 
 const PROTOTYPE_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/prototypes/dasma-definition";
 const PROTOTYPE_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/prototypes/simple-editor";
+
+const TIDDLER_CREATION_STATE_BASE= "$:/state/rimir/dasma/creation";
 	
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/$(stateFieldName-${this.fieldName})$";
@@ -30,36 +32,43 @@ const COMPONENT_CONFIGURATION = {
 		editComponent: "dasma/edit/input",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
+		previousValueComponent: "dasma/viewers/simple-field"
 	},
 	"dasma/component/multiline": {
 		editComponent: "dasma/edit/textarea",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
+		previousValueComponent: "dasma/viewers/simple-field"
 	},
 	"dasma/component/checkboxes": {
 		useIndexStateTiddler: true,
 		editComponent: "dasma/edit/checkboxes",
 		saveComponent: "dasma/transfer/index2list",
 		loadComponent: "dasma/transfer/list2index",
-		narrowComponent: "dasma/narrower/by-caption"
+		narrowComponent: "dasma/narrower/by-caption",
+		previousValueComponent: "dasma/viewers/simple-name-list"
 	},
 	"dasma/component/multiselect": {
 		editComponent: "dasma/edit/multiselect",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
-		narrowComponent: "dasma/narrower/by-caption"
+		narrowComponent: "dasma/narrower/by-caption",
+		previousValueComponent: "dasma/viewers/simple-name-list",
+		currentValueComponent: "dasma/viewers/simple-name-list"
 	},
 	"dasma/component/radio": {
 		editComponent: "dasma/edit/radio",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
-		narrowComponent: "dasma/narrower/by-caption"
+		narrowComponent: "dasma/narrower/by-caption",
+		previousValueComponent: "dasma/viewers/simple-name"
 	},
 	"dasma/component/select": {
 		editComponent: "dasma/edit/select",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
-		narrowComponent: "dasma/narrower/by-caption"
+		narrowComponent: "dasma/narrower/by-caption",
+		previousValueComponent: "dasma/viewers/simple-name"
 	}
 }
 
@@ -69,6 +78,12 @@ const NARROWERS = {
 
 const VALIDATORS = {
 	"tbd": "TBD"
+}
+
+const VIEWERS = {
+	"dasma/viewers/simple-field" : "$:/plugins/rimir/dasma/templates/viewers/simple-field-viewer",
+	"dasma/viewers/simple-name" : "$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer",
+	"dasma/viewers/simple-name-list" : "$:/plugins/rimir/dasma/templates/viewers/simple-name-list-viewer"
 }
 
 const EDITORS = {
@@ -289,8 +304,8 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		headline: editorDescription.headline || "THE PLACEHOLDER-HEADLINE",
 		imports: this.getEditorRenderTiddlerName() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
 		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
-		stateTiddler: "",
-		targetTiddler: ""
+		stateTiddler: TIDDLER_CREATION_STATE_BASE + "/" + editorDescription.id,
+		targetTiddler: "Meins"
 	};
 	var fields = {
 		title: "DEFINEME/" + editorTemplate.id,
@@ -335,11 +350,11 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 		},
 		previousValue: {
 			display: componentConfiguration.previousValueComponent ? "yes" : "no",
-			component: componentConfiguration.previousValueComponent ? "TBD": "TBD"
+			component: componentConfiguration.previousValueComponent ? VIEWERS[componentConfiguration.previousValueComponent]: "NONE"
 		},
 		currentValue: {
 			display: componentConfiguration.currentValueComponent ? "yes" : "no",
-			component: componentConfiguration.currentValueComponent ? "TBD": "TBD"
+			component: componentConfiguration.currentValueComponent ? VIEWERS[componentConfiguration.currentValueComponent]: "NONE"
 		},
 		edit: {
 			filter: this.createFilterExpression(fieldDescription.options) + (componentConfiguration.narrowComponent ? "+[subfilter<narrow-filter-" + fieldDescription.fieldName + ">]" : ""),
