@@ -1,6 +1,6 @@
 caption: Prototype: Component: caption (SingleLinedText)
-created: 20201202084100858
-modified: 20201202084100867
+created: 20201203164716544
+modified: 20201203164716747
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/caption
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -44,19 +44,19 @@ type: text/vnd.tiddlywiki
 </$vars>
 \end
 
-\define display-previous-caption() no
+\define display-previous-caption() yes
 \define previousValueStateTiddler-caption() $(stateTiddler-caption)$/previousValueTiddlers/$(targetFieldName-caption)$
 \define previous-caption()
-<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-caption)$">
-<$transclude tiddler="TBD"/>
+<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-caption)$" rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-caption)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-field-viewer"/>
 </$vars>
 \end
 
 \define display-current-caption() no
 \define currentValueStateTiddler-caption() $(stateTiddler-caption)$/currentValueTiddlers/$(targetFieldName-caption)$
 \define current-caption()
-<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-caption)$">
-<$transclude tiddler="TBD"/>
+<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-caption)$" rimir:dasma:tiddler="$(stateTiddler-caption)$" rimir:dasma:field="$(stateFieldName-caption)$">
+<$transclude tiddler="NONE"/>
 </$vars>
 \end
 
