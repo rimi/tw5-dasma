@@ -1,0 +1,11 @@
+caption: Simple Name Viewer
+created: 20201203161757672
+modified: 20201203162159910
+tags: 
+title: $:/plugins/rimir/dasma/templates/viewers/simple-name-viewer
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/viewers
+type: text/vnd.tiddlywiki
+
+<$tiddler tiddler={{{[<rimir:dasma:tiddler>get<rimir:dasma:field>]}}}>
+<<rimir:name>>
+</$tiddler>
