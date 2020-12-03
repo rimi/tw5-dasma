@@ -163,19 +163,24 @@ GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescriptio
 		caption: "Editor-Component: " + fieldDescription.caption
 	}
 }
+
+GeneratorWidget.prototype.generateEditorEntryPoint = function(editorComponentReferences) {
+	
+}
 	
 /*
 Regenerates the Prototype (intented to play with/enhance the current implementation)
 */
 GeneratorWidget.prototype.regeneratePrototype = function() {
 	var self = this;
+	var generatedComponents = [];
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	const prototypeStruct = JSON.parse($tw.wiki.getTiddler(PROTOTYPE_DASMA_DESCRIPTIONS).fields["text"]);
 	$tw.utils.each(prototypeStruct.fields, function(fieldDescription) {
 		const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
-		self.generateEditorComponent(finalFieldDescription, self.createPrototypeFieldOverwrites(finalFieldDescription));
-		}
-	);
+		generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createPrototypeFieldOverwrites(finalFieldDescription)));
+	});
+	this.generateEditorEntryPoint(generatedComponents);
 }
 	
 /*
@@ -183,15 +188,17 @@ Loads all custom structs (tagged with 'dasma:struct') and generates the componen
 */
 GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	var self = this;
+	var generatedComponents = [];
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 	$tw.utils.each($tw.wiki.filterTiddlers("[tag[dasma:struct]]"),function(title) {
 		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
 		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
 		$tw.utils.each(dasmaStruct.fields, function(fieldDescription) {
 			const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
-			self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription));
+			generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription)));
 		});
 	});
+	this.generateEditorEntryPoint(generatedComponents);
 }
 
 GeneratorWidget.prototype.mergeWithCommonDescription = function(fieldDescription, commonDasmaElements) {
@@ -208,7 +215,8 @@ GeneratorWidget.prototype.mergeWithCommonDescription = function(fieldDescription
 }
 	
 /*
-Generates the editor-component tiddlers for the COMMON dasma-elements
+!DEPRECATED! (not used as editor-components anymore, but left for testing-purposes)
+Generates editor-component-tiddlers for the COMMON dasma-elements
 */
 GeneratorWidget.prototype.generateCommonDasmaDefinitions = function() {
 	var self = this;
@@ -275,6 +283,10 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 		type: "text/vnd.tiddlywiki"
 	};
 	$tw.wiki.addTiddler(new $tw.Tiddler(deepmerge.all([fields, customFieldOverwrites])));
+	return {
+		title: fields.title,
+		fieldName: fieldDescription.fieldName
+	};
 }
 	
 GeneratorWidget.prototype.createFilterExpression = function(description) {
