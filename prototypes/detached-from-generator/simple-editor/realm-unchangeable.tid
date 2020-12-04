@@ -1,0 +1,80 @@
+caption: Simple Editor: Realm - UNCHANGEABLE (Radio)
+created: 20201204072403264
+modified: 20201204072509590
+tags: 
+title: $:/plugins/rimir/dasma/prototypes/detached-from-generator/simple-editor/realm-unchangeable
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/detached-from-generator
+type: text/vnd.tiddlywiki
+
+\define stateTiddler-realm() $(stateTiddler)$
+
+\define stateFieldName-realm() tmp_realm
+\define targetFieldName-realm() realm
+\define name-realm() Component: realm (Radio) / UNCHANGEABLE
+
+\define display-narrow-realm() yes
+\define narrowStateTiddler-realm() $(stateTiddler-realm)$/narrowTiddlers/$(targetFieldName-realm)$
+\define narrow-realm()
+<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-realm)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/narrowers/caption-only"/>
+</$vars>
+\end
+\define narrow-filter-realm() [search:caption:literal{$(narrowStateTiddler-realm)$!!caption}]
+
+\define display-group-realm() no
+\define groupStateTiddler-realm() $(stateTiddler-realm)$/groupTiddlers/$(targetFieldName-realm)$
+\define group-realm()
+<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-realm)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-validate-realm() no
+\define validateStateTiddler-realm() $(stateTiddler-realm)$/validateTiddlers/$(targetFieldName-realm)$
+\define validate-realm()
+<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-realm)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-info-realm() no
+\define infoStateTiddler-realm() $(stateTiddler-realm)$/infoTiddlers/$(targetFieldName-realm)$
+\define info-realm()
+<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-realm)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-previous-realm() yes
+\define previousValueStateTiddler-realm() $(stateTiddler-realm)$/previousValueTiddlers/$(targetFieldName-realm)$
+\define previous-realm()
+<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-realm)$" rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer"/>
+</$vars>
+\end
+
+\define display-current-realm() no
+\define currentValueStateTiddler-realm() $(stateTiddler-realm)$/currentValueTiddlers/$(targetFieldName-realm)$
+\define current-realm()
+<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-realm)$" rimir:dasma:tiddler="$(stateTiddler-realm)$" rimir:dasma:field="$(stateFieldName-realm)$">
+<$transclude tiddler="NONE"/>
+</$vars>
+\end
+
+\define edit-realm() 
+<$vars rimir:dasma:stateTiddler="$(stateTiddler-realm)$" rimir:dasma:stateField="$(stateFieldName-realm)$" rimir:dasma:filter="[tag[realm]]+[subfilter<narrow-filter-realm>]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/radiowidget"/>
+</$vars>
+\end
+
+\define save-realm()
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-realm)$" rimir:dasma:sourceField="$(stateFieldName-realm)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-realm)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+\end
+
+\define load-realm()
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-realm)$" rimir:dasma:targetTiddler="$(stateTiddler-realm)$" rimir:dasma:targetField="$(stateFieldName-realm)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+\end
