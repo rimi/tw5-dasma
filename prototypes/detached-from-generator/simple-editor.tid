@@ -1,18 +1,20 @@
 caption: Simple Table-Editor Prototype
 created: 20201123173129738
-modified: 20201203181928218
+modified: 20201204072919228
 tags: 
 title: $:/plugins/rimir/dasma/prototypes/detached-from-generator/simple-editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/detached-from-generator
 type: text/vnd.tiddlywiki
 
-\import $:/plugins/rimir/dasma/templates/editors/table-based-editor $:/plugins/rimir/dasma/prototypes/simple-editor/caption $:/plugins/rimir/dasma/prototypes/simple-editor/description $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref
+\import $:/plugins/rimir/dasma/templates/editors/table-based-editor $:/plugins/rimir/dasma/prototypes/simple-editor/realm $:/plugins/rimir/dasma/prototypes/simple-editor/caption $:/plugins/rimir/dasma/prototypes/simple-editor/description $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref
 
 \define headline() Create/Edit Person
 
-\define stateTiddler() $:/state/rimir/dasma/prototype-editor
-\define targetTiddler() Prototype-Editor-Output
+\define stateTiddler() $:/state/rimir/dasma/creation/prototype-detached
+\define targetTiddler() Detached-Prototype-Output
 
-<$set name="fields" value="caption description proto.refs2 proto.refs proto.ref2 proto.ref">
+\define addStaticFields() <$action-setfield $tiddler="$(targetTiddler)$" />
+
+<$set name="fields" value="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref">
 <<editor>>
 </$set>
