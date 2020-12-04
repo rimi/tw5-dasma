@@ -305,7 +305,8 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		imports: this.getEditorRenderTiddlerName() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
 		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
 		stateTiddler: TIDDLER_CREATION_STATE_BASE + "/" + editorDescription.id,
-		targetTiddler: "Meins"
+		targetTiddler: "Meins",
+		staticFieldAssignments: this.createEditorComponentsStaticFieldAssignments(editorDescription)
 	};
 	var fields = {
 		title: "DEFINEME/" + editorTemplate.id,
@@ -316,6 +317,19 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		type: "text/vnd.tiddlywiki"
 	};
 	$tw.wiki.addTiddler(new $tw.Tiddler(deepmerge.all([fields, customFieldOverwrites])));
+}
+	
+GeneratorWidget.prototype.createEditorComponentsStaticFieldAssignments = function(editorDescription) {
+	let result = "";
+	let first = true;
+	if(editorDescription.staticFieldAssignments){
+		for (var prop in editorDescription.staticFieldAssignments) {
+			if(!first) result += " ";
+			result += prop + "=\"" + editorDescription.staticFieldAssignments[prop] + "\"";
+			first = false;
+		}
+	}
+	return result;
 }
 	
 GeneratorWidget.prototype.createEditorComponentsTitlesList = function(editorComponentInfos) {
