@@ -1,11 +1,11 @@
 caption: Copy State-Field Action
 created: 20201123181048723
-modified: 20201127133504017
+modified: 20201204142036636
 tags: 
 title: $:/plugins/rimir/dasma/templates/actions/copy-field-to-field
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/actions
 type: text/vnd.tiddlywiki
 
-<$wikify name="theValue" text="<$view tiddler=<<rimir:dasma:sourceTiddler>> field=<<rimir:dasma:sourceField>>/>">
+<$wikify name="theValue" text="""<$vars rimir:dasma:tiddler=<<rimir:dasma:sourceTiddler>> rimir:dasma:field=<<rimir:dasma:sourceField>>><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>""">
 <$action-setfield $tiddler=<<rimir:dasma:targetTiddler>> $field=<<rimir:dasma:targetField>> $value=<<theValue>>/>
 </$wikify>
