@@ -1,9 +1,9 @@
 caption: Simple Editor: proto.refs (MultiSelect)
 created: 20201123183050878
-modified: 20201129172249421
+modified: 20201203181734402
 tags: 
-title: $:/plugins/rimir/dasma/prototypes/editors/simple-editor/proto-multi-select
-tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/editor
+title: $:/plugins/rimir/dasma/prototypes/detached-from-generator/simple-editor/proto-multi-select
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping/detached-from-generator
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-proto.refs() $(stateTiddler)$
