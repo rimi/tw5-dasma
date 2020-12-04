@@ -1,4 +1,5 @@
 {
+	"id": "prototypeOne",
 	"headline": "Create/Edit Person",
 	"title-template": "${this.realm-prefix}persons/${this.now}",
 	"tagging": {
