@@ -353,6 +353,7 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 	const fieldConfig = {
 		fieldName: fieldDescription.fieldName,
 		caption: fieldDescription.caption,
+		mandatory: fieldDescription.mandatory ? "yes" : "no",
 		narrowing: {
 			display: componentConfiguration.narrowComponent ? "yes" : "no",
 			component: componentConfiguration.narrowComponent ? NARROWERS[componentConfiguration.narrowComponent] : "NONE"
