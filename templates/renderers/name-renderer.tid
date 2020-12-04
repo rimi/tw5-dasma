@@ -1,0 +1,11 @@
+caption: Simple Name Renderer
+created: 20201203161757672
+modified: 20201204180543407
+tags: 
+title: $:/plugins/rimir/dasma/templates/renderers/name-renderer
+tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/value-renderer
+type: text/vnd.tiddlywiki
+
+<$tiddler tiddler=<<rimir:dasma:value>>>
+<<rimir:name>>
+</$tiddler>

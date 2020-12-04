@@ -1,6 +1,6 @@
 caption: Prototype: Component: proto.ref (SingleSelect)
-created: 20201204135933488
-modified: 20201204135933694
+created: 20201204181845365
+modified: 20201204181845603
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -11,6 +11,10 @@ type: text/vnd.tiddlywiki
 \define targetFieldName-proto.ref() proto.ref
 \define name-proto.ref() Component: proto.ref (SingleSelect)
 \define mandatory-proto.ref() no
+
+\define previous-value-proto.ref() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.ref)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
+
+\define current-value-proto.ref() <$vars rimir:dasma:tiddler="$(stateTiddler-proto.ref)$" rimir:dasma:field="$(stateFieldName-proto.ref)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
 \define display-narrow-proto.ref() yes
 \define narrowStateTiddler-proto.ref() $(stateTiddler-proto.ref)$/narrowTiddlers/$(targetFieldName-proto.ref)$
@@ -47,16 +51,20 @@ type: text/vnd.tiddlywiki
 
 \define display-previous-proto.ref() yes
 \define previous-proto.ref()
-<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.ref)$">
-<$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer"/>
+<$wikify name="theValue" text="""$(previous-value-proto.ref)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
 </$vars>
+</$wikify>
 \end
 
-\define display-current-proto.ref() no
+\define display-current-proto.ref() yes
 \define current-proto.ref()
-<$vars rimir:dasma:tiddler="$(stateTiddler-proto.ref)$" rimir:dasma:field="$(stateFieldName-proto.ref)$">
-<$transclude tiddler="NONE"/>
+<$wikify name="theValue" text="""$(current-value-proto.ref)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
 </$vars>
+</$wikify>
 \end
 
 \define readonly-proto.ref() no
@@ -68,9 +76,11 @@ type: text/vnd.tiddlywiki
 </$list>
 <$list filter="[<targetTiddler>is[tiddler]]">
 <$list filter="[<readonly-proto.ref>match[yes]]">
-<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.ref)$">
-<$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer"/>
+<$wikify name="theValue" text="""$(previous-value-proto.ref)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
 </$vars>
+</$wikify>
 </$list>
 </$list>
 \end

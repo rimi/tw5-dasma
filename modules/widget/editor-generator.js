@@ -32,15 +32,13 @@ const COMPONENT_CONFIGURATION = {
 		editComponent: "dasma/edit/input",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
-		previousValueComponent: "dasma/viewers/simple-field",
-		readonlyViewerComponent: "dasma/viewers/simple-field"
+		defaultValueRendererComponent: "dasma/value-renderers/field-asis"
 	},
 	"dasma/component/multiline": {
 		editComponent: "dasma/edit/textarea",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
-		previousValueComponent: "dasma/viewers/simple-field",
-		readonlyViewerComponent: "dasma/viewers/simple-field"
+		defaultValueRendererComponent: "dasma/value-renderers/field-asis"
 	},
 	"dasma/component/checkboxes": {
 		useIndexStateTiddler: true,
@@ -48,33 +46,29 @@ const COMPONENT_CONFIGURATION = {
 		saveComponent: "dasma/transfer/index2list",
 		loadComponent: "dasma/transfer/list2index",
 		narrowComponent: "dasma/narrower/by-caption",
-		previousValueComponent: "dasma/viewers/simple-name-list",
-		readonlyViewerComponent: "dasma/viewers/simple-name-list"
+		currentValueReaderComponent: "dasma/value-readers/index2list",
+		defaultValueRendererComponent: "dasma/value-renderers/list-as-ul-name"
 	},
 	"dasma/component/multiselect": {
 		editComponent: "dasma/edit/multiselect",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
 		narrowComponent: "dasma/narrower/by-caption",
-		previousValueComponent: "dasma/viewers/simple-name-list",
-		currentValueComponent: "dasma/viewers/simple-name-list",
-		readonlyViewerComponent: "dasma/viewers/simple-name-list"
+		defaultValueRendererComponent: "dasma/value-renderers/list-as-ul-name"
 	},
 	"dasma/component/radio": {
 		editComponent: "dasma/edit/radio",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
 		narrowComponent: "dasma/narrower/by-caption",
-		previousValueComponent: "dasma/viewers/simple-name",
-		readonlyViewerComponent: "dasma/viewers/simple-name"
+		defaultValueRendererComponent: "dasma/value-renderers/name"
 	},
 	"dasma/component/select": {
 		editComponent: "dasma/edit/select",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
 		narrowComponent: "dasma/narrower/by-caption",
-		previousValueComponent: "dasma/viewers/simple-name",
-		readonlyViewerComponent: "dasma/viewers/simple-name"
+		defaultValueRendererComponent: "dasma/value-renderers/name"
 	}
 }
 
@@ -86,10 +80,17 @@ const VALIDATORS = {
 	"tbd": "TBD"
 }
 
-const VIEWERS = {
-	"dasma/viewers/simple-field" : "$:/plugins/rimir/dasma/templates/viewers/simple-field-viewer",
-	"dasma/viewers/simple-name" : "$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer",
-	"dasma/viewers/simple-name-list" : "$:/plugins/rimir/dasma/templates/viewers/simple-name-list-viewer"
+const VALUE_READERS = {
+	"dasma/value-readers/index2list": "$:/plugins/rimir/dasma/templates/value-readers/transform-index-selected-to-list",
+	"dasma/value-readers/field": "$:/plugins/rimir/dasma/templates/value-readers/read-field"
+}
+
+const DEFAULT_VALUE_READER = "dasma/value-readers/field";
+
+const VALUE_RENDERER = {
+	"dasma/value-renderers/field-asis" : "$:/plugins/rimir/dasma/templates/renderers/simple-renderer",
+	"dasma/value-renderers/name" : "$:/plugins/rimir/dasma/templates/renderers/name-renderer",
+	"dasma/value-renderers/list-as-ul-name" : "$:/plugins/rimir/dasma/templates/renderers/list-as-ul-name-renderer"
 }
 
 const EDITORS = {
@@ -354,6 +355,12 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 		fieldName: fieldDescription.fieldName,
 		caption: fieldDescription.caption,
 		mandatory: fieldDescription.mandatory ? "yes" : "no",
+		currentValueReader: {
+			component: componentConfiguration.currentValueReaderComponent ? VALUE_READERS[componentConfiguration.currentValueReaderComponent] : (componentConfiguration.defaultValueReaderComponent ? VALUE_READERS[componentConfiguration.defaultValueReaderComponent] : VALUE_READERS[DEFAULT_VALUE_READER])
+		},
+		previousValueReader: {
+			component: componentConfiguration.previousValueReaderComponent ? VALUE_READERS[componentConfiguration.previousValueReaderComponent] : (componentConfiguration.defaultValueReaderComponent ? VALUE_READERS[componentConfiguration.defaultValueReaderComponent] : VALUE_READERS[DEFAULT_VALUE_READER])
+		},
 		narrowing: {
 			display: componentConfiguration.narrowComponent ? "yes" : "no",
 			component: componentConfiguration.narrowComponent ? NARROWERS[componentConfiguration.narrowComponent] : "NONE"
@@ -370,17 +377,17 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 			display: componentConfiguration.informationComponent ? "yes" : "no",
 			component: componentConfiguration.informationComponent ? "TBD": "TBD"
 		},
-		previousValue: {
-			display: componentConfiguration.previousValueComponent ? "yes" : "no",
-			component: componentConfiguration.previousValueComponent ? VIEWERS[componentConfiguration.previousValueComponent]: "NONE"
+		previousValueRenderer: {
+			display: fieldDescription.displayPrevious ? "yes" : "no",
+			component: componentConfiguration.previousValueRendererComponent ? VALUE_RENDERER[componentConfiguration.previousValueRendererComponent]: (componentConfiguration.defaultValueRendererComponent ? VALUE_RENDERER[componentConfiguration.defaultValueRendererComponent]:"NONE")
 		},
-		currentValue: {
-			display: componentConfiguration.currentValueComponent ? "yes" : "no",
-			component: componentConfiguration.currentValueComponent ? VIEWERS[componentConfiguration.currentValueComponent]: "NONE"
+		currentValueRenderer: {
+			display: fieldDescription.displayCurrent ? "yes" : "no",
+			component: componentConfiguration.currentValueRendererComponent ? VALUE_RENDERER[componentConfiguration.currentValueRendererComponent]: (componentConfiguration.defaultValueRendererComponent ? VALUE_RENDERER[componentConfiguration.defaultValueRendererComponent]:"NONE")
 		},
-		readonly: {
+		readonlyRenderer: {
 			display: fieldDescription.readonly ? "yes" : "no",
-			component: componentConfiguration.readonlyViewerComponent ? VIEWERS[componentConfiguration.readonlyViewerComponent]: "NONE"
+			component: componentConfiguration.readonlyRendererComponent ? VALUE_RENDERER[componentConfiguration.readonlyRendererComponent]: (componentConfiguration.defaultValueRendererComponent ? VALUE_RENDERER[componentConfiguration.defaultValueRendererComponent]:"NONE")
 		},
 		edit: {
 			filter: this.createFilterExpression(fieldDescription.options) + (componentConfiguration.narrowComponent ? "+[subfilter<narrow-filter-" + fieldDescription.fieldName + ">]" : ""),

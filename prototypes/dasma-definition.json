@@ -21,16 +21,19 @@
 		},
 		{
 			"dasma-id.ref": "dasma/field/caption",
-			"caption": "Component: caption (SingleLinedText)"
+			"caption": "Component: caption (SingleLinedText)",
+			"displayPrevious": true
 		},
 		{
 			"dasma-id.ref": "dasma/field/description",
-			"caption": "Component: description (MultiLinedText)"
+			"caption": "Component: description (MultiLinedText)",
+			"displayPrevious": true
 		},
 		{
 			"dasma-id.ref": "dasma/field/generic-checkboxes",
 			"fieldName": "proto.refs2",
 			"caption": "Component: proto.refs2 (Checkbox)",
+			"displayPrevious": true,
 			"options": {
 				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
 			}
@@ -39,6 +42,8 @@
 			"dasma-id.ref": "dasma/field/generic-multiselect",
 			"fieldName": "proto.refs",
 			"caption": "Component: proto.refs (MultiSelect)",
+			"displayCurrent": true,
+			"displayPrevious": true,
 			"options": {
 				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
 			}
@@ -47,6 +52,7 @@
 			"dasma-id.ref": "dasma/field/generic-radio",
 			"fieldName": "proto.ref2",
 			"caption": "Component: proto.ref2 (Radio)",
+			"displayPrevious": true,
 			"options": {
 				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
 			}
@@ -55,6 +61,8 @@
 			"dasma-id.ref": "dasma/field/generic-select",
 			"fieldName": "proto.ref",
 			"caption": "Component: proto.ref (SingleSelect)",
+			"displayCurrent": true,
+			"displayPrevious": true,
 			"options": {
 				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
 			}

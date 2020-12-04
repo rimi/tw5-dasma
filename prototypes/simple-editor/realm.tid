@@ -1,6 +1,6 @@
 caption: Prototype: Component: realm (Radio) / UNCHANGEABLE
-created: 20201204135933485
-modified: 20201204135933739
+created: 20201204181845362
+modified: 20201204181845712
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/realm
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -11,6 +11,10 @@ type: text/vnd.tiddlywiki
 \define targetFieldName-realm() realm
 \define name-realm() Component: realm (Radio) / UNCHANGEABLE
 \define mandatory-realm() yes
+
+\define previous-value-realm() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
+
+\define current-value-realm() <$vars rimir:dasma:tiddler="$(stateTiddler-realm)$" rimir:dasma:field="$(stateFieldName-realm)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
 \define display-narrow-realm() yes
 \define narrowStateTiddler-realm() $(stateTiddler-realm)$/narrowTiddlers/$(targetFieldName-realm)$
@@ -45,18 +49,22 @@ type: text/vnd.tiddlywiki
 </$vars>
 \end
 
-\define display-previous-realm() yes
+\define display-previous-realm() no
 \define previous-realm()
-<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$">
-<$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer"/>
+<$wikify name="theValue" text="""$(previous-value-realm)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
 </$vars>
+</$wikify>
 \end
 
 \define display-current-realm() no
 \define current-realm()
-<$vars rimir:dasma:tiddler="$(stateTiddler-realm)$" rimir:dasma:field="$(stateFieldName-realm)$">
-<$transclude tiddler="NONE"/>
+<$wikify name="theValue" text="""$(current-value-realm)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
 </$vars>
+</$wikify>
 \end
 
 \define readonly-realm() yes
@@ -68,9 +76,11 @@ type: text/vnd.tiddlywiki
 </$list>
 <$list filter="[<targetTiddler>is[tiddler]]">
 <$list filter="[<readonly-realm>match[yes]]">
-<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$">
-<$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer"/>
+<$wikify name="theValue" text="""$(previous-value-realm)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
 </$vars>
+</$wikify>
 </$list>
 </$list>
 \end
