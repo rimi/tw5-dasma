@@ -32,13 +32,15 @@ const COMPONENT_CONFIGURATION = {
 		editComponent: "dasma/edit/input",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
-		previousValueComponent: "dasma/viewers/simple-field"
+		previousValueComponent: "dasma/viewers/simple-field",
+		readonlyViewerComponent: "dasma/viewers/simple-field"
 	},
 	"dasma/component/multiline": {
 		editComponent: "dasma/edit/textarea",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
-		previousValueComponent: "dasma/viewers/simple-field"
+		previousValueComponent: "dasma/viewers/simple-field",
+		readonlyViewerComponent: "dasma/viewers/simple-field"
 	},
 	"dasma/component/checkboxes": {
 		useIndexStateTiddler: true,
@@ -46,7 +48,8 @@ const COMPONENT_CONFIGURATION = {
 		saveComponent: "dasma/transfer/index2list",
 		loadComponent: "dasma/transfer/list2index",
 		narrowComponent: "dasma/narrower/by-caption",
-		previousValueComponent: "dasma/viewers/simple-name-list"
+		previousValueComponent: "dasma/viewers/simple-name-list",
+		readonlyViewerComponent: "dasma/viewers/simple-name-list"
 	},
 	"dasma/component/multiselect": {
 		editComponent: "dasma/edit/multiselect",
@@ -54,21 +57,24 @@ const COMPONENT_CONFIGURATION = {
 		loadComponent: "dasma/transfer/field2field",
 		narrowComponent: "dasma/narrower/by-caption",
 		previousValueComponent: "dasma/viewers/simple-name-list",
-		currentValueComponent: "dasma/viewers/simple-name-list"
+		currentValueComponent: "dasma/viewers/simple-name-list",
+		readonlyViewerComponent: "dasma/viewers/simple-name-list"
 	},
 	"dasma/component/radio": {
 		editComponent: "dasma/edit/radio",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
 		narrowComponent: "dasma/narrower/by-caption",
-		previousValueComponent: "dasma/viewers/simple-name"
+		previousValueComponent: "dasma/viewers/simple-name",
+		readonlyViewerComponent: "dasma/viewers/simple-name"
 	},
 	"dasma/component/select": {
 		editComponent: "dasma/edit/select",
 		saveComponent: "dasma/transfer/field2field",
 		loadComponent: "dasma/transfer/field2field",
 		narrowComponent: "dasma/narrower/by-caption",
-		previousValueComponent: "dasma/viewers/simple-name"
+		previousValueComponent: "dasma/viewers/simple-name",
+		readonlyViewerComponent: "dasma/viewers/simple-name"
 	}
 }
 
@@ -301,7 +307,8 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
 	const editorTemplate = $tw.wiki.getTiddler(DEFAULT_EDITOR_TEMPLATE).fields["text"];
 	const editorConfig = {
-		headline: editorDescription.headline || "THE PLACEHOLDER-HEADLINE",
+		createHeadline: editorDescription.headline["on-create"] || "CREATE PLACEHOLDER",
+		modifyHeadline: editorDescription.headline["on-modify"] || "MODIFY PLACEHOLDER",
 		imports: this.getEditorRenderTiddlerName() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
 		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
 		stateTiddler: TIDDLER_CREATION_STATE_BASE + "/" + editorDescription.id,
@@ -369,6 +376,10 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 		currentValue: {
 			display: componentConfiguration.currentValueComponent ? "yes" : "no",
 			component: componentConfiguration.currentValueComponent ? VIEWERS[componentConfiguration.currentValueComponent]: "NONE"
+		},
+		readonly: {
+			display: fieldDescription.readonly ? "yes" : "no",
+			component: componentConfiguration.readonlyViewerComponent ? VIEWERS[componentConfiguration.readonlyViewerComponent]: "NONE"
 		},
 		edit: {
 			filter: this.createFilterExpression(fieldDescription.options) + (componentConfiguration.narrowComponent ? "+[subfilter<narrow-filter-" + fieldDescription.fieldName + ">]" : ""),

@@ -1,6 +1,6 @@
 caption: Default Editor
 created: 20201201095332674
-modified: 20201204065150014
+modified: 20201204124114531
 tags: 
 title: $:/plugins/rimir/dasma/generator/templates/default-editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/generator/templates
@@ -8,7 +8,7 @@ type: text/vnd.tiddlywiki
 
 \\import ${this.imports}
 
-\\define headline() ${this.headline}
+\\define headline() <$list filter="[<targetTiddler>is[tiddler]]">${this.modifyHeadline}</$list><$list filter="[<targetTiddler>!is[tiddler]]">${this.createHeadline}</$list>
 
 \\define stateTiddler() ${this.stateTiddler}
 \\define targetTiddler() ${this.targetTiddler}

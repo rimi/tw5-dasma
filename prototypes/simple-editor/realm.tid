@@ -1,6 +1,6 @@
 caption: Prototype: Component: realm (Radio) / UNCHANGEABLE
-created: 20201204072100692
-modified: 20201204072101047
+created: 20201204132533573
+modified: 20201204132533928
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/realm
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -45,25 +45,33 @@ type: text/vnd.tiddlywiki
 \end
 
 \define display-previous-realm() yes
-\define previousValueStateTiddler-realm() $(stateTiddler-realm)$/previousValueTiddlers/$(targetFieldName-realm)$
 \define previous-realm()
-<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-realm)$" rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$">
+<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer"/>
 </$vars>
 \end
 
 \define display-current-realm() no
-\define currentValueStateTiddler-realm() $(stateTiddler-realm)$/currentValueTiddlers/$(targetFieldName-realm)$
 \define current-realm()
-<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-realm)$" rimir:dasma:tiddler="$(stateTiddler-realm)$" rimir:dasma:field="$(stateFieldName-realm)$">
+<$vars rimir:dasma:tiddler="$(stateTiddler-realm)$" rimir:dasma:field="$(stateFieldName-realm)$">
 <$transclude tiddler="NONE"/>
 </$vars>
 \end
 
-\define edit-realm() 
+\define readonly-realm() yes
+\define edit-realm()
+<$list filter="[<targetTiddler>!is[tiddler]][<readonly-realm>match[no]]+[first[]]">
 <$vars rimir:dasma:stateTiddler="$(stateTiddler-realm)$" rimir:dasma:stateField="$(stateFieldName-realm)$" rimir:dasma:filter="[tag[realm]]+[subfilter<narrow-filter-realm>]" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/radiowidget"/>
 </$vars>
+</$list>
+<$list filter="[<targetTiddler>is[tiddler]]">
+<$list filter="[<readonly-realm>match[yes]]">
+<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-viewer"/>
+</$vars>
+</$list>
+</$list>
 \end
 
 \define save-realm()

@@ -1,6 +1,6 @@
 caption: Prototype: Component: proto.refs2 (Checkbox)
-created: 20201203164716545
-modified: 20201203164716878
+created: 20201204132533575
+modified: 20201204132533914
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs2
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -45,25 +45,33 @@ type: text/vnd.tiddlywiki
 \end
 
 \define display-previous-proto.refs2() yes
-\define previousValueStateTiddler-proto.refs2() $(stateTiddler-proto.refs2)$/previousValueTiddlers/$(targetFieldName-proto.refs2)$
 \define previous-proto.refs2()
-<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-proto.refs2)$" rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.refs2)$">
+<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.refs2)$">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-list-viewer"/>
 </$vars>
 \end
 
 \define display-current-proto.refs2() no
-\define currentValueStateTiddler-proto.refs2() $(stateTiddler-proto.refs2)$/currentValueTiddlers/$(targetFieldName-proto.refs2)$
 \define current-proto.refs2()
-<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-proto.refs2)$" rimir:dasma:tiddler="$(stateTiddler-proto.refs2)$" rimir:dasma:field="$(stateFieldName-proto.refs2)$">
+<$vars rimir:dasma:tiddler="$(stateTiddler-proto.refs2)$" rimir:dasma:field="$(stateFieldName-proto.refs2)$">
 <$transclude tiddler="NONE"/>
 </$vars>
 \end
 
-\define edit-proto.refs2() 
+\define readonly-proto.refs2() no
+\define edit-proto.refs2()
+<$list filter="[<targetTiddler>!is[tiddler]][<readonly-proto.refs2>match[no]]+[first[]]">
 <$vars rimir:dasma:stateTiddler="$(stateTiddler-proto.refs2)$" rimir:dasma:stateField="$(stateFieldName-proto.refs2)$" rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]+[subfilter<narrow-filter-proto.refs2>]" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/checkboxwidget"/>
 </$vars>
+</$list>
+<$list filter="[<targetTiddler>is[tiddler]]">
+<$list filter="[<readonly-proto.refs2>match[yes]]">
+<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.refs2)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/viewers/simple-name-list-viewer"/>
+</$vars>
+</$list>
+</$list>
 \end
 
 \define save-proto.refs2()

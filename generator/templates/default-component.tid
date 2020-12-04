@@ -1,6 +1,6 @@
 caption: Default Component
 created: 20201128153716321
-modified: 20201203164654874
+modified: 20201204132505727
 tags: 
 title: $:/plugins/rimir/dasma/generator/templates/default-component
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/generator/templates
@@ -46,25 +46,33 @@ type: text/vnd.tiddlywiki
 \\end
 
 \\define display-previous-${this.fieldName}() ${this.previousValue.display}
-\\define previousValueStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/previousValueTiddlers/$(targetFieldName-${this.fieldName})$
 \\define previous-${this.fieldName}()
-<$vars rimir:dasma:stateTiddler="$(previousValueStateTiddler-${this.fieldName})$" rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-${this.fieldName})$">
+<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-${this.fieldName})$">
 <$transclude tiddler="${this.previousValue.component}"/>
 </$vars>
 \\end
 
 \\define display-current-${this.fieldName}() ${this.currentValue.display}
-\\define currentValueStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/currentValueTiddlers/$(targetFieldName-${this.fieldName})$
 \\define current-${this.fieldName}()
-<$vars rimir:dasma:stateTiddler="$(currentValueStateTiddler-${this.fieldName})$" rimir:dasma:tiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:field="$(stateFieldName-${this.fieldName})$">
+<$vars rimir:dasma:tiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:field="$(stateFieldName-${this.fieldName})$">
 <$transclude tiddler="${this.currentValue.component}"/>
 </$vars>
 \\end
 
-\\define edit-${this.fieldName}() 
+\\define readonly-${this.fieldName}() ${this.readonly.display}
+\\define edit-${this.fieldName}()
+<$list filter="[<targetTiddler>!is[tiddler]][<readonly-${this.fieldName}>match[no]]+[first[]]">
 <$vars rimir:dasma:stateTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:stateField="$(stateFieldName-${this.fieldName})$" rimir:dasma:filter="${this.edit.filter}" ${this.edit.customFields}>
 <$transclude tiddler="${this.edit.component}"/>
 </$vars>
+</$list>
+<$list filter="[<targetTiddler>is[tiddler]]">
+<$list filter="[<readonly-${this.fieldName}>match[yes]]">
+<$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-${this.fieldName})$">
+<$transclude tiddler="${this.readonly.component}"/>
+</$vars>
+</$list>
+</$list>
 \\end
 
 \\define save-${this.fieldName}()

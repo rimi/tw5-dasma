@@ -1,18 +1,18 @@
 caption: Prototype-Editor
-created: 20201204072100695
-modified: 20201204072100844
+created: 20201204132533579
+modified: 20201204132533860
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
 
 \import $:/plugins/rimir/dasma/templates/editors/table-based-editor $:/plugins/rimir/dasma/prototypes/simple-editor/realm $:/plugins/rimir/dasma/prototypes/simple-editor/caption $:/plugins/rimir/dasma/prototypes/simple-editor/description $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref
 
-\define headline() Create/Edit Person
+\define headline() <$list filter="[<targetTiddler>is[tiddler]]">Edit Prototype Data</$list><$list filter="[<targetTiddler>!is[tiddler]]">Create Prototype Data</$list>
 
 \define stateTiddler() $:/state/rimir/dasma/creation/prototypeOne
 \define targetTiddler() Meins
 
-\define addStaticFields() <$action-setfield $tiddler="$(targetTiddler)$" />
+\define addStaticFields() <$action-setfield $tiddler="$(targetTiddler)$" tags="prototype"/>
 
 <$set name="fields" value="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref">
 <<editor>>

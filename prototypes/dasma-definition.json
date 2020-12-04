@@ -1,15 +1,17 @@
 {
 	"id": "prototypeOne",
-	"headline": "Create/Edit Person",
+	"headline": {
+		"on-create": "Create Prototype Data",
+		"on-modify": "Edit Prototype Data"
+	},
 	"title-template": "${this.realm-prefix}persons/${this.now}",
-	"tagging": {
-		"static": [
-			"person"
-		]
+	"staticFieldAssignments": {
+		"tags": "prototype"
 	},
 	"fields": [
 		{
 			"dasma-id.ref": "dasma/field/generic-radio",
+			"readonly": true,
 			"fieldName": "realm",
 			"caption": "Component: realm (Radio) / UNCHANGEABLE",
 			"options": {
