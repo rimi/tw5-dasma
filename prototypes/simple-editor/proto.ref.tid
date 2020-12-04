@@ -1,6 +1,6 @@
 caption: Prototype: Component: proto.ref (SingleSelect)
-created: 20201204132533578
-modified: 20201204132533873
+created: 20201204135933488
+modified: 20201204135933694
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -10,11 +10,12 @@ type: text/vnd.tiddlywiki
 \define stateFieldName-proto.ref() tmp_proto.ref
 \define targetFieldName-proto.ref() proto.ref
 \define name-proto.ref() Component: proto.ref (SingleSelect)
+\define mandatory-proto.ref() no
 
 \define display-narrow-proto.ref() yes
 \define narrowStateTiddler-proto.ref() $(stateTiddler-proto.ref)$/narrowTiddlers/$(targetFieldName-proto.ref)$
 \define narrow-proto.ref()
-<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-proto.ref)$">
+<$vars rimir:dasma:internalStateTiddler="$(narrowStateTiddler-proto.ref)$">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/narrowers/caption-only"/>
 </$vars>
 \end
@@ -23,7 +24,7 @@ type: text/vnd.tiddlywiki
 \define display-group-proto.ref() no
 \define groupStateTiddler-proto.ref() $(stateTiddler-proto.ref)$/groupTiddlers/$(targetFieldName-proto.ref)$
 \define group-proto.ref()
-<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-proto.ref)$">
+<$vars rimir:dasma:internalStateTiddler="$(groupStateTiddler-proto.ref)$">
 <$transclude tiddler="TBD"/>
 </$vars>
 \end
@@ -31,7 +32,7 @@ type: text/vnd.tiddlywiki
 \define display-validate-proto.ref() no
 \define validateStateTiddler-proto.ref() $(stateTiddler-proto.ref)$/validateTiddlers/$(targetFieldName-proto.ref)$
 \define validate-proto.ref()
-<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-proto.ref)$">
+<$vars rimir:dasma:internalStateTiddler="$(validateStateTiddler-proto.ref)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-proto.ref)$" rimir:dasma:currentTiddler="$(stateTiddler-proto.ref)$" rimir:dasma:currentField="$(stateFieldName-proto.ref)$">
 <$transclude tiddler="TBD"/>
 </$vars>
 \end
@@ -39,7 +40,7 @@ type: text/vnd.tiddlywiki
 \define display-info-proto.ref() no
 \define infoStateTiddler-proto.ref() $(stateTiddler-proto.ref)$/infoTiddlers/$(targetFieldName-proto.ref)$
 \define info-proto.ref()
-<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-proto.ref)$">
+<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-proto.ref)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-proto.ref)$" rimir:dasma:currentTiddler="$(stateTiddler-proto.ref)$" rimir:dasma:currentField="$(stateFieldName-proto.ref)$">
 <$transclude tiddler="TBD"/>
 </$vars>
 \end
@@ -61,7 +62,7 @@ type: text/vnd.tiddlywiki
 \define readonly-proto.ref() no
 \define edit-proto.ref()
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-proto.ref>match[no]]+[first[]]">
-<$vars rimir:dasma:stateTiddler="$(stateTiddler-proto.ref)$" rimir:dasma:stateField="$(stateFieldName-proto.ref)$" rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]+[subfilter<narrow-filter-proto.ref>]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$vars rimir:dasma:tiddler="$(stateTiddler-proto.ref)$" rimir:dasma:field="$(stateFieldName-proto.ref)$" rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]+[subfilter<narrow-filter-proto.ref>]" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/single-selectwidget"/>
 </$vars>
 </$list>

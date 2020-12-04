@@ -1,6 +1,6 @@
 caption: Prototype: Component: caption (SingleLinedText)
-created: 20201204132533574
-modified: 20201204132533820
+created: 20201204135933485
+modified: 20201204135933654
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/caption
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -10,11 +10,12 @@ type: text/vnd.tiddlywiki
 \define stateFieldName-caption() tmp_caption
 \define targetFieldName-caption() caption
 \define name-caption() Component: caption (SingleLinedText)
+\define mandatory-caption() no
 
 \define display-narrow-caption() no
 \define narrowStateTiddler-caption() $(stateTiddler-caption)$/narrowTiddlers/$(targetFieldName-caption)$
 \define narrow-caption()
-<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-caption)$">
+<$vars rimir:dasma:internalStateTiddler="$(narrowStateTiddler-caption)$">
 <$transclude tiddler="NONE"/>
 </$vars>
 \end
@@ -23,7 +24,7 @@ type: text/vnd.tiddlywiki
 \define display-group-caption() no
 \define groupStateTiddler-caption() $(stateTiddler-caption)$/groupTiddlers/$(targetFieldName-caption)$
 \define group-caption()
-<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-caption)$">
+<$vars rimir:dasma:internalStateTiddler="$(groupStateTiddler-caption)$">
 <$transclude tiddler="TBD"/>
 </$vars>
 \end
@@ -31,7 +32,7 @@ type: text/vnd.tiddlywiki
 \define display-validate-caption() no
 \define validateStateTiddler-caption() $(stateTiddler-caption)$/validateTiddlers/$(targetFieldName-caption)$
 \define validate-caption()
-<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-caption)$">
+<$vars rimir:dasma:internalStateTiddler="$(validateStateTiddler-caption)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-caption)$" rimir:dasma:currentTiddler="$(stateTiddler-caption)$" rimir:dasma:currentField="$(stateFieldName-caption)$">
 <$transclude tiddler="TBD"/>
 </$vars>
 \end
@@ -39,7 +40,7 @@ type: text/vnd.tiddlywiki
 \define display-info-caption() no
 \define infoStateTiddler-caption() $(stateTiddler-caption)$/infoTiddlers/$(targetFieldName-caption)$
 \define info-caption()
-<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-caption)$">
+<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-caption)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-caption)$" rimir:dasma:currentTiddler="$(stateTiddler-caption)$" rimir:dasma:currentField="$(stateFieldName-caption)$">
 <$transclude tiddler="TBD"/>
 </$vars>
 \end
@@ -61,7 +62,7 @@ type: text/vnd.tiddlywiki
 \define readonly-caption() no
 \define edit-caption()
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-caption>match[no]]+[first[]]">
-<$vars rimir:dasma:stateTiddler="$(stateTiddler-caption)$" rimir:dasma:stateField="$(stateFieldName-caption)$" rimir:dasma:filter="[is[]]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$vars rimir:dasma:tiddler="$(stateTiddler-caption)$" rimir:dasma:field="$(stateFieldName-caption)$" rimir:dasma:filter="[is[]]" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/edittextwidget-singlelined"/>
 </$vars>
 </$list>

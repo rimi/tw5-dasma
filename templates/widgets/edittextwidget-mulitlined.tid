@@ -1,9 +1,9 @@
 caption: EditTextWidget Multi-Lined
 created: 20201123175221037
-modified: 20201129135004307
+modified: 20201204135813350
 tags: 
 title: $:/plugins/rimir/dasma/templates/widgets/edittextwidget-mulitlined
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editor-components
 type: text/vnd.tiddlywiki
 
-<$edit-text tiddler=<<rimir:dasma:stateTiddler>> field=<<rimir:dasma:stateField>> tag="textarea"/>
+<$edit-text tiddler=<<rimir:dasma:tiddler>> field=<<rimir:dasma:field>> tag="textarea"/>

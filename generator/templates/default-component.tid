@@ -1,6 +1,6 @@
 caption: Default Component
 created: 20201128153716321
-modified: 20201204133344929
+modified: 20201204135731317
 tags: 
 title: $:/plugins/rimir/dasma/generator/templates/default-component
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/generator/templates
@@ -16,7 +16,7 @@ type: text/vnd.tiddlywiki
 \\define display-narrow-${this.fieldName}() ${this.narrowing.display}
 \\define narrowStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/narrowTiddlers/$(targetFieldName-${this.fieldName})$
 \\define narrow-${this.fieldName}()
-<$vars rimir:dasma:stateTiddler="$(narrowStateTiddler-${this.fieldName})$">
+<$vars rimir:dasma:internalStateTiddler="$(narrowStateTiddler-${this.fieldName})$">
 <$transclude tiddler="${this.narrowing.component}"/>
 </$vars>
 \\end
@@ -25,7 +25,7 @@ type: text/vnd.tiddlywiki
 \\define display-group-${this.fieldName}() ${this.grouping.display}
 \\define groupStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/groupTiddlers/$(targetFieldName-${this.fieldName})$
 \\define group-${this.fieldName}()
-<$vars rimir:dasma:stateTiddler="$(groupStateTiddler-${this.fieldName})$">
+<$vars rimir:dasma:internalStateTiddler="$(groupStateTiddler-${this.fieldName})$">
 <$transclude tiddler="${this.grouping.component}"/>
 </$vars>
 \\end
@@ -33,7 +33,7 @@ type: text/vnd.tiddlywiki
 \\define display-validate-${this.fieldName}() ${this.validation.display}
 \\define validateStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/validateTiddlers/$(targetFieldName-${this.fieldName})$
 \\define validate-${this.fieldName}()
-<$vars rimir:dasma:stateTiddler="$(validateStateTiddler-${this.fieldName})$">
+<$vars rimir:dasma:internalStateTiddler="$(validateStateTiddler-${this.fieldName})$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-${this.fieldName})$" rimir:dasma:currentTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:currentField="$(stateFieldName-${this.fieldName})$">
 <$transclude tiddler="${this.validation.component}"/>
 </$vars>
 \\end
@@ -41,7 +41,7 @@ type: text/vnd.tiddlywiki
 \\define display-info-${this.fieldName}() ${this.information.display}
 \\define infoStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/infoTiddlers/$(targetFieldName-${this.fieldName})$
 \\define info-${this.fieldName}()
-<$vars rimir:dasma:stateTiddler="$(infoStateTiddler-${this.fieldName})$">
+<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-${this.fieldName})$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-${this.fieldName})$" rimir:dasma:currentTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:currentField="$(stateFieldName-${this.fieldName})$">
 <$transclude tiddler="${this.information.component}"/>
 </$vars>
 \\end
@@ -63,7 +63,7 @@ type: text/vnd.tiddlywiki
 \\define readonly-${this.fieldName}() ${this.readonly.display}
 \\define edit-${this.fieldName}()
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-${this.fieldName}>match[no]]+[first[]]">
-<$vars rimir:dasma:stateTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:stateField="$(stateFieldName-${this.fieldName})$" rimir:dasma:filter="${this.edit.filter}" ${this.edit.customFields}>
+<$vars rimir:dasma:tiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:field="$(stateFieldName-${this.fieldName})$" rimir:dasma:filter="${this.edit.filter}" ${this.edit.customFields}>
 <$transclude tiddler="${this.edit.component}"/>
 </$vars>
 </$list>
