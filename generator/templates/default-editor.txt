@@ -1,0 +1,16 @@
+\\import ${this.imports}
+
+\\define headline() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$list filter="[<targetTiddler>is[tiddler]]">${this.modifyHeadline}</$list><$list filter="[<targetTiddler>!is[tiddler]]">${this.createHeadline}</$list></$wikify>
+
+\\define internalStateBase() <$wikify name="stateTiddler" text=<<stateBase>>><$list filter="[<stateTiddler>length[]!match[0]]"><<stateTiddler>></$list><$list filter="[<stateTiddler>length[]match[0]]">$:/state/rimir/dasma/creation<<qualify>></$list></$wikify>
+\\define internalTargetTiddler() <$wikify name="targetTiddler" text=<<targetTiddler>>><$list filter="[<targetTiddler>length[]!match[0]]"><<targetTiddler>></$list><$list filter="[<targetTiddler>length[]match[0]]"><mark>DASMA-DUMMY-ENTITY</mark></$list></$wikify>
+
+\\define addStaticFields() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$action-setfield $tiddler="$(targetTiddler)$" ${this.staticFieldAssignments}/></$wikify>
+
+<$set name="fields" value="${this.fieldNames}">
+<$wikify name="targetTiddler" text=<<internalTargetTiddler>>>
+<$wikify name="stateTiddler" text=<<internalStateBase>>>
+<<editor>>
+</$wikify>
+</$wikify>
+</$set>
