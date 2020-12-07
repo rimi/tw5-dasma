@@ -312,8 +312,6 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		modifyHeadline: editorDescription.headline["on-modify"] || "MODIFY PLACEHOLDER",
 		imports: this.getEditorRenderTiddlerName() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
 		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
-		stateTiddler: TIDDLER_CREATION_STATE_BASE + "/" + editorDescription.id,
-		targetTiddler: "Meins",
 		staticFieldAssignments: this.createEditorComponentsStaticFieldAssignments(editorDescription)
 	};
 	var fields = {
