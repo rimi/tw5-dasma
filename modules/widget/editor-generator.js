@@ -27,6 +27,8 @@ const TIDDLER_CREATION_STATE_BASE= "$:/state/rimir/dasma/creation";
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/$(stateFieldName-${this.fieldName})$";
 
+const FORCE_GENERATION = false;
+
 const COMPONENT_CONFIGURATION = {
 	"dasma/component/singleline": {
 		editComponent: "dasma/edit/input",
@@ -149,6 +151,10 @@ We don't allow actions to propagate because we trigger actions ourselves
 GeneratorWidget.prototype.allowActionPropagation = function() {
 	return false;
 };
+	
+GeneratorWidget.prototype.isForceGeneration = function() {
+	return FORCE_GENERATION;
+};
 
 /*
 Loads the common DASMA data (structs etc.) and returns it as Object
@@ -223,7 +229,7 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 	const editorTreeLink = this.getEditorTreeLinkingPath(editorDescription);
 	const fieldsTreeLink = this.getFieldsTreeLinkingPath(editorDescription);
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
-	if(!$tw.wiki.tiddlerExists(editorTreeLink)){
+	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(editorTreeLink)){
 		var editorLink = {
 			title: editorTreeLink,
 			"tocp.main-parent.ref": baseLink,
@@ -235,7 +241,7 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 		};
 		$tw.wiki.addTiddler(new $tw.Tiddler(editorLink));
 	}
-	if(!$tw.wiki.tiddlerExists(fieldsTreeLink)){
+	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(fieldsTreeLink)){
 		var fieldLink = {
 			title: fieldsTreeLink,
 			"tocp.main-parent.ref": editorTreeLink,
@@ -318,15 +324,19 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
 		staticFieldAssignments: this.createEditorComponentsStaticFieldAssignments(editorDescription)
 	};
+	const newText = formatTemplate(editorTemplate, editorConfig);
 	var fields = {
 		title: "DEFINEME/" + editorTemplate.id,
-		text: formatTemplate(editorTemplate, editorConfig),
+		text: newText,
 		created: NOW,
 		modified: NOW,
 		bag: "default",
 		type: "text/vnd.tiddlywiki"
 	};
-	$tw.wiki.addTiddler(new $tw.Tiddler(deepmerge.all([fields, customFieldOverwrites])));
+	const mergedFields = deepmerge.all([fields, customFieldOverwrites]);
+	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(mergedFields.title) || !$tw.wiki.checkTiddlerText(mergedFields.title, newText)){
+		$tw.wiki.addTiddler(new $tw.Tiddler(mergedFields));
+	}
 }
 	
 GeneratorWidget.prototype.createEditorComponentsStaticFieldAssignments = function(editorDescription) {
@@ -409,16 +419,20 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 	let stateTiddlerName = componentConfiguration.useIndexStateTiddler ? formatTemplate(INDEX_STATETIDDLER_NAME, fieldConfig) : DEFAULT_STATETIDDLER_NAME;
 	fieldConfig.stateTiddlerName = stateTiddlerName;
 	const componentTemplate = $tw.wiki.getTiddler(DEFAULT_COMPONENT_TEMPLATE).fields["text"];
+	const newText = formatTemplate(componentTemplate, fieldConfig);
 	var fields = {
 		title: "DEFINEME/" + fieldDescription.fieldName,
-		text: formatTemplate(componentTemplate, fieldConfig),
+		text: newText,
 		created: NOW,
 		modified: NOW,
 		bag: "default",
 		type: "text/vnd.tiddlywiki"
 	};
 	const mergedFields = deepmerge.all([fields, customFieldOverwrites]);
-	$tw.wiki.addTiddler(new $tw.Tiddler(mergedFields));
+
+	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(mergedFields.title) || !$tw.wiki.checkTiddlerText(mergedFields.title, newText)){
+		$tw.wiki.addTiddler(new $tw.Tiddler(mergedFields));
+	}
 	return {
 		title: mergedFields.title,
 		fieldName: fieldDescription.fieldName
