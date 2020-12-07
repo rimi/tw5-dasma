@@ -1,6 +1,6 @@
 caption: Prototype: Component: description (MultiLinedText)
-created: 20201207101257371
-modified: 20201207101257723
+created: 20201207113950965
+modified: 20201207113952206
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/description
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -11,6 +11,8 @@ type: text/vnd.tiddlywiki
 \define targetFieldName-description() description
 \define name-description() Component: description (MultiLinedText)
 \define mandatory-description() no
+
+\define valid-description() <$list filter="[<mandatory-description>!match[yes]]">yes</$list><$list filter="[<mandatory-description>match[yes]]"><$wikify name="currentValue" text=<<current-value-description>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list>
 
 \define previous-value-description() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-description)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 

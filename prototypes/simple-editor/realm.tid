@@ -1,6 +1,6 @@
 caption: Prototype: Component: realm (Radio) / UNCHANGEABLE
-created: 20201207101257369
-modified: 20201207101257855
+created: 20201207113950962
+modified: 20201207113952696
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/realm
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -11,6 +11,8 @@ type: text/vnd.tiddlywiki
 \define targetFieldName-realm() realm
 \define name-realm() Component: realm (Radio) / UNCHANGEABLE
 \define mandatory-realm() yes
+
+\define valid-realm() <$list filter="[<mandatory-realm>!match[yes]]">yes</$list><$list filter="[<mandatory-realm>match[yes]]"><$wikify name="currentValue" text=<<current-value-realm>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list>
 
 \define previous-value-realm() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
