@@ -1,19 +1,23 @@
 caption: Prototype-Editor
-created: 20201204135933488
-modified: 20201204135933681
+created: 20201207094828241
+modified: 20201207094828743
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
 
 \import $:/plugins/rimir/dasma/templates/editors/table-based-editor $:/plugins/rimir/dasma/prototypes/simple-editor/realm $:/plugins/rimir/dasma/prototypes/simple-editor/caption $:/plugins/rimir/dasma/prototypes/simple-editor/description $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref
 
-\define headline() <$list filter="[<targetTiddler>is[tiddler]]">Edit Prototype Data</$list><$list filter="[<targetTiddler>!is[tiddler]]">Create Prototype Data</$list>
+\define headline() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$list filter="[<targetTiddler>is[tiddler]]">Edit Prototype Data</$list><$list filter="[<targetTiddler>!is[tiddler]]">Create Prototype Data</$list></$wikify>
 
-\define stateTiddler() $:/state/rimir/dasma/creation/prototypeOne
-\define targetTiddler() Meins
+\define internalStateBase() <$wikify name="stateTiddler" text=<<stateBase>>><$list filter="[<stateTiddler>length[]!match[0]]"><<stateTiddler>></$list><$list filter="[<stateTiddler>length[]match[0]]">$:/state/rimir/dasma/creation<<qualify>></$list></$wikify>
+\define internalTargetTiddler() <$wikify name="targetTiddler" text=<<targetTiddler>>><$list filter="[<targetTiddler>length[]!match[0]]"><<targetTiddler>></$list><$list filter="[<targetTiddler>length[]match[0]]"><mark>DASMA-DUMMY-ENTITY</mark></$list></$wikify>
 
-\define addStaticFields() <$action-setfield $tiddler="$(targetTiddler)$" tags="prototype"/>
+\define addStaticFields() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$action-setfield $tiddler="$(targetTiddler)$" tags="prototype"/></$wikify>
 
 <$set name="fields" value="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref">
+<$wikify name="targetTiddler" text=<<internalTargetTiddler>>>
+<$wikify name="stateTiddler" text=<<internalStateBase>>>
 <<editor>>
+</$wikify>
+</$wikify>
 </$set>
