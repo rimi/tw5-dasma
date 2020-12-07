@@ -1,6 +1,6 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201207113705393
+modified: 20201207125255487
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editors
@@ -30,7 +30,7 @@ type: text/vnd.tiddlywiki
 \define editorRow(fieldName)
 <tr>
 <th><<name-$fieldName$>><$wikify name="theMandatory" text="<<mandatory-$fieldName$>>"><$list filter="[<theMandatory>match[yes]]">**</$list></$wikify></th>
-<td><$wikify name="theDisplayPrevious" text="<<display-previous-$fieldName$>>"><$list filter="[<theDisplayPrevious>match[yes]]">''Previous value: <<previous-$fieldName$>>''<br/></$list></$wikify><<edit-$fieldName$>><$wikify name="theDisplayCurrent" text="<<display-current-$fieldName$>>"><$list filter="[<theDisplayCurrent>match[yes]]"><br/>''Current value: <<current-$fieldName$>>''</$list></$wikify></td>
+<td><$wikify name="theDisplayPrevious" text="<<display-previous-$fieldName$>>"><$list filter="[<theDisplayPrevious>match[yes]][<targetTiddler>is[tiddler]]+[count[]match[2]]">''Previous value: <<previous-$fieldName$>>''<br/></$list></$wikify><<edit-$fieldName$>><$wikify name="theDisplayCurrent" text="<<display-current-$fieldName$>>"><$list filter="[<theDisplayCurrent>match[yes]]"><br/>''Current value: <<current-$fieldName$>>''</$list></$wikify></td>
 <td><$wikify name="theDisplayNarrowing" text="<<display-narrow-$fieldName$>>"><$list filter="[<theDisplayNarrowing>match[yes]]" emptyMessage="-NO NARROWING-"><<narrow-$fieldName$>></$list></$wikify></td>
 <td><$wikify name="theDisplayGrouping" text="<<display-group-$fieldName$>>"><$list filter="[<theDisplayGrouping>match[yes]]" emptyMessage="-NO GROUPING-"><<group-$fieldName$>></$list></$wikify></td>
 <td><$wikify name="theDisplayInformation" text="<<display-info-$fieldName$>>"><$list filter="[<theDisplayInformation>match[yes]]" emptyMessage="-NO INFORMATION-"><<info-$fieldName$>></$list></$wikify></td>
