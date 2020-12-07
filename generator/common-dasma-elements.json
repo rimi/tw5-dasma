@@ -4,6 +4,7 @@
 			"id": "dasma/field/caption",
 			"fieldName": "caption",
 			"caption": "Caption",
+			"mandatory": true,
 			"editor": {
 				"component": "dasma/component/singleline"
 			}
