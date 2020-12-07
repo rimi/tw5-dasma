@@ -1,6 +1,6 @@
 caption: Prototype: Component: proto.ref2 (Radio)
-created: 20201204181845365
-modified: 20201204181845615
+created: 20201207101257373
+modified: 20201207101257771
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref2
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -86,9 +86,16 @@ type: text/vnd.tiddlywiki
 \end
 
 \define save-proto.ref2()
+<$wikify name="currentValue" text=<<current-value-proto.ref2>>>
+<$list filter="[<currentValue>length[]!match[0]]">
 <$vars rimir:dasma:sourceTiddler="$(stateTiddler-proto.ref2)$" rimir:dasma:sourceField="$(stateFieldName-proto.ref2)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-proto.ref2)$" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
+</$list>
+<$list filter="[<currentValue>length[]match[0]]">
+<$action-deletefield $tiddler=<<targetTiddler>> $field=<<targetFieldName-proto.ref2>>/>
+</$list>
+</$wikify>
 \end
 
 \define load-proto.ref2()

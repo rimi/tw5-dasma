@@ -79,9 +79,16 @@
 \\end
 
 \\define save-${this.fieldName}()
+<$wikify name="currentValue" text=<<current-value-${this.fieldName}>>>
+<$list filter="[<currentValue>length[]!match[0]]">
 <$vars rimir:dasma:sourceTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:sourceField="$(stateFieldName-${this.fieldName})$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-${this.fieldName})$" ${this.save.customFields}>
 <$transclude tiddler="${this.save.component}"/>
 </$vars>
+</$list>
+<$list filter="[<currentValue>length[]match[0]]">
+<$action-deletefield $tiddler=<<targetTiddler>> $field=<<targetFieldName-${this.fieldName}>>/>
+</$list>
+</$wikify>
 \\end
 
 \\define load-${this.fieldName}()

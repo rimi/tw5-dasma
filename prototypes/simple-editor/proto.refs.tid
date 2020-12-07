@@ -1,6 +1,6 @@
 caption: Prototype: Component: proto.refs (MultiSelect)
-created: 20201204181845365
-modified: 20201204181845681
+created: 20201207101257372
+modified: 20201207101257821
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -86,9 +86,16 @@ type: text/vnd.tiddlywiki
 \end
 
 \define save-proto.refs()
+<$wikify name="currentValue" text=<<current-value-proto.refs>>>
+<$list filter="[<currentValue>length[]!match[0]]">
 <$vars rimir:dasma:sourceTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:sourceField="$(stateFieldName-proto.refs)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-proto.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
+</$list>
+<$list filter="[<currentValue>length[]match[0]]">
+<$action-deletefield $tiddler=<<targetTiddler>> $field=<<targetFieldName-proto.refs>>/>
+</$list>
+</$wikify>
 \end
 
 \define load-proto.refs()
