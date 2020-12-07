@@ -7,6 +7,12 @@
 
 \\define addStaticFields() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$action-setfield $tiddler="$(targetTiddler)$" ${this.staticFieldAssignments}/></$wikify>
 
+\\define validEditorComponentsList() <$list filter="${this.fieldNames}"><$macrocall $name="validateField" fieldName=<<currentTiddler>>/> </$list>
+
+\\define validateField(fieldName) <<valid-$fieldName$>>
+
+\\define validEditor() <$wikify name="valids" text=<<validEditorComponentsList>>><$list filter="[enlist<valids>match[no]else[yes]]"><<currentTiddler>></$list></$wikify>
+
 <$set name="fields" value="${this.fieldNames}">
 <$wikify name="targetTiddler" text=<<internalTargetTiddler>>>
 <$wikify name="stateTiddler" text=<<internalStateBase>>>

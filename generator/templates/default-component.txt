@@ -5,6 +5,8 @@
 \\define name-${this.fieldName}() ${this.caption}
 \\define mandatory-${this.fieldName}() ${this.mandatory}
 
+\\define valid-${this.fieldName}() <$list filter="[<mandatory-${this.fieldName}>!match[yes]]">yes</$list><$list filter="[<mandatory-${this.fieldName}>match[yes]]"><$wikify name="currentValue" text=<<current-value-${this.fieldName}>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list>
+
 \\define previous-value-${this.fieldName}() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-${this.fieldName})$"><$transclude tiddler="${this.previousValueReader.component}"/></$vars>
 
 \\define current-value-${this.fieldName}() <$vars rimir:dasma:tiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:field="$(stateFieldName-${this.fieldName})$"><$transclude tiddler="${this.currentValueReader.component}"/></$vars>

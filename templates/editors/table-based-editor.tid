@@ -1,6 +1,6 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201207100026422
+modified: 20201207113705393
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editors
@@ -69,10 +69,14 @@ type: text/vnd.tiddlywiki
 <$macrocall $name="editorRow" fieldName=<<field>>/>
 </$list>
 </table>
+<$wikify name="editorValid" text=<<validEditor>>>
+<$list filter="[<editorValid>match[yes]]" emptyMessage="NOT VALID">
 <$button>
 <<store-actions>>
 <$list filter="[<targetTiddler>is[tiddler]]">SAVE CHANGES</$list><$list filter="[<targetTiddler>!is[tiddler]]">CREATE</$list>
 </$button>
+</$list>
+</$wikify>
 <$button>
 <$list filter="[<targetTiddler>is[tiddler]]"><<load-actions>>Discard Changes</$list>
 <$list filter="[<targetTiddler>!is[tiddler]]"><$list filter="[prefix<stateTiddler>]"><$action-deletetiddler $tiddler=<<currentTiddler>>/></$list>Clear Form</$list>
