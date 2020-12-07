@@ -223,26 +223,30 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 	const editorTreeLink = this.getEditorTreeLinkingPath(editorDescription);
 	const fieldsTreeLink = this.getFieldsTreeLinkingPath(editorDescription);
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
-	var editorLink = {
-		title: editorTreeLink,
-		"tocp.main-parent.ref": baseLink,
-		caption: editorDescription.id,
-		created: NOW,
-		modified: NOW,
-		bag: "default",
-		type: "text/vnd.tiddlywiki"
-	};
-	$tw.wiki.addTiddler(new $tw.Tiddler(editorLink));
-	var fieldLink = {
-		title: fieldsTreeLink,
-		"tocp.main-parent.ref": editorTreeLink,
-		caption: "fields",
-		created: NOW,
-		modified: NOW,
-		bag: "default",
-		type: "text/vnd.tiddlywiki"
-	};
-	$tw.wiki.addTiddler(new $tw.Tiddler(fieldLink));
+	if(!$tw.wiki.tiddlerExists(editorTreeLink)){
+		var editorLink = {
+			title: editorTreeLink,
+			"tocp.main-parent.ref": baseLink,
+			caption: editorDescription.id,
+			created: NOW,
+			modified: NOW,
+			bag: "default",
+			type: "text/vnd.tiddlywiki"
+		};
+		$tw.wiki.addTiddler(new $tw.Tiddler(editorLink));
+	}
+	if(!$tw.wiki.tiddlerExists(fieldsTreeLink)){
+		var fieldLink = {
+			title: fieldsTreeLink,
+			"tocp.main-parent.ref": editorTreeLink,
+			caption: "fields",
+			created: NOW,
+			modified: NOW,
+			bag: "default",
+			type: "text/vnd.tiddlywiki"
+		};
+		$tw.wiki.addTiddler(new $tw.Tiddler(fieldLink));
+	}
 }
 
 /*
