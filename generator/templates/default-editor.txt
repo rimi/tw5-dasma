@@ -3,6 +3,7 @@
 \\define headline() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$list filter="[<targetTiddler>is[tiddler]]">${this.modifyHeadline}</$list><$list filter="[<targetTiddler>!is[tiddler]]">${this.createHeadline}</$list></$wikify>
 
 \\define internalStateBase() <$wikify name="stateTiddler" text=<<stateBase>>><$list filter="[<stateTiddler>length[]!match[0]]"><<stateTiddler>></$list><$list filter="[<stateTiddler>length[]match[0]]"><<qualify "$:/state/rimir/dasma/creation">></$list></$wikify>
+\\define internalTarget() <$wikify name="stateTiddler" text=<<internalStateBase>>><$wikify name="targetTiddler" text=<<target>>><$list filter="[<targetTiddler>length[]!match[0]]"><<targetTiddler>></$list><$list filter="[<targetTiddler>length[]match[0]]">${this.newTitleTemplate}</$list></$wikify></$wikify>
 
 \\define addStaticFields() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$action-setfield $tiddler="$(targetTiddler)$" ${this.staticFieldAssignments}/></$wikify>
 
@@ -13,7 +14,7 @@
 \\define validEditor() <$wikify name="valids" text=<<validEditorComponentsList>>><$list filter="[enlist<valids>match[no]else[yes]]"><<currentTiddler>></$list></$wikify>
 
 <$set name="fields" value="${this.fieldNames}">
-<$wikify name="targetTiddler" text=<<target>>>
+<$wikify name="targetTiddler" text=<<internalTarget>>>
 <$wikify name="stateTiddler" text=<<internalStateBase>>>
 <<editor>>
 </$wikify>

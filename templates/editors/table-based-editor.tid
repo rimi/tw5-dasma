@@ -1,6 +1,6 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201207161815400
+modified: 20201208064318874
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editors
@@ -49,7 +49,6 @@ type: text/vnd.tiddlywiki
 <th>Validation</th>
 <th>Info</th>
 </tr>
-<$list filter="[<targetTiddler>is[tiddler]]">
 <tr>
 <th>Tiddler-Title</th>
 <td><$link to=<<targetTiddler>>><<targetTiddler>></$link></td>
@@ -58,7 +57,6 @@ type: text/vnd.tiddlywiki
 <td>--</td>
 <td>--</td>
 </tr>
-</$list>
 <tr>
 <th>State-Base</th>
 <td><$link to=<<stateTiddler>>><<stateTiddler>></$link></td>

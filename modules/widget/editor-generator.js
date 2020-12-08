@@ -23,6 +23,7 @@ const PROTOTYPE_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/prototypes/dasma-de
 const PROTOTYPE_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/prototypes/simple-editor";
 
 const TIDDLER_CREATION_STATE_BASE= "$:/state/rimir/dasma/creation";
+const DEFAULT_TITLE_TEMPLATE = "data/${this.editorId}/${this._now}";
 	
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/$(stateFieldName-${this.fieldName})$";
@@ -322,7 +323,8 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		modifyHeadline: editorDescription.headline["on-modify"] || "MODIFY PLACEHOLDER",
 		imports: this.getEditorRenderTiddlerName() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
 		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
-		staticFieldAssignments: this.createEditorComponentsStaticFieldAssignments(editorDescription)
+		staticFieldAssignments: this.createEditorComponentsStaticFieldAssignments(editorDescription),
+		newTitleTemplate: this.createTitleTemplate(editorDescription, editorComponentInfos)
 	};
 	const newText = formatTemplate(editorTemplate, editorConfig);
 	var fields = {
@@ -338,7 +340,20 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		$tw.wiki.addTiddler(new $tw.Tiddler(mergedFields));
 	}
 }
-	
+
+GeneratorWidget.prototype.createTitleTemplate = function(editorDescription, editorComponentInfos) {
+	const template = editorDescription["title-template"] || DEFAULT_TITLE_TEMPLATE;
+	const tmplvars = {
+		"_now": "<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>",
+		"editorId": editorDescription.id
+	}
+	for (var i = 0; i < editorComponentInfos.length; i++) {
+		const compInfo = editorComponentInfos[i];
+		tmplvars[compInfo.fieldName] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]]}}}"
+	}
+	return formatTemplate(template, tmplvars);
+}
+
 GeneratorWidget.prototype.createEditorComponentsStaticFieldAssignments = function(editorDescription) {
 	let result = "";
 	let first = true;
