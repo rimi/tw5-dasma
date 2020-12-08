@@ -1,6 +1,6 @@
 caption: Prototype-Editor
-created: 20201207161216746
-modified: 20201207161216756
+created: 20201208070137081
+modified: 20201208070137094
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/editor
 tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/prototyping
 type: text/vnd.tiddlywiki
@@ -10,6 +10,7 @@ type: text/vnd.tiddlywiki
 \define headline() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$list filter="[<targetTiddler>is[tiddler]]">Edit Prototype Data</$list><$list filter="[<targetTiddler>!is[tiddler]]">Create Prototype Data</$list></$wikify>
 
 \define internalStateBase() <$wikify name="stateTiddler" text=<<stateBase>>><$list filter="[<stateTiddler>length[]!match[0]]"><<stateTiddler>></$list><$list filter="[<stateTiddler>length[]match[0]]"><<qualify "$:/state/rimir/dasma/creation">></$list></$wikify>
+\define internalTarget() <$wikify name="stateTiddler" text=<<internalStateBase>>><$wikify name="targetTiddler" text=<<target>>><$list filter="[<targetTiddler>length[]!match[0]]"><<targetTiddler>></$list><$list filter="[<targetTiddler>length[]match[0]]">{{{[<stateTiddler>get[tmp_realm]]}}}/prototype-elements/<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>></$list></$wikify></$wikify>
 
 \define addStaticFields() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$action-setfield $tiddler="$(targetTiddler)$" tags="prototype"/></$wikify>
 
@@ -20,7 +21,7 @@ type: text/vnd.tiddlywiki
 \define validEditor() <$wikify name="valids" text=<<validEditorComponentsList>>><$list filter="[enlist<valids>match[no]else[yes]]"><<currentTiddler>></$list></$wikify>
 
 <$set name="fields" value="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref">
-<$wikify name="targetTiddler" text=<<target>>>
+<$wikify name="targetTiddler" text=<<internalTarget>>>
 <$wikify name="stateTiddler" text=<<internalStateBase>>>
 <<editor>>
 </$wikify>

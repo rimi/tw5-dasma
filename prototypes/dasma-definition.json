@@ -4,7 +4,7 @@
 		"on-create": "Create Prototype Data",
 		"on-modify": "Edit Prototype Data"
 	},
-	"title-template": "${this.realm-prefix}persons/${this.now}",
+	"title-template": "${this.realm}/prototype-elements/${this._now}",
 	"staticFieldAssignments": {
 		"tags": "prototype"
 	},
