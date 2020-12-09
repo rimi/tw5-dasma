@@ -1,9 +1,9 @@
 caption: Transform "selected" from index to list
 created: 20201204140802420
-modified: 20201204170354269
+modified: 20201209183606598
 tags: 
 title: $:/plugins/rimir/dasma/templates/value-readers/transform-index-selected-to-list
-tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/value-reader
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/value-readers
 type: text/vnd.tiddlywiki
 
 <$list filter="[<rimir:dasma:tiddler>indexes[]]" variable="index"><$list filter="[<rimir:dasma:tiddler>getindex<index>match[selected]]"><<index>> </$list></$list>

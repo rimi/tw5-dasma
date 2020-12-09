@@ -1,9 +1,9 @@
 caption: Transfer Indexes to List-Field Action
 created: 20201123190145929
-modified: 20201204141411059
+modified: 20201209182947161
 tags: 
 title: $:/plugins/rimir/dasma/templates/actions/transfer-indexes-to-list-field
-tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/actions
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/actions
 type: text/vnd.tiddlywiki
 
 <$wikify name="theValue" text="""<$vars rimir:dasma:tiddler=<<rimir:dasma:sourceTiddler>>><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/transform-index-selected-to-list"/></$vars>""">

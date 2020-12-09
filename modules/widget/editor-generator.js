@@ -196,7 +196,7 @@ GeneratorWidget.prototype.createCommonFieldOverwrites = function(fieldDescriptio
 GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/" + fieldDescription.fieldName,
-		"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/prototyping",
+		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping",
 		caption: "Prototype: " + fieldDescription.caption
 	}
 }
@@ -204,7 +204,7 @@ GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescrip
 GeneratorWidget.prototype.createPrototypeEditorOverwrites = function(editorDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/editor",
-		"tocp.dasma-plugin-parent.ref": "#:/wiki/plugins/rimir/dasma/prototyping",
+		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping",
 		caption: "Prototype-Editor"
 	}
 }

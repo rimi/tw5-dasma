@@ -1,9 +1,9 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201208064318874
+modified: 20201209183432483
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
-tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editors
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editors
 type: text/vnd.tiddlywiki
 
 \define saveAction(fieldName)

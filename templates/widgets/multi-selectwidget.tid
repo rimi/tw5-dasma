@@ -1,9 +1,9 @@
 caption: Multi SelectWidget
 created: 20201123182425855
-modified: 20201204135843342
+modified: 20201209183353774
 tags: 
 title: $:/plugins/rimir/dasma/templates/widgets/multi-selectwidget
-tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editor-components
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editor-components
 type: text/vnd.tiddlywiki
 
 <$select tiddler=<<rimir:dasma:tiddler>> field=<<rimir:dasma:field>> multiple size=<<rimir:dasma:custom:numOfVisibleElements>>>

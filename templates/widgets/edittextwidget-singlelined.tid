@@ -1,9 +1,9 @@
 caption: EditTextWidget Single-Lined
 created: 20201123174641605
-modified: 20201204134339421
+modified: 20201209183334868
 tags: 
 title: $:/plugins/rimir/dasma/templates/widgets/edittextwidget-singlelined
-tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/editor-components
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editor-components
 type: text/vnd.tiddlywiki
 
 <$edit-text tiddler=<<rimir:dasma:tiddler>> field=<<rimir:dasma:field>> tag="input"/>

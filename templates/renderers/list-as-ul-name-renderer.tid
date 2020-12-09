@@ -1,9 +1,9 @@
 caption: Simple List-as-UL Name-Renderer
 created: 20201203162202607
-modified: 20201204161255516
+modified: 20201209183644779
 tags: 
 title: $:/plugins/rimir/dasma/templates/renderers/list-as-ul-name-renderer
-tocp.dasma-plugin-parent.ref: #:/wiki/plugins/rimir/dasma/templates/value-renderer
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/value-renderer
 type: text/vnd.tiddlywiki
 
 <ul>
