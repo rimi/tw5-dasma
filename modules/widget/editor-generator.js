@@ -170,11 +170,11 @@ GeneratorWidget.prototype.getEditorRenderTiddlerName = function() {
 }
 	
 GeneratorWidget.prototype.getBaseGeneratorOutputNamespace = function(editorDescription) {
-	return "$:/rimir/dasma/generated" + (editorDescription ? "/" + editorDescription.id : "");
+	return "$:/rimir/extensions/dasma/generated" + (editorDescription ? "/" + editorDescription.id : "");
 }
 
 GeneratorWidget.prototype.getBaseTreeLinkingPath = function() {
-	return "#:/wiki/extensions/dasma/generated";
+	return "#:/rimir/extensions/dasma/generated";
 }
 	
 GeneratorWidget.prototype.getEditorTreeLinkingPath = function(editorDescription) {
@@ -184,7 +184,10 @@ GeneratorWidget.prototype.getEditorTreeLinkingPath = function(editorDescription)
 GeneratorWidget.prototype.getFieldsTreeLinkingPath = function(editorDescription) {
 	return this.getEditorTreeLinkingPath(editorDescription) + "/fields";
 }
-	
+
+/*
+!DEPRECATED! (not used as editor-components anymore, but left for testing-purposes as part of generateCommonDasmaDefinitions-functionality)
+*/
 GeneratorWidget.prototype.createCommonFieldOverwrites = function(fieldDescription) {
 	return {
 		title: this.getBaseGeneratorOutputNamespace() + "/dasma-common/" + fieldDescription.id,
@@ -212,7 +215,7 @@ GeneratorWidget.prototype.createPrototypeEditorOverwrites = function(editorDescr
 GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescription, editorDescription) {
 	return {
 		title: this.getBaseGeneratorOutputNamespace(editorDescription) + "/" + fieldDescription.fieldName,
-		"tocp.main-parent.ref": this.getFieldsTreeLinkingPath(editorDescription),
+		"tocp.rimir.parent.ref": this.getFieldsTreeLinkingPath(editorDescription),
 		caption: "Editor-Component: " + fieldDescription.caption
 	}
 }
@@ -220,7 +223,7 @@ GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescriptio
 GeneratorWidget.prototype.createCustomEditorOverwrites = function(editorDescription) {
 	return {
 		title: this.getBaseGeneratorOutputNamespace(editorDescription),
-		"tocp.main-parent.ref": this.getEditorTreeLinkingPath(editorDescription),
+		"tocp.rimir.parent.ref": this.getEditorTreeLinkingPath(editorDescription),
 		caption: "Editor: " + editorDescription.id
 	}
 }
@@ -233,7 +236,7 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(editorTreeLink)){
 		var editorLink = {
 			title: editorTreeLink,
-			"tocp.main-parent.ref": baseLink,
+			"tocp.dasma-plugin-parent.ref": baseLink,
 			caption: editorDescription.id,
 			created: NOW,
 			modified: NOW,
@@ -245,7 +248,7 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(fieldsTreeLink)){
 		var fieldLink = {
 			title: fieldsTreeLink,
-			"tocp.main-parent.ref": editorTreeLink,
+			"tocp.dasma-plugin-parent.ref": editorTreeLink,
 			caption: "fields",
 			created: NOW,
 			modified: NOW,
