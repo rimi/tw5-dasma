@@ -236,7 +236,7 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(editorTreeLink)){
 		var editorLink = {
 			title: editorTreeLink,
-			"tocp.dasma-plugin-parent.ref": baseLink,
+			"tocp.rimir.parent.ref": baseLink,
 			caption: editorDescription.id,
 			created: NOW,
 			modified: NOW,
@@ -248,7 +248,7 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(fieldsTreeLink)){
 		var fieldLink = {
 			title: fieldsTreeLink,
-			"tocp.dasma-plugin-parent.ref": editorTreeLink,
+			"tocp.rimir.parent.ref": editorTreeLink,
 			caption: "fields",
 			created: NOW,
 			modified: NOW,
