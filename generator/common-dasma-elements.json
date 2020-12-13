@@ -5,6 +5,18 @@
 			"fieldName": "caption",
 			"caption": "Caption",
 			"mandatory": true,
+			"displayPrevious": true,
+			"editor": {
+				"component": "dasma/component/singleline"
+			}
+		},
+		{
+			"id": "dasma/field/uname",
+			"fieldName": "uname",
+			"caption": "Unique Name",
+			"mandatory": true,
+			"readonly": true,
+			"unique": true,
 			"editor": {
 				"component": "dasma/component/singleline"
 			}
