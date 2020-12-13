@@ -66,6 +66,9 @@
 			"options": {
 				"filter": ["prefix[$:/plugins/rimir/dasma/prototypes]"]
 			}
+		},
+		{
+			"dasma-id.ref": "dasma/field/uname"
 		}
 	],
 	"actions": {
