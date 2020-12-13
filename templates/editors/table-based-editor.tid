@@ -1,6 +1,6 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201209183432483
+modified: 20201213175928338
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editors
@@ -33,8 +33,8 @@ type: text/vnd.tiddlywiki
 <td><$wikify name="theDisplayPrevious" text="<<display-previous-$fieldName$>>"><$list filter="[<theDisplayPrevious>match[yes]][<targetTiddler>is[tiddler]]+[count[]match[2]]">''Previous value: <<previous-$fieldName$>>''<br/></$list></$wikify><<edit-$fieldName$>><$wikify name="theDisplayCurrent" text="<<display-current-$fieldName$>>"><$list filter="[<theDisplayCurrent>match[yes]]"><br/>''Current value: <<current-$fieldName$>>''</$list></$wikify></td>
 <td><$wikify name="theDisplayNarrowing" text="<<display-narrow-$fieldName$>>"><$list filter="[<theDisplayNarrowing>match[yes]]" emptyMessage="-NO NARROWING-"><<narrow-$fieldName$>></$list></$wikify></td>
 <td><$wikify name="theDisplayGrouping" text="<<display-group-$fieldName$>>"><$list filter="[<theDisplayGrouping>match[yes]]" emptyMessage="-NO GROUPING-"><<group-$fieldName$>></$list></$wikify></td>
+<td><$wikify name="theDisplayValidation" text="<<display-validate-$fieldName$>>"><$list filter="[<theDisplayValidation>match[yes]]" emptyMessage="-NO VALIDATION-"><<validate-$fieldName$>></$list></$wikify></td>
 <td><$wikify name="theDisplayInformation" text="<<display-info-$fieldName$>>"><$list filter="[<theDisplayInformation>match[yes]]" emptyMessage="-NO INFORMATION-"><<info-$fieldName$>></$list></$wikify></td>
-<td></td>
 </tr>
 \end
 

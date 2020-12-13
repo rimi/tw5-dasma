@@ -18,7 +18,10 @@
 			"readonly": true,
 			"unique": true,
 			"editor": {
-				"component": "dasma/component/singleline"
+				"component": "dasma/component/singleline",
+				"config": {
+					"validationComponent": "dasma/validators/globally-unique"
+				}
 			}
 		},
 		{

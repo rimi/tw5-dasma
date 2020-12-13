@@ -1,6 +1,6 @@
 caption: Prototype: Component: realm (Radio) / UNCHANGEABLE
-created: 20201208064435273
-modified: 20201209184026172
+created: 20201213184048809
+modified: 20201213184049348
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/realm
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -12,7 +12,7 @@ type: text/vnd.tiddlywiki
 \define name-realm() Component: realm (Radio) / UNCHANGEABLE
 \define mandatory-realm() yes
 
-\define valid-realm() <$list filter="[<mandatory-realm>!match[yes]]">yes</$list><$list filter="[<mandatory-realm>match[yes]]"><$wikify name="currentValue" text=<<current-value-realm>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list>
+\define valid-realm() <$list filter="[<mandatory-realm>!match[yes]]">yes</$list><$list filter="[<mandatory-realm>match[yes]]"><$wikify name="currentValue" text=<<current-value-realm>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-realm>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-realm>></$list></$wikify>
 
 \define previous-value-realm() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
@@ -38,9 +38,11 @@ type: text/vnd.tiddlywiki
 \define display-validate-realm() no
 \define validateStateTiddler-realm() $(stateTiddler-realm)$/validateTiddlers/$(targetFieldName-realm)$
 \define validate-realm()
-<$vars rimir:dasma:internalStateTiddler="$(validateStateTiddler-realm)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-realm)$" rimir:dasma:currentTiddler="$(stateTiddler-realm)$" rimir:dasma:currentField="$(stateFieldName-realm)$">
-<$transclude tiddler="TBD"/>
+<$wikify name="theValue" text="""$(current-value-realm)$""">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-realm)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-realm)$" rimir:dasma:currentTiddler="$(stateTiddler-realm)$" rimir:dasma:currentField="$(stateFieldName-realm)$">
+<$transclude tiddler="NONE"/>
 </$vars>
+</$wikify>
 \end
 
 \define display-info-realm() no

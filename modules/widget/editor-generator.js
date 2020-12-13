@@ -80,7 +80,7 @@ const NARROWERS = {
 }
 
 const VALIDATORS = {
-	"tbd": "TBD"
+	"dasma/validators/globally-unique": "$:/plugins/rimir/dasma/templates/validators/global-unique-value"
 }
 
 const VALUE_READERS = {
@@ -382,7 +382,12 @@ GeneratorWidget.prototype.createEditorComponentsFieldNamesList = function(editor
 	
 GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
-	const componentConfiguration = COMPONENT_CONFIGURATION[fieldDescription.editor.component];
+	let componentConfiguration = COMPONENT_CONFIGURATION[fieldDescription.editor.component];
+	
+	if(fieldDescription.editor.config){
+		componentConfiguration = deepmerge.all([componentConfiguration, fieldDescription.editor.config]);
+	}
+	
 	const fieldConfig = {
 		fieldName: fieldDescription.fieldName,
 		caption: fieldDescription.caption,
@@ -399,7 +404,7 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 		},
 		validation: {
 			display: componentConfiguration.validationComponent ? "yes" : "no",
-			component: componentConfiguration.validationComponent ? "TBD": "TBD"
+			component: componentConfiguration.validationComponent ? VALIDATORS[componentConfiguration.validationComponent] : "NONE"
 		},
 		grouping: {
 			display: componentConfiguration.groupingComponent ? "yes" : "no",

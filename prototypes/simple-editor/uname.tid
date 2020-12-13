@@ -1,6 +1,6 @@
 caption: Prototype: Unique Name
-created: 20201213175003623
-modified: 20201213175003855
+created: 20201213184048814
+modified: 20201213184049363
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/uname
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -12,7 +12,7 @@ type: text/vnd.tiddlywiki
 \define name-uname() Unique Name
 \define mandatory-uname() yes
 
-\define valid-uname() <$list filter="[<mandatory-uname>!match[yes]]">yes</$list><$list filter="[<mandatory-uname>match[yes]]"><$wikify name="currentValue" text=<<current-value-uname>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list>
+\define valid-uname() <$list filter="[<mandatory-uname>!match[yes]]">yes</$list><$list filter="[<mandatory-uname>match[yes]]"><$wikify name="currentValue" text=<<current-value-uname>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-uname>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-uname>></$list></$wikify>
 
 \define previous-value-uname() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-uname)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
@@ -35,12 +35,14 @@ type: text/vnd.tiddlywiki
 </$vars>
 \end
 
-\define display-validate-uname() no
+\define display-validate-uname() yes
 \define validateStateTiddler-uname() $(stateTiddler-uname)$/validateTiddlers/$(targetFieldName-uname)$
 \define validate-uname()
-<$vars rimir:dasma:internalStateTiddler="$(validateStateTiddler-uname)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-uname)$" rimir:dasma:currentTiddler="$(stateTiddler-uname)$" rimir:dasma:currentField="$(stateFieldName-uname)$">
-<$transclude tiddler="TBD"/>
+<$wikify name="theValue" text="""$(current-value-uname)$""">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-uname)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-uname)$" rimir:dasma:currentTiddler="$(stateTiddler-uname)$" rimir:dasma:currentField="$(stateFieldName-uname)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/validators/global-unique-value"/>
 </$vars>
+</$wikify>
 \end
 
 \define display-info-uname() no

@@ -5,7 +5,7 @@
 \\define name-${this.fieldName}() ${this.caption}
 \\define mandatory-${this.fieldName}() ${this.mandatory}
 
-\\define valid-${this.fieldName}() <$list filter="[<mandatory-${this.fieldName}>!match[yes]]">yes</$list><$list filter="[<mandatory-${this.fieldName}>match[yes]]"><$wikify name="currentValue" text=<<current-value-${this.fieldName}>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list>
+\\define valid-${this.fieldName}() <$list filter="[<mandatory-${this.fieldName}>!match[yes]]">yes</$list><$list filter="[<mandatory-${this.fieldName}>match[yes]]"><$wikify name="currentValue" text=<<current-value-${this.fieldName}>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-${this.fieldName}>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-${this.fieldName}>></$list></$wikify>
 
 \\define previous-value-${this.fieldName}() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-${this.fieldName})$"><$transclude tiddler="${this.previousValueReader.component}"/></$vars>
 
@@ -31,9 +31,11 @@
 \\define display-validate-${this.fieldName}() ${this.validation.display}
 \\define validateStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/validateTiddlers/$(targetFieldName-${this.fieldName})$
 \\define validate-${this.fieldName}()
-<$vars rimir:dasma:internalStateTiddler="$(validateStateTiddler-${this.fieldName})$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-${this.fieldName})$" rimir:dasma:currentTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:currentField="$(stateFieldName-${this.fieldName})$">
+<$wikify name="theValue" text="""$(current-value-${this.fieldName})$""">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-${this.fieldName})$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-${this.fieldName})$" rimir:dasma:currentTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:currentField="$(stateFieldName-${this.fieldName})$">
 <$transclude tiddler="${this.validation.component}"/>
 </$vars>
+</$wikify>
 \\end
 
 \\define display-info-${this.fieldName}() ${this.information.display}

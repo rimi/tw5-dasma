@@ -1,6 +1,6 @@
 caption: Prototype: Component: proto.ref (SingleSelect)
-created: 20201207113950971
-modified: 20201209183946037
+created: 20201213184048813
+modified: 20201213184049196
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -12,7 +12,7 @@ type: text/vnd.tiddlywiki
 \define name-proto.ref() Component: proto.ref (SingleSelect)
 \define mandatory-proto.ref() no
 
-\define valid-proto.ref() <$list filter="[<mandatory-proto.ref>!match[yes]]">yes</$list><$list filter="[<mandatory-proto.ref>match[yes]]"><$wikify name="currentValue" text=<<current-value-proto.ref>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list>
+\define valid-proto.ref() <$list filter="[<mandatory-proto.ref>!match[yes]]">yes</$list><$list filter="[<mandatory-proto.ref>match[yes]]"><$wikify name="currentValue" text=<<current-value-proto.ref>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-proto.ref>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-proto.ref>></$list></$wikify>
 
 \define previous-value-proto.ref() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.ref)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
@@ -38,9 +38,11 @@ type: text/vnd.tiddlywiki
 \define display-validate-proto.ref() no
 \define validateStateTiddler-proto.ref() $(stateTiddler-proto.ref)$/validateTiddlers/$(targetFieldName-proto.ref)$
 \define validate-proto.ref()
-<$vars rimir:dasma:internalStateTiddler="$(validateStateTiddler-proto.ref)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-proto.ref)$" rimir:dasma:currentTiddler="$(stateTiddler-proto.ref)$" rimir:dasma:currentField="$(stateFieldName-proto.ref)$">
-<$transclude tiddler="TBD"/>
+<$wikify name="theValue" text="""$(current-value-proto.ref)$""">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-proto.ref)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-proto.ref)$" rimir:dasma:currentTiddler="$(stateTiddler-proto.ref)$" rimir:dasma:currentField="$(stateFieldName-proto.ref)$">
+<$transclude tiddler="NONE"/>
 </$vars>
+</$wikify>
 \end
 
 \define display-info-proto.ref() no
