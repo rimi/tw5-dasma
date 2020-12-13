@@ -352,7 +352,9 @@ GeneratorWidget.prototype.createTitleTemplate = function(editorDescription, edit
 	}
 	for (var i = 0; i < editorComponentInfos.length; i++) {
 		const compInfo = editorComponentInfos[i];
-		tmplvars[compInfo.fieldName] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]]}}}"
+		tmplvars[compInfo.fieldName] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]]}}}";
+		//TODO make all existing fields in referenced tiddlers available - not like the following static caption
+		tmplvars[compInfo.fieldName+"/caption"] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]get[caption]]}}}";
 	}
 	return formatTemplate(template, tmplvars);
 }
