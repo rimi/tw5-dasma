@@ -39,6 +39,12 @@ const COMPONENT_CONFIGURATION = {
 		loadComponent: "dasma/transfer/field2field",
 		defaultValueRendererComponent: "dasma/value-renderers/field-asis"
 	},
+	"dasma/component/date": {
+		editComponent: "dasma/edit/date",
+		saveComponent: "dasma/transfer/field2field",
+		loadComponent: "dasma/transfer/field2field",
+		defaultValueRendererComponent: "dasma/value-renderers/field-asis"
+	},
 	"dasma/component/multiline": {
 		editComponent: "dasma/edit/textarea",
 		saveComponent: "dasma/transfer/field2field",
@@ -82,8 +88,11 @@ const NARROWERS = {
 }
 
 const VALIDATORS = {
-	"dasma/validators/globally-unique": "$:/plugins/rimir/dasma/templates/validators/global-unique-value",
-	"dasma/validators/unique": "$:/plugins/rimir/dasma/templates/validators/unique-value"
+	"dasma/validators/globally-unique-nospace": "$:/plugins/rimir/dasma/templates/validators/global-unique-value",
+	"dasma/validators/unique-nospace": "$:/plugins/rimir/dasma/templates/validators/unique-value",
+	"dasma/validators/phone": "TODO",
+	"dasma/validators/e-mail": "TODO",
+	"dasma/validators/date-in-past": "TODO"
 }
 
 const VALUE_READERS = {
@@ -105,7 +114,8 @@ const EDITORS = {
 	"dasma/edit/checkboxes": "$:/plugins/rimir/dasma/templates/widgets/checkboxwidget",
 	"dasma/edit/multiselect": "$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget",
 	"dasma/edit/radio": "$:/plugins/rimir/dasma/templates/widgets/radiowidget",
-	"dasma/edit/select": "$:/plugins/rimir/dasma/templates/widgets/single-selectwidget"
+	"dasma/edit/select": "$:/plugins/rimir/dasma/templates/widgets/single-selectwidget",
+	"dasma/edit/date": "$:/plugins/rimir/dasma/templates/widgets/editdatewidget"
 }
 
 const TRANSFERERS = {

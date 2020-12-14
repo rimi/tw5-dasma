@@ -17,7 +17,7 @@
 			"editor": {
 				"component": "dasma/component/singleline",
 				"config": {
-					"validationComponent": "dasma/validators/globally-unique"
+					"validationComponent": "dasma/validators/globally-unique-nospace"
 				}
 			}
 		},
@@ -28,7 +28,7 @@
 			"editor": {
 				"component": "dasma/component/singleline",
 				"config": {
-					"validationComponent": "dasma/validators/unique"
+					"validationComponent": "dasma/validators/unique-nospace"
 				}
 			}
 		},
@@ -51,6 +51,36 @@
 			},
 			"editor": {
 				"component": "dasma/component/radio"
+			}
+		},
+		{
+			"id": "dasma/field/phonenumber",
+			"fieldName": "phonenumber",
+			"caption": "Phone-Number",
+			"editor": {
+				"component": "dasma/component/singleline",
+				"config": {
+					"validationComponent": "dasma/validators/phone"
+				}
+			}
+		},
+		{
+			"id": "dasma/field/e-mail",
+			"fieldName": "e-mail",
+			"caption": "E-Mail",
+			"editor": {
+				"component": "dasma/component/singleline",
+				"config": {
+					"validationComponent": "dasma/validators/e-mail"
+				}
+			}
+		},
+		{
+			"id": "dasma/field/date",
+			"fieldName": "date",
+			"caption": "Date",
+			"editor": {
+				"component": "dasma/component/date"
 			}
 		}
 	],
@@ -85,6 +115,22 @@
 			"caption": "GENERIC Base-Select",
 			"editor": {
 				"component": "dasma/component/select"
+			}
+		},
+		{
+			"id": "dasma/field/generic-singleline",
+			"fieldName": "GENERIC_singleline.ref",
+			"caption": "GENERIC Base-Singleline",
+			"editor": {
+				"component": "dasma/component/singleline"
+			}
+		},
+		{
+			"id": "dasma/field/generic-multiline",
+			"fieldName": "GENERIC_multiline.ref",
+			"caption": "GENERIC Base-Multiline",
+			"editor": {
+				"component": "dasma/component/multiline"
 			}
 		}
 	]
