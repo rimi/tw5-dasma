@@ -42,7 +42,6 @@
 		},
 		{
 			"id": "dasma/field/realm",
-			"readonly": true,
 			"transient": true,
 			"mandatory": true,
 			"fieldName": "realm.ref",
