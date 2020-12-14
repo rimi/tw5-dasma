@@ -396,6 +396,7 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 		fieldName: fieldDescription.fieldName,
 		caption: fieldDescription.caption,
 		mandatory: fieldDescription.mandatory ? "yes" : "no",
+		transient: fieldDescription.transient ? "yes" : "no",
 		currentValueReader: {
 			component: componentConfiguration.currentValueReaderComponent ? VALUE_READERS[componentConfiguration.currentValueReaderComponent] : (componentConfiguration.defaultValueReaderComponent ? VALUE_READERS[componentConfiguration.defaultValueReaderComponent] : VALUE_READERS[DEFAULT_VALUE_READER])
 		},

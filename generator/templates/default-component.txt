@@ -4,8 +4,9 @@
 \\define targetFieldName-${this.fieldName}() ${this.fieldName}
 \\define name-${this.fieldName}() ${this.caption}
 \\define mandatory-${this.fieldName}() ${this.mandatory}
+\\define transient-${this.fieldName}() ${this.transient}
 
-\\define valid-${this.fieldName}() <$list filter="[<mandatory-${this.fieldName}>!match[yes]]">yes</$list><$list filter="[<mandatory-${this.fieldName}>match[yes]]"><$wikify name="currentValue" text=<<current-value-${this.fieldName}>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-${this.fieldName}>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-${this.fieldName}>></$list></$wikify>
+\\define valid-${this.fieldName}() <$list filter="[<mandatory-${this.fieldName}>!match[yes]]">yes</$list><$list filter="[<mandatory-${this.fieldName}>match[yes]]"><$wikify name="currentValue" text=<<current-value-${this.fieldName}>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theEnableValidation" text="<<display-validate-${this.fieldName}>>"><$list filter="[<theEnableValidation>match[yes]]"> <<validate-${this.fieldName}>></$list></$wikify>
 
 \\define previous-value-${this.fieldName}() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-${this.fieldName})$"><$transclude tiddler="${this.previousValueReader.component}"/></$vars>
 
@@ -84,7 +85,7 @@
 
 \\define save-${this.fieldName}()
 <$wikify name="currentValue" text=<<current-value-${this.fieldName}>>>
-<$list filter="[<currentValue>length[]!match[0]]">
+<$list filter="[<currentValue>length[]!match[0]][<transient-${this.fieldName}>!match[yes]]+[count[]match[2]]">
 <$vars rimir:dasma:sourceTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:sourceField="$(stateFieldName-${this.fieldName})$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-${this.fieldName})$" ${this.save.customFields}>
 <$transclude tiddler="${this.save.component}"/>
 </$vars>

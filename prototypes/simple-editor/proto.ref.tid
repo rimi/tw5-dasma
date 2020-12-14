@@ -1,6 +1,6 @@
 caption: Prototype: Component: proto.ref (SingleSelect)
-created: 20201213184048813
-modified: 20201213184049196
+created: 20201214163829432
+modified: 20201214163829573
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -11,8 +11,9 @@ type: text/vnd.tiddlywiki
 \define targetFieldName-proto.ref() proto.ref
 \define name-proto.ref() Component: proto.ref (SingleSelect)
 \define mandatory-proto.ref() no
+\define transient-proto.ref() no
 
-\define valid-proto.ref() <$list filter="[<mandatory-proto.ref>!match[yes]]">yes</$list><$list filter="[<mandatory-proto.ref>match[yes]]"><$wikify name="currentValue" text=<<current-value-proto.ref>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-proto.ref>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-proto.ref>></$list></$wikify>
+\define valid-proto.ref() <$list filter="[<mandatory-proto.ref>!match[yes]]">yes</$list><$list filter="[<mandatory-proto.ref>match[yes]]"><$wikify name="currentValue" text=<<current-value-proto.ref>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theEnableValidation" text="<<display-validate-proto.ref>>"><$list filter="[<theEnableValidation>match[yes]]"> <<validate-proto.ref>></$list></$wikify>
 
 \define previous-value-proto.ref() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.ref)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
@@ -91,7 +92,7 @@ type: text/vnd.tiddlywiki
 
 \define save-proto.ref()
 <$wikify name="currentValue" text=<<current-value-proto.ref>>>
-<$list filter="[<currentValue>length[]!match[0]]">
+<$list filter="[<currentValue>length[]!match[0]][<transient-proto.ref>!match[yes]]+[count[]match[2]]">
 <$vars rimir:dasma:sourceTiddler="$(stateTiddler-proto.ref)$" rimir:dasma:sourceField="$(stateFieldName-proto.ref)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-proto.ref)$" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>

@@ -1,6 +1,6 @@
 caption: Prototype: Key
-created: 20201214092851431
-modified: 20201214092851732
+created: 20201214163829433
+modified: 20201214163829567
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/key
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -11,8 +11,9 @@ type: text/vnd.tiddlywiki
 \define targetFieldName-key() key
 \define name-key() Key
 \define mandatory-key() no
+\define transient-key() no
 
-\define valid-key() <$list filter="[<mandatory-key>!match[yes]]">yes</$list><$list filter="[<mandatory-key>match[yes]]"><$wikify name="currentValue" text=<<current-value-key>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-key>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-key>></$list></$wikify>
+\define valid-key() <$list filter="[<mandatory-key>!match[yes]]">yes</$list><$list filter="[<mandatory-key>match[yes]]"><$wikify name="currentValue" text=<<current-value-key>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theEnableValidation" text="<<display-validate-key>>"><$list filter="[<theEnableValidation>match[yes]]"> <<validate-key>></$list></$wikify>
 
 \define previous-value-key() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-key)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
@@ -91,7 +92,7 @@ type: text/vnd.tiddlywiki
 
 \define save-key()
 <$wikify name="currentValue" text=<<current-value-key>>>
-<$list filter="[<currentValue>length[]!match[0]]">
+<$list filter="[<currentValue>length[]!match[0]][<transient-key>!match[yes]]+[count[]match[2]]">
 <$vars rimir:dasma:sourceTiddler="$(stateTiddler-key)$" rimir:dasma:sourceField="$(stateFieldName-key)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-key)$" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>

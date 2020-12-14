@@ -1,6 +1,6 @@
 caption: Prototype: Component: caption (SingleLinedText)
-created: 20201213184048811
-modified: 20201213184048836
+created: 20201214163829430
+modified: 20201214163829448
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/caption
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -11,8 +11,9 @@ type: text/vnd.tiddlywiki
 \define targetFieldName-caption() caption
 \define name-caption() Component: caption (SingleLinedText)
 \define mandatory-caption() yes
+\define transient-caption() no
 
-\define valid-caption() <$list filter="[<mandatory-caption>!match[yes]]">yes</$list><$list filter="[<mandatory-caption>match[yes]]"><$wikify name="currentValue" text=<<current-value-caption>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-caption>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-caption>></$list></$wikify>
+\define valid-caption() <$list filter="[<mandatory-caption>!match[yes]]">yes</$list><$list filter="[<mandatory-caption>match[yes]]"><$wikify name="currentValue" text=<<current-value-caption>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theEnableValidation" text="<<display-validate-caption>>"><$list filter="[<theEnableValidation>match[yes]]"> <<validate-caption>></$list></$wikify>
 
 \define previous-value-caption() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-caption)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
@@ -91,7 +92,7 @@ type: text/vnd.tiddlywiki
 
 \define save-caption()
 <$wikify name="currentValue" text=<<current-value-caption>>>
-<$list filter="[<currentValue>length[]!match[0]]">
+<$list filter="[<currentValue>length[]!match[0]][<transient-caption>!match[yes]]+[count[]match[2]]">
 <$vars rimir:dasma:sourceTiddler="$(stateTiddler-caption)$" rimir:dasma:sourceField="$(stateFieldName-caption)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-caption)$" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
