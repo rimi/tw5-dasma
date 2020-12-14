@@ -39,6 +39,19 @@
 			"editor": {
 				"component": "dasma/component/multiline"
 			}
+		},
+		{
+			"id": "dasma/field/realm",
+			"readonly": true,
+			"mandatory": true,
+			"fieldName": "realm.ref",
+			"caption": "Realm",
+			"options": {
+				"tags": ["realm"]
+			},
+			"editor": {
+				"component": "dasma/component/radio"
+			}
 		}
 	],
 	"templates": [

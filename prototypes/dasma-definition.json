@@ -10,14 +10,9 @@
 	},
 	"fields": [
 		{
-			"dasma-id.ref": "dasma/field/generic-radio",
-			"readonly": true,
-			"mandatory": true,
+			"dasma-id.ref": "dasma/field/realm",
 			"fieldName": "realm",
-			"caption": "Component: realm (Radio) / UNCHANGEABLE",
-			"options": {
-				"tags": ["realm"]
-			}
+			"caption": "Component: realm (Radio) / UNCHANGEABLE"
 		},
 		{
 			"dasma-id.ref": "dasma/field/caption",
