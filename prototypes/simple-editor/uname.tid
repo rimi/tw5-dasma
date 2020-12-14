@@ -1,6 +1,6 @@
 caption: Prototype: Unique Name
-created: 20201213184048814
-modified: 20201213184049363
+created: 20201214092851431
+modified: 20201214092851662
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/uname
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -10,7 +10,7 @@ type: text/vnd.tiddlywiki
 \define stateFieldName-uname() tmp_uname
 \define targetFieldName-uname() uname
 \define name-uname() Unique Name
-\define mandatory-uname() yes
+\define mandatory-uname() no
 
 \define valid-uname() <$list filter="[<mandatory-uname>!match[yes]]">yes</$list><$list filter="[<mandatory-uname>match[yes]]"><$wikify name="currentValue" text=<<current-value-uname>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theDisplayValidation" text="<<display-validate-uname>>"><$list filter="[<theDisplayValidation>match[yes]]"> <<validate-uname>></$list></$wikify>
 
@@ -71,7 +71,7 @@ type: text/vnd.tiddlywiki
 </$wikify>
 \end
 
-\define readonly-uname() yes
+\define readonly-uname() no
 \define edit-uname()
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-uname>match[no]]+[first[]]">
 <$vars rimir:dasma:tiddler="$(stateTiddler-uname)$" rimir:dasma:field="$(stateFieldName-uname)$" rimir:dasma:filter="[is[]]" rimir:dasma:custom:numOfVisibleElements='3'>

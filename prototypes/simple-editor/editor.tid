@@ -1,26 +1,26 @@
 caption: Prototype-Editor
-created: 20201213175003623
-modified: 20201213175003649
+created: 20201214095501768
+modified: 20201214095501790
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/editor
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
 
-\import $:/plugins/rimir/dasma/templates/editors/table-based-editor $:/plugins/rimir/dasma/prototypes/simple-editor/realm $:/plugins/rimir/dasma/prototypes/simple-editor/caption $:/plugins/rimir/dasma/prototypes/simple-editor/description $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref $:/plugins/rimir/dasma/prototypes/simple-editor/uname
+\import $:/plugins/rimir/dasma/templates/editors/table-based-editor $:/plugins/rimir/dasma/prototypes/simple-editor/realm $:/plugins/rimir/dasma/prototypes/simple-editor/caption $:/plugins/rimir/dasma/prototypes/simple-editor/description $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.refs $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref2 $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref $:/plugins/rimir/dasma/prototypes/simple-editor/uname $:/plugins/rimir/dasma/prototypes/simple-editor/key
 
 \define headline() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$list filter="[<targetTiddler>is[tiddler]]">Edit Prototype Data</$list><$list filter="[<targetTiddler>!is[tiddler]]">Create Prototype Data</$list></$wikify>
 
 \define internalStateBase() <$wikify name="stateTiddler" text=<<stateBase>>><$list filter="[<stateTiddler>length[]!match[0]]"><<stateTiddler>></$list><$list filter="[<stateTiddler>length[]match[0]]"><<qualify "$:/state/rimir/dasma/creation">></$list></$wikify>
-\define internalTarget() <$wikify name="stateTiddler" text=<<internalStateBase>>><$wikify name="targetTiddler" text=<<target>>><$list filter="[<targetTiddler>length[]!match[0]]"><<targetTiddler>></$list><$list filter="[<targetTiddler>length[]match[0]]">{{{[<stateTiddler>get[tmp_realm]]}}}/prototype-elements/<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>></$list></$wikify></$wikify>
+\define internalTarget() <$wikify name="stateTiddler" text=<<internalStateBase>>><$wikify name="targetTiddler" text=<<target>>><$list filter="[<targetTiddler>length[]!match[0]]"><<targetTiddler>></$list><$list filter="[<targetTiddler>length[]match[0]]">{{{[<stateTiddler>get[tmp_realm]]}}}/prototype-elements/<$list filter="[<stateTiddler>get[tmp_uname]length[]!match[0]]" emptyMessage="""<$list filter="[<stateTiddler>get[tmp_key]length[]!match[0]]" emptyMessage="<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>">{{{[<stateTiddler>get[tmp_key]]}}}</$list>""">{{{[<stateTiddler>get[tmp_uname]]}}}</$list></$list></$wikify></$wikify>
 
 \define addStaticFields() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$action-setfield $tiddler="$(targetTiddler)$" tags="prototype"/></$wikify>
 
-\define validEditorComponentsList() <$list filter="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref uname"><$macrocall $name="validateField" fieldName=<<currentTiddler>>/> </$list>
+\define validEditorComponentsList() <$list filter="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref uname key"><$macrocall $name="validateField" fieldName=<<currentTiddler>>/> </$list>
 
 \define validateField(fieldName) <<valid-$fieldName$>>
 
 \define validEditor() <$wikify name="valids" text=<<validEditorComponentsList>>><$list filter="[enlist<valids>match[no]else[yes]]"><<currentTiddler>></$list></$wikify>
 
-<$set name="fields" value="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref uname">
+<$set name="fields" value="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref uname key">
 <$wikify name="targetTiddler" text=<<internalTarget>>>
 <$wikify name="stateTiddler" text=<<internalStateBase>>>
 <<editor>>
