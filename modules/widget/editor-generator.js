@@ -80,7 +80,8 @@ const NARROWERS = {
 }
 
 const VALIDATORS = {
-	"dasma/validators/globally-unique": "$:/plugins/rimir/dasma/templates/validators/global-unique-value"
+	"dasma/validators/globally-unique": "$:/plugins/rimir/dasma/templates/validators/global-unique-value",
+	"dasma/validators/unique": "$:/plugins/rimir/dasma/templates/validators/unique-value"
 }
 
 const VALUE_READERS = {
@@ -348,13 +349,14 @@ GeneratorWidget.prototype.createTitleTemplate = function(editorDescription, edit
 	const template = editorDescription["title-template"] || DEFAULT_TITLE_TEMPLATE;
 	const tmplvars = {
 		"_now": "<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>",
+		"_uname_OR_key_OR_now": "<$list filter=\"[<stateTiddler>get[tmp_uname]length[]!match[0]]\" emptyMessage=\"\"\"<$list filter=\"[<stateTiddler>get[tmp_key]length[]!match[0]]\" emptyMessage=\"<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>\">{{{[<stateTiddler>get[tmp_key]]}}}</$list>\"\"\">{{{[<stateTiddler>get[tmp_uname]]}}}</$list>",
 		"editorId": editorDescription.id
 	}
 	for (var i = 0; i < editorComponentInfos.length; i++) {
 		const compInfo = editorComponentInfos[i];
 		tmplvars[compInfo.fieldName] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]]}}}";
 		//TODO make all existing fields in referenced tiddlers available - not like the following static caption
-		tmplvars[compInfo.fieldName+"/caption"] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]get[caption]]}}}";
+		tmplvars[compInfo.fieldName+"/key"] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]get[key]]}}}";
 	}
 	return formatTemplate(template, tmplvars);
 }
