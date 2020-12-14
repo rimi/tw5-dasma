@@ -14,11 +14,21 @@
 			"id": "dasma/field/uname",
 			"fieldName": "uname",
 			"caption": "Unique Name",
-			"unique": true,
 			"editor": {
 				"component": "dasma/component/singleline",
 				"config": {
 					"validationComponent": "dasma/validators/globally-unique"
+				}
+			}
+		},
+		{
+			"id": "dasma/field/key",
+			"fieldName": "key",
+			"caption": "Key",
+			"editor": {
+				"component": "dasma/component/singleline",
+				"config": {
+					"validationComponent": "dasma/validators/unique"
 				}
 			}
 		},
