@@ -41,6 +41,14 @@
 			}
 		},
 		{
+			"id": "dasma/field/note",
+			"fieldName": "note",
+			"caption": "Note",
+			"editor": {
+				"component": "dasma/component/multiline"
+			}
+		},
+		{
 			"id": "dasma/field/realm",
 			"transient": true,
 			"mandatory": true,
