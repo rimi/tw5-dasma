@@ -328,7 +328,8 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		createHeadline: editorDescription.headline["on-create"] || "CREATE PLACEHOLDER",
 		modifyHeadline: editorDescription.headline["on-modify"] || "MODIFY PLACEHOLDER",
 		imports: this.getEditorRenderTiddlers() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
-		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
+		creationFieldNames: this.createEditorComponentsCreationFieldNamesList(editorComponentInfos),
+		modificationFieldNames: this.createEditorComponentsModificationFieldNamesList(editorComponentInfos),
 		staticFieldAssignments: this.createEditorComponentsStaticFieldAssignments(editorDescription),
 		newTitleTemplate: this.createTitleTemplate(editorDescription, editorComponentInfos)
 	};
@@ -380,8 +381,12 @@ GeneratorWidget.prototype.createEditorComponentsTitlesList = function(editorComp
 	return editorComponentInfos.map(function(elem){return elem.title;}).join(" ");
 }
 	
-GeneratorWidget.prototype.createEditorComponentsFieldNamesList = function(editorComponentInfos) {
-	return editorComponentInfos.map(function(elem){return elem.fieldName;}).join(" ");
+GeneratorWidget.prototype.createEditorComponentsCreationFieldNamesList = function(editorComponentInfos) {
+	return editorComponentInfos.map(function(elem){return elem.showOnCreation ? elem.fieldName : "";}).join(" ");
+}
+
+GeneratorWidget.prototype.createEditorComponentsModificationFieldNamesList = function(editorComponentInfos) {
+	return editorComponentInfos.map(function(elem){return elem.showOnModification ? elem.fieldName : "";}).join(" ");
 }
 	
 GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {
@@ -465,7 +470,9 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 	}
 	return {
 		title: mergedFields.title,
-		fieldName: fieldDescription.fieldName
+		fieldName: fieldDescription.fieldName,
+		showOnCreation: true,
+		showOnModification: !(fieldDescription.mandatory && fieldDescription.transient)
 	};
 }
 	

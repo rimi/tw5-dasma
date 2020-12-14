@@ -1,6 +1,6 @@
 caption: Prototype-Editor
-created: 20201214164945568
-modified: 20201214164945576
+created: 20201214181552385
+modified: 20201214181552400
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/editor
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -14,16 +14,18 @@ type: text/vnd.tiddlywiki
 
 \define addStaticFields() <$wikify name="targetTiddler" text=<<internalTargetTiddler>>><$action-setfield $tiddler="$(targetTiddler)$" tags="prototype"/></$wikify>
 
-\define validEditorComponentsList() <$list filter="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref uname key"><$macrocall $name="validateField" fieldName=<<currentTiddler>>/> </$list>
+\define validEditorComponentsList() <$list filter=<<fields>>><$macrocall $name="validateField" fieldName=<<currentTiddler>>/> </$list>
 
 \define validateField(fieldName) <<valid-$fieldName$>>
 
 \define validEditor() <$wikify name="valids" text=<<validEditorComponentsList>>><$list filter="[enlist<valids>match[no]else[yes]]"><<currentTiddler>></$list></$wikify>
 
-<$set name="fields" value="realm caption description proto.refs2 proto.refs proto.ref2 proto.ref uname key">
+\define fieldNames() <$list filter=<<is-create-filter>>>realm caption description proto.refs2 proto.refs proto.ref2 proto.ref uname key</$list><$list filter=<<is-modify-filter>>> caption description proto.refs2 proto.refs proto.ref2 proto.ref uname key</$list>
+
 <$wikify name="targetTiddler" text=<<internalTarget>>>
 <$wikify name="stateTiddler" text=<<internalStateBase>>>
+<$wikify name="fields" text=<<fieldNames>>>
 <<editor>>
 </$wikify>
 </$wikify>
-</$set>
+</$wikify>
