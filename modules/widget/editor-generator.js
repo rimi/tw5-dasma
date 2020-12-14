@@ -17,6 +17,8 @@ var Widget = require("$:/core/modules/widgets/widget.js").widget;
 const DEFAULT_COMPONENT_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/default-component";
 const DEFAULT_EDITOR_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/default-editor";
 	
+const COMMON_EDITOR_MACROS = "$:/plugins/rimir/dasma/templates/editors/common-editor-macros";
+	
 const COMMON_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/generator/common-dasma-elements";
 
 const PROTOTYPE_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/prototypes/dasma-definition";
@@ -166,8 +168,8 @@ GeneratorWidget.prototype.getCommonDasmaDescriptions = function() {
 	return JSON.parse(commonDasmaElementsJSON);
 }
 
-GeneratorWidget.prototype.getEditorRenderTiddlerName = function() {
-	return "$:/plugins/rimir/dasma/templates/editors/table-based-editor";
+GeneratorWidget.prototype.getEditorRenderTiddlers = function() {
+	return "$:/plugins/rimir/dasma/templates/editors/table-based-editor " + COMMON_EDITOR_MACROS;
 }
 	
 GeneratorWidget.prototype.getBaseGeneratorOutputNamespace = function(editorDescription) {
@@ -325,7 +327,7 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 	const editorConfig = {
 		createHeadline: editorDescription.headline["on-create"] || "CREATE PLACEHOLDER",
 		modifyHeadline: editorDescription.headline["on-modify"] || "MODIFY PLACEHOLDER",
-		imports: this.getEditorRenderTiddlerName() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
+		imports: this.getEditorRenderTiddlers() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
 		fieldNames: this.createEditorComponentsFieldNamesList(editorComponentInfos),
 		staticFieldAssignments: this.createEditorComponentsStaticFieldAssignments(editorDescription),
 		newTitleTemplate: this.createTitleTemplate(editorDescription, editorComponentInfos)

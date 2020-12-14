@@ -1,0 +1,28 @@
+caption: Common Editor-Macros
+created: 20201214164404269
+modified: 20201214164451647
+tags: 
+title: $:/plugins/rimir/dasma/templates/editors/common-editor-macros
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editors
+type: text/vnd.tiddlywiki
+
+\define saveAction(fieldName)
+<<save-$fieldName$>>
+\end
+
+\define loadAction(fieldName)
+<<load-$fieldName$>>
+\end
+
+\define store-actions()
+<$list filter="[enlist<fields>]" variable="field">
+<$macrocall $name="saveAction" fieldName=<<field>>/>
+<<addStaticFields>>
+</$list>
+\end
+
+\define load-actions()
+<$list filter="[enlist<fields>]" variable="field">
+<$macrocall $name="loadAction" fieldName=<<field>>/>
+</$list>
+\end

@@ -1,31 +1,10 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201213175928338
+modified: 20201214164607157
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editors
 type: text/vnd.tiddlywiki
-
-\define saveAction(fieldName)
-<<save-$fieldName$>>
-\end
-
-\define loadAction(fieldName)
-<<load-$fieldName$>>
-\end
-
-\define store-actions()
-<$list filter="[enlist<fields>]" variable="field">
-<$macrocall $name="saveAction" fieldName=<<field>>/>
-<<addStaticFields>>
-</$list>
-\end
-
-\define load-actions()
-<$list filter="[enlist<fields>]" variable="field">
-<$macrocall $name="loadAction" fieldName=<<field>>/>
-</$list>
-\end
 
 \define editorRow(fieldName)
 <tr>
