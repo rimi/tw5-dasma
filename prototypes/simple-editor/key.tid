@@ -1,6 +1,6 @@
-caption: Prototype: Key
-created: 20201214163829433
-modified: 20201214163829567
+caption: Prototype: Locally Unique Key
+created: 20201214183418510
+modified: 20201214183418522
 title: $:/plugins/rimir/dasma/prototypes/simple-editor/key
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
 type: text/vnd.tiddlywiki
@@ -9,7 +9,7 @@ type: text/vnd.tiddlywiki
 
 \define stateFieldName-key() tmp_key
 \define targetFieldName-key() key
-\define name-key() Key
+\define name-key() Locally Unique Key
 \define mandatory-key() no
 \define transient-key() no
 

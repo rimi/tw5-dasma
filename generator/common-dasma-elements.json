@@ -13,7 +13,7 @@
 		{
 			"id": "dasma/field/uname",
 			"fieldName": "uname",
-			"caption": "Unique Name",
+			"caption": "Globally Unique Name",
 			"editor": {
 				"component": "dasma/component/singleline",
 				"config": {
@@ -24,7 +24,7 @@
 		{
 			"id": "dasma/field/key",
 			"fieldName": "key",
-			"caption": "Key",
+			"caption": "Locally Unique Key",
 			"editor": {
 				"component": "dasma/component/singleline",
 				"config": {
