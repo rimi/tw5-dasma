@@ -14,15 +14,15 @@ DASMA Editor-Generator widget
 
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
-const DEFAULT_COMPONENT_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/default-component";
-const DEFAULT_EDITOR_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/default-editor";
+const DEFAULT_COMPONENT_TEMPLATE = "$:/plugins/rimir/dasma/generator/state-indirection-edit-templates/default-component";
+const DEFAULT_EDITOR_TEMPLATE = "$:/plugins/rimir/dasma/generator/state-indirection-edit-templates/default-editor";
 	
 const COMMON_EDITOR_MACROS = "$:/plugins/rimir/dasma/templates/editors/common-editor-macros";
 	
 const COMMON_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/generator/common-dasma-elements";
 
 const PROTOTYPE_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/prototypes/dasma-definition";
-const PROTOTYPE_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/prototypes/simple-editor";
+const PROTOTYPE_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/prototypes/state-indirection-editor";
 
 const TIDDLER_CREATION_STATE_BASE= "$:/state/rimir/dasma/creation";
 const DEFAULT_TITLE_TEMPLATE = "data/${this.editorId}/${this._now}";
@@ -212,7 +212,7 @@ GeneratorWidget.prototype.createCommonFieldOverwrites = function(fieldDescriptio
 GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/" + fieldDescription.fieldName,
-		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping",
+		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping/state-indirection",
 		caption: "Prototype: " + fieldDescription.caption
 	}
 }
@@ -220,7 +220,7 @@ GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescrip
 GeneratorWidget.prototype.createPrototypeEditorOverwrites = function(editorDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/editor",
-		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping",
+		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping/state-indirection",
 		caption: "Prototype-Editor",
 		tags: ["dasma:editor"],
 		"dasma.supported-tag": editorDescription.id

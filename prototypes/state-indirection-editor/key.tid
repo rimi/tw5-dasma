@@ -1,8 +1,8 @@
 caption: Prototype: Locally Unique Key
-created: 20201214183418510
-modified: 20201214183418522
-title: $:/plugins/rimir/dasma/prototypes/simple-editor/key
-tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
+created: 20201215200042098
+modified: 20201215200042221
+title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/key
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-key() $(stateTiddler)$

@@ -1,8 +1,8 @@
 caption: Prototype: Component: proto.ref2 (Radio)
-created: 20201214163829431
-modified: 20201214163829582
-title: $:/plugins/rimir/dasma/prototypes/simple-editor/proto.ref2
-tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
+created: 20201215200042097
+modified: 20201215200042192
+title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.ref2
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-proto.ref2() $(stateTiddler)$
