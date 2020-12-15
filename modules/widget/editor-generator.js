@@ -221,7 +221,9 @@ GeneratorWidget.prototype.createPrototypeEditorOverwrites = function(editorDescr
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/editor",
 		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping",
-		caption: "Prototype-Editor"
+		caption: "Prototype-Editor",
+		tags: ["dasma:editor"],
+		"dasma.supported-tag": editorDescription.id
 	}
 }
 	
@@ -237,7 +239,9 @@ GeneratorWidget.prototype.createCustomEditorOverwrites = function(editorDescript
 	return {
 		title: this.getBaseGeneratorOutputNamespace(editorDescription),
 		"tocp.rimir.parent.ref": this.getEditorTreeLinkingPath(editorDescription),
-		caption: "Editor: " + editorDescription.id
+		caption: "Editor: " + editorDescription.id,
+		tags: ["dasma:editor"],
+		"dasma.supported-tag": editorDescription.id
 	}
 }
 	
