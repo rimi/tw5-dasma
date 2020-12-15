@@ -1,0 +1,26 @@
+caption: DASMA Edit-Template
+created: 20201214205111630
+modified: 20201215081149890
+tags: core-tweak
+title: $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/extensions/core/edit-templates
+type: text/vnd.tiddlywiki
+
+\define delete-edittemplate-state-tiddlers() <$action-deletetiddler $filter="[<newFieldNameTiddler>] [<newFieldValueTiddler>] [<newFieldNameInputTiddler>] [<newFieldNameSelectionTiddler>] [<newTagNameTiddler>] [<newTagNameInputTiddler>] [<newTagNameSelectionTiddler>] [<typeInputTiddler>] [<typeSelectionTiddler>]"/>
+\define save-tiddler-actions()
+<$action-sendmessage $message="tm-add-tag" $param={{{ [<newTagNameTiddler>get[text]] }}}/>
+<$action-sendmessage $message="tm-add-field" $name={{{ [<newFieldNameTiddler>get[text]] }}} $value={{{ [<newFieldValueTiddler>get[text]] }}}/>
+<<delete-edittemplate-state-tiddlers>>
+<$action-sendmessage $message="tm-save-tiddler"/>
+\end
+\define cancel-delete-tiddler-actions(message)
+<<delete-edittemplate-state-tiddlers>>
+<$action-sendmessage $message="tm-$message$-tiddler"/>
+\end
+<div data-tiddler-title=<<currentTiddler>> data-tags={{!!tags}} class={{{ tc-tiddler-frame tc-tiddler-edit-frame [<currentTiddler>is[tiddler]then[tc-tiddler-exists]] [<currentTiddler>is[missing]!is[shadow]then[tc-tiddler-missing]] [<currentTiddler>is[shadow]then[tc-tiddler-exists tc-tiddler-shadow]] [<currentTiddler>is[system]then[tc-tiddler-system]] [{!!class}] [<currentTiddler>tags[]encodeuricomponent[]addprefix[tc-tagged-]] +[join[ ]] }}}>
+<$fieldmangler>
+<$list filter="[tag[dasma:editor]get[dasma.supported-tag]tagging[]is[current]]" emptyMessage="""<$transclude tiddler="$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/original-as-tab"/>""">
+<<tabs "$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/original-as-tab $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/dasma-editor-as-tab" "$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/dasma-editor-as-tab">>
+</$list>
+</$fieldmangler>
+</div>

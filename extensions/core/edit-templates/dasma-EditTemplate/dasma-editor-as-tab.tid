@@ -1,0 +1,20 @@
+caption: DASMA Edit-Template - DASMA-Editor-Tab
+created: 20201215073940924
+modified: 20201215152914628
+tags: 
+title: $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/dasma-editor-as-tab
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/extensions/core/edit-templates
+type: text/vnd.tiddlywiki
+
+<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">>>
+<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>>>
+<$transclude tiddler="$:/core/ui/EditTemplate/controls"/>
+<$list filter="[<currentTiddler>tags[]]" variable="tiddlerTag">
+<$list filter="[tag[dasma:editor]dasma.supported-tag<tiddlerTag>]" variable="editor">
+<$vars target=<<currentTiddler>>>
+<$transclude tiddler=<<editor>>/>
+</$vars>
+</$list>
+</$list>
+</$keyboard>
+</$keyboard>

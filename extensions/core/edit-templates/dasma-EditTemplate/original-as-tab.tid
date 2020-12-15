@@ -1,0 +1,19 @@
+caption: DASMA Edit-Template - Original-Tab
+created: 20201214210050030
+modified: 20201214210301292
+tags: 
+title: $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/original-as-tab
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/extensions/core/edit-templates
+type: text/vnd.tiddlywiki
+
+<$vars storyTiddler=<<currentTiddler>> newTagNameTiddler=<<qualify "$:/temp/NewTagName">> newFieldNameTiddler=<<qualify "$:/temp/NewFieldName">> newFieldValueTiddler=<<qualify "$:/temp/NewFieldValue">> newFieldNameInputTiddler=<<qualify "$:/temp/NewFieldName/input">> newFieldNameSelectionTiddler=<<qualify "$:/temp/NewFieldName/selected-item">> newTagNameInputTiddler=<<qualify "$:/temp/NewTagName/input">> newTagNameSelectionTiddler=<<qualify "$:/temp/NewTagName/selected-item">> typeInputTiddler=<<qualify "$:/temp/Type/input">> typeSelectionTiddler=<<qualify "$:/temp/Type/selected-item">>>
+<$keyboard key="((cancel-edit-tiddler))" actions=<<cancel-delete-tiddler-actions "cancel">>>
+<$keyboard key="((save-tiddler))" actions=<<save-tiddler-actions>>>
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditTemplate]!has[draft.of]]" variable="listItem">
+<$set name="tv-config-toolbar-class" filter="[<tv-config-toolbar-class>] [<listItem>encodeuricomponent[]addprefix[tc-btn-]]">
+<$transclude tiddler=<<listItem>>/>
+</$set>
+</$list>
+</$keyboard>
+</$keyboard>
+</$vars>
