@@ -6,7 +6,7 @@
 	},
 	"title-template": "${this.realm}/prototype-elements/${this._uname_OR_key_OR_now}",
 	"staticFieldAssignments": {
-		"tags": "prototype"
+		"tags": "prototypeOne"
 	},
 	"fields": [
 		{
