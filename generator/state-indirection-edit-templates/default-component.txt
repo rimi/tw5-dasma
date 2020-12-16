@@ -1,6 +1,6 @@
 \\define stateTiddler-${this.fieldName}() ${this.stateTiddlerName}
 
-\\define stateFieldPrefix() <$list filter="[<draftFlow>match[no]]">tmp_</$list>
+\\define stateFieldPrefix() <$list filter="[<wfDraftFlow>!match[yes]]">tmp_</$list>
 
 \\define stateFieldName-${this.fieldName}() $(stateFieldPrefix)$${this.fieldName}
 \\define targetFieldName-${this.fieldName}() ${this.fieldName}

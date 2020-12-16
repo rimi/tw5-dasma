@@ -1,13 +1,13 @@
 caption: Prototype: Component: proto.ref2 (Radio)
-created: 20201216095929846
-modified: 20201216095930181
+created: 20201216125706495
+modified: 20201216125707376
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.ref2
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-proto.ref2() $(stateTiddler)$
 
-\define stateFieldPrefix() <$list filter="[<draftFlow>match[no]]">tmp_</$list>
+\define stateFieldPrefix() <$list filter="[<wfDraftFlow>!match[yes]]">tmp_</$list>
 
 \define stateFieldName-proto.ref2() $(stateFieldPrefix)$proto.ref2
 \define targetFieldName-proto.ref2() proto.ref2

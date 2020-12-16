@@ -1,10 +1,12 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201216095916056
+modified: 20201216120502973
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editors
 type: text/vnd.tiddlywiki
+
+\define showDebug() yes
 
 \define editorRow(fieldName)
 <tr>
@@ -16,8 +18,6 @@ type: text/vnd.tiddlywiki
 <td><$wikify name="theDisplayInformation" text="<<display-info-$fieldName$>>"><$list filter="[<theDisplayInformation>match[yes]]" emptyMessage="-NO INFORMATION-"><<info-$fieldName$>></$list></$wikify></td>
 </tr>
 \end
-
-\define showDebug() yes
 
 \define editor()
 <h2><<headline>></h2>
@@ -52,8 +52,10 @@ type: text/vnd.tiddlywiki
 <$macrocall $name="editorRow" fieldName=<<field>>/>
 </$list>
 </table>
-<$wikify name="editorValid" text=<<validEditor>>>
-<$list filter="[<editorValid>match[yes]]" emptyMessage="NOT VALID">
+<$wikify name="wfDraftFlow" text=<<draftFlow>>>
+<$list filter="[<wfDraftFlow>!match[yes]]">
+<$wikify name="wfEditorValid" text=<<validEditor>>>
+<$list filter="[<wfEditorValid>match[yes]]" emptyMessage="NOT VALID">
 <$button>
 <<store-actions>>
 <$list filter=<<is-modify-filter>>>SAVE CHANGES</$list><$list filter=<<is-create-filter>>>CREATE</$list>
@@ -64,4 +66,6 @@ type: text/vnd.tiddlywiki
 <$list filter=<<is-modify-filter>>><<load-actions>>Discard Changes</$list>
 <$list filter=<<is-create-filter>>><$list filter="[prefix<stateTiddler>]"><$action-deletetiddler $tiddler=<<currentTiddler>>/></$list>Clear Form</$list>
 </$button>
+</$list>
+</$wikify>
 \end

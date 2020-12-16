@@ -1,13 +1,13 @@
 caption: Prototype: Component: proto.ref (SingleSelect)
-created: 20201216095929846
-modified: 20201216095930168
+created: 20201216125706496
+modified: 20201216125707363
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.ref
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-proto.ref() $(stateTiddler)$
 
-\define stateFieldPrefix() <$list filter="[<draftFlow>match[no]]">tmp_</$list>
+\define stateFieldPrefix() <$list filter="[<wfDraftFlow>!match[yes]]">tmp_</$list>
 
 \define stateFieldName-proto.ref() $(stateFieldPrefix)$proto.ref
 \define targetFieldName-proto.ref() proto.ref

@@ -1,13 +1,13 @@
 caption: Prototype: Component: realm (Radio) / UNCHANGEABLE
-created: 20201216095929844
-modified: 20201216095930211
+created: 20201216125706490
+modified: 20201216125707553
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/realm
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-realm() $(stateTiddler)$
 
-\define stateFieldPrefix() <$list filter="[<draftFlow>match[no]]">tmp_</$list>
+\define stateFieldPrefix() <$list filter="[<wfDraftFlow>!match[yes]]">tmp_</$list>
 
 \define stateFieldName-realm() $(stateFieldPrefix)$realm
 \define targetFieldName-realm() realm
