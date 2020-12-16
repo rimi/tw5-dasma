@@ -14,8 +14,8 @@ DASMA Editor-Generator widget
 
 var Widget = require("$:/core/modules/widgets/widget.js").widget;
 
-const DEFAULT_COMPONENT_TEMPLATE = "$:/plugins/rimir/dasma/generator/state-indirection-edit-templates/default-component";
-const DEFAULT_EDITOR_TEMPLATE = "$:/plugins/rimir/dasma/generator/state-indirection-edit-templates/default-editor";
+const DEFAULT_COMPONENT_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/default-component";
+const DEFAULT_EDITOR_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/default-editor";
 	
 const COMMON_EDITOR_MACROS = "$:/plugins/rimir/dasma/templates/editors/common-editor-macros";
 	
@@ -211,7 +211,7 @@ GeneratorWidget.prototype.createCommonFieldOverwrites = function(fieldDescriptio
 GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/" + fieldDescription.fieldName,
-		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping/state-indirection",
+		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping/fields",
 		caption: "Prototype: " + fieldDescription.caption
 	}
 }
@@ -219,7 +219,7 @@ GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescrip
 GeneratorWidget.prototype.createPrototypeEditorOverwrites = function(editorDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/editor",
-		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping/state-indirection",
+		"tocp.dasma-plugin-parent.ref": "#:/p/dasma/#:/prototyping",
 		caption: "Prototype-Editor",
 		tags: ["dasma:editor"],
 		"dasma.supported-tag": editorDescription.id
