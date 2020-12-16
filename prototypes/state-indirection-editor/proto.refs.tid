@@ -1,13 +1,15 @@
 caption: Prototype: Component: proto.refs (MultiSelect)
-created: 20201215200042096
-modified: 20201215200042182
+created: 20201216080426979
+modified: 20201216080428179
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.refs
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-proto.refs() $(stateTiddler)$
 
-\define stateFieldName-proto.refs() tmp_proto.refs
+\define stateFieldPrefix() tmp_
+
+\define stateFieldName-proto.refs() $(stateFieldPrefix)$proto.refs
 \define targetFieldName-proto.refs() proto.refs
 \define name-proto.refs() Component: proto.refs (MultiSelect)
 \define mandatory-proto.refs() no

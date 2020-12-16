@@ -1,13 +1,15 @@
 caption: Prototype: Component: description (MultiLinedText)
-created: 20201215200042095
-modified: 20201215200042160
+created: 20201216080426977
+modified: 20201216080428040
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/description
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-description() $(stateTiddler)$
 
-\define stateFieldName-description() tmp_description
+\define stateFieldPrefix() tmp_
+
+\define stateFieldName-description() $(stateFieldPrefix)$description
 \define targetFieldName-description() description
 \define name-description() Component: description (MultiLinedText)
 \define mandatory-description() no

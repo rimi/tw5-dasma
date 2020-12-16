@@ -1,6 +1,8 @@
 \\define stateTiddler-${this.fieldName}() ${this.stateTiddlerName}
 
-\\define stateFieldName-${this.fieldName}() tmp_${this.fieldName}
+\\define stateFieldPrefix() tmp_
+
+\\define stateFieldName-${this.fieldName}() $(stateFieldPrefix)$${this.fieldName}
 \\define targetFieldName-${this.fieldName}() ${this.fieldName}
 \\define name-${this.fieldName}() ${this.caption}
 \\define mandatory-${this.fieldName}() ${this.mandatory}

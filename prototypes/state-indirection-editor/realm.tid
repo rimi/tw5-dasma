@@ -1,13 +1,15 @@
 caption: Prototype: Component: realm (Radio) / UNCHANGEABLE
-created: 20201215200042093
-modified: 20201215200042118
+created: 20201216080426973
+modified: 20201216080427999
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/realm
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-realm() $(stateTiddler)$
 
-\define stateFieldName-realm() tmp_realm
+\define stateFieldPrefix() tmp_
+
+\define stateFieldName-realm() $(stateFieldPrefix)$realm
 \define targetFieldName-realm() realm
 \define name-realm() Component: realm (Radio) / UNCHANGEABLE
 \define mandatory-realm() yes
