@@ -370,9 +370,9 @@ GeneratorWidget.prototype.createTitleTemplate = function(editorDescription, edit
 	}
 	for (var i = 0; i < editorComponentInfos.length; i++) {
 		const compInfo = editorComponentInfos[i];
-		tmplvars[compInfo.fieldName] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]]}}}";
+		tmplvars[compInfo.fieldName] = "<$wikify name=\"wfStateFieldName\" text=\"<<stateFieldName-" + compInfo.fieldName + ">>\">{{{[<stateTiddler>get<wfStateFieldName>]}}}</$wikify>";
 		//TODO make all existing fields in referenced tiddlers available - not like the following static caption
-		tmplvars[compInfo.fieldName+"/uid"] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]get[uid]]}}}";
+		tmplvars[compInfo.fieldName+"/uid"] = "<$wikify name=\"wfStateFieldName\" text=\"<<stateFieldName-" + compInfo.fieldName + ">>\">{{{[<stateTiddler>get<wfStateFieldName>get[uid]]}}}</$wikify>";
 	}
 	return formatTemplate(template, tmplvars);
 }

@@ -2,8 +2,10 @@
 
 \\define headline() <$wikify name="targetTiddler" text=<<internalTarget>>><$list filter="[<targetTiddler>is[tiddler]]">${this.modifyHeadline}</$list><$list filter="[<targetTiddler>!is[tiddler]]">${this.createHeadline}</$list></$wikify>
 
+\\define titleTemplate() ${this.newTitleTemplate}
+
 \\define internalStateBase() <$wikify name="stateTiddler" text=<<stateBase>>><$list filter="[<stateTiddler>length[]!match[0]]"><<stateTiddler>></$list><$list filter="[<stateTiddler>length[]match[0]]"><<qualify "$:/state/rimir/dasma/creation">></$list></$wikify>
-\\define internalTarget() <$wikify name="stateTiddler" text=<<internalStateBase>>><$wikify name="targetTiddler" text=<<target>>><$wikify name="wfDraftFlow" text=<<draftFlow>>><$list filter="[<wfDraftFlow>match[yes]]">{{{[<stateTiddler>get[draft.of]]}}}</$list><$list filter="[<wfDraftFlow>!match[yes]][<targetTiddler>length[]!match[0]]+[count[]match[2]]"><<targetTiddler>></$list><$list filter="[<wfDraftFlow>!match[yes]][<targetTiddler>length[]match[0]]+[count[]match[2]]">${this.newTitleTemplate}</$list></$wikify></$wikify></$wikify>
+\\define internalTarget() <$wikify name="stateTiddler" text=<<internalStateBase>>><$wikify name="targetTiddler" text=<<target>>><$wikify name="wfDraftFlow" text=<<draftFlow>>><$list filter="[<wfDraftFlow>match[yes]]">{{{[<stateTiddler>get[draft.of]]}}}</$list><$list filter="[<wfDraftFlow>!match[yes]][<targetTiddler>length[]!match[0]]+[count[]match[2]]"><<targetTiddler>></$list><$list filter="[<wfDraftFlow>!match[yes]][<targetTiddler>length[]match[0]]+[count[]match[2]]"><<titleTemplate>></$list></$wikify></$wikify></$wikify>
 
 \\define addStaticFields() <$wikify name="targetTiddler" text=<<internalTarget>>><$action-setfield $tiddler="$(targetTiddler)$" ${this.staticFieldAssignments}/></$wikify>
 
@@ -21,6 +23,7 @@
 <$wikify name="stateTiddler" text=<<internalStateBase>>>
 <$wikify name="fields" text=<<fieldNames>>>
 <$wikify name="wfDraftFlow" text=<<draftFlow>>>
+<$list filter="[<wfDraftFlow>match[yes]]"><$wikify name="wfNewTitle" text=<<titleTemplate>>><$list filter="[<stateTiddler>get[draft.title]!match<wfNewTitle>]"><$button><$action-setfield $tiddler=<<stateTiddler>> $field="draft.title" $value=<<wfNewTitle>>/>Calculated title changed! Use it!</$button></$list></$wikify></$list>
 <<editor>>
 </$wikify>
 </$wikify>
