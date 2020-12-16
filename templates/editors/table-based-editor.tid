@@ -1,6 +1,6 @@
 caption: Table-based Editor
 created: 20201123165722393
-modified: 20201216091335377
+modified: 20201216095916056
 tags: 
 title: $:/plugins/rimir/dasma/templates/editors/table-based-editor
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editors
@@ -17,6 +17,8 @@ type: text/vnd.tiddlywiki
 </tr>
 \end
 
+\define showDebug() yes
+
 \define editor()
 <h2><<headline>></h2>
 <table>
@@ -28,6 +30,7 @@ type: text/vnd.tiddlywiki
 <th>Validation</th>
 <th>Info</th>
 </tr>
+<$list filter="[<showDebug>match[yes]]">
 <tr>
 <th>Tiddler-Title</th>
 <td><$link to=<<targetTiddler>>><<targetTiddler>></$link></td>
@@ -44,11 +47,9 @@ type: text/vnd.tiddlywiki
 <td>--</td>
 <td>--</td>
 </tr>
+</$list>
 <$list filter="[enlist<fields>]" variable="field">
-<$wikify name="wfStateFieldName" text="""<$wikify name="wfMacroName" text="stateFieldName-<<field>>"><$macrocall $name=<<wfMacroName>>/></$wikify>""">
-<<wfStateFieldName>>
 <$macrocall $name="editorRow" fieldName=<<field>>/>
-</$wikify>
 </$list>
 </table>
 <$wikify name="editorValid" text=<<validEditor>>>
