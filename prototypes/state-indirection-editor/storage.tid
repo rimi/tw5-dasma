@@ -1,0 +1,123 @@
+caption: Prototype: Component: storage (Radio)
+created: 20201216164145627
+modified: 20201216164145971
+title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/storage
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
+type: text/vnd.tiddlywiki
+
+\define stateTiddler-storage() $(stateTiddler)$
+
+\define stateFieldPrefix() <$list filter="[<wfDraftFlow>!match[yes]]">tmp_</$list>
+
+\define stateFieldName-storage() $(stateFieldPrefix)$storage
+\define targetFieldName-storage() storage
+\define name-storage() Component: storage (Radio)
+\define mandatory-storage() yes
+\define transient-storage() no
+
+\define valid-storage() <$list filter="[<mandatory-storage>!match[yes]]">yes</$list><$list filter="[<mandatory-storage>match[yes]]"><$wikify name="currentValue" text=<<current-value-storage>>><$list filter="[<currentValue>length[]!match[0]]">yes</$list><$list filter="[<currentValue>length[]match[0]]">no</$list></$wikify></$list><$wikify name="theEnableValidation" text="<<display-validate-storage>>"><$list filter="[<theEnableValidation>match[yes]]"> <<validate-storage>></$list></$wikify>
+
+\define previous-value-storage() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-storage)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
+
+\define current-value-storage() <$wikify name="wfStateFieldName" text=<<stateFieldName-storage>>><$vars rimir:dasma:tiddler=<<stateTiddler-storage>> rimir:dasma:field=<<wfStateFieldName>>><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars></$wikify>
+
+\define display-narrow-storage() yes
+\define narrowStateTiddler-storage() $(stateTiddler-storage)$/narrowTiddlers/$(targetFieldName-storage)$
+\define narrow-storage()
+<$vars rimir:dasma:internalStateTiddler="$(narrowStateTiddler-storage)$">
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/narrowers/caption-only"/>
+</$vars>
+\end
+\define narrow-filter-storage() [search:caption:literal{$(narrowStateTiddler-storage)$!!caption}]
+
+\define display-group-storage() no
+\define groupStateTiddler-storage() $(stateTiddler-storage)$/groupTiddlers/$(targetFieldName-storage)$
+\define group-storage()
+<$vars rimir:dasma:internalStateTiddler="$(groupStateTiddler-storage)$">
+<$transclude tiddler="TBD"/>
+</$vars>
+\end
+
+\define display-validate-storage() no
+\define validateStateTiddler-storage() $(stateTiddler-storage)$/validateTiddlers/$(targetFieldName-storage)$
+\define validate-storage()
+<$wikify name="wfStateFieldName" text=<<stateFieldName-storage>>>
+<$wikify name="theValue" text="""$(current-value-storage)$""">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-storage)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-storage)$" rimir:dasma:currentTiddler="$(stateTiddler-storage)$" rimir:dasma:currentField=<<wfStateFieldName>>>
+<$transclude tiddler="NONE"/>
+</$vars>
+</$wikify>
+</$wikify>
+\end
+
+\define display-info-storage() no
+\define infoStateTiddler-storage() $(stateTiddler-storage)$/infoTiddlers/$(targetFieldName-storage)$
+\define info-storage()
+<$wikify name="wfStateFieldName" text=<<stateFieldName-storage>>>
+<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-storage)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-storage)$" rimir:dasma:currentTiddler="$(stateTiddler-storage)$" rimir:dasma:currentField=<<wfStateFieldName>>>
+<$transclude tiddler="TBD"/>
+</$vars>
+</$wikify>
+\end
+
+\define display-previous-storage() no
+\define previous-storage()
+<$wikify name="theValue" text="""$(previous-value-storage)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
+</$vars>
+</$wikify>
+\end
+
+\define display-current-storage() no
+\define current-storage()
+<$wikify name="theValue" text="""$(current-value-storage)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
+</$vars>
+</$wikify>
+\end
+
+\define readonly-storage() no
+
+\define edit-storage()
+<$list filter="[<targetTiddler>!is[tiddler]][<readonly-storage>match[no]]+[first[]]">
+<$wikify name="wfStateFieldName" text=<<stateFieldName-storage>>>
+<$vars rimir:dasma:tiddler="$(stateTiddler-storage)$" rimir:dasma:field=<<wfStateFieldName>> rimir:dasma:filter="[tag[storage]]+[subfilter<narrow-filter-storage>]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/radiowidget"/>
+</$vars>
+</$wikify>
+</$list>
+<$list filter="[<targetTiddler>is[tiddler]]">
+<$list filter="[<readonly-storage>match[yes]]">
+<$wikify name="theValue" text="""$(previous-value-storage)$""">
+<$vars rimir:dasma:value=<<theValue>>>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/name-renderer"/>
+</$vars>
+</$wikify>
+</$list>
+</$list>
+\end
+
+\define save-storage()
+<$wikify name="currentValue" text=<<current-value-storage>>>
+<$list filter="[<currentValue>length[]!match[0]][<transient-storage>!match[yes]]+[count[]match[2]]">
+<$wikify name="wfStateFieldName" text=<<stateFieldName-storage>>>
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-storage)$" rimir:dasma:sourceField=<<wfStateFieldName>> rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-storage)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+</$wikify>
+</$list>
+<$list filter="[<currentValue>length[]match[0]]">
+<$action-deletefield $tiddler=<<targetTiddler>> $field=<<targetFieldName-storage>>/>
+</$list>
+</$wikify>
+\end
+
+\define load-storage()
+<$wikify name="wfStateFieldName" text=<<stateFieldName-storage>>>
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-storage)$" rimir:dasma:targetTiddler="$(stateTiddler-storage)$" rimir:dasma:targetField=<<wfStateFieldName>> rimir:dasma:custom:numOfVisibleElements='3'>
+<$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
+</$vars>
+</$wikify>
+\end

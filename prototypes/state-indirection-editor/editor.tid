@@ -1,18 +1,18 @@
 caption: Prototype-Editor
-created: 20201216145917221
+created: 20201216164841459
 dasma.supported-tag: prototypeOne
-modified: 20201216145917241
+modified: 20201216164841482
 tags: dasma:editor
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/editor
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
-\import $:/plugins/rimir/dasma/templates/editors/table-based-editor $:/plugins/rimir/dasma/templates/editors/common-editor-macros $:/plugins/rimir/dasma/prototypes/state-indirection-editor/realm $:/plugins/rimir/dasma/prototypes/state-indirection-editor/caption $:/plugins/rimir/dasma/prototypes/state-indirection-editor/description $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.refs2 $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.refs $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.ref2 $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.ref $:/plugins/rimir/dasma/prototypes/state-indirection-editor/uname $:/plugins/rimir/dasma/prototypes/state-indirection-editor/key
+\import $:/plugins/rimir/dasma/templates/editors/table-based-editor $:/plugins/rimir/dasma/templates/editors/common-editor-macros $:/plugins/rimir/dasma/prototypes/state-indirection-editor/storage $:/plugins/rimir/dasma/prototypes/state-indirection-editor/caption $:/plugins/rimir/dasma/prototypes/state-indirection-editor/description $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.refs2 $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.refs $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.ref2 $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.ref $:/plugins/rimir/dasma/prototypes/state-indirection-editor/uname $:/plugins/rimir/dasma/prototypes/state-indirection-editor/uid
 
 \define headline() <$wikify name="targetTiddler" text=<<internalTarget>>><$list filter="[<targetTiddler>is[tiddler]]">Edit Prototype Data</$list><$list filter="[<targetTiddler>!is[tiddler]]">Create Prototype Data</$list></$wikify>
 
 \define internalStateBase() <$wikify name="stateTiddler" text=<<stateBase>>><$list filter="[<stateTiddler>length[]!match[0]]"><<stateTiddler>></$list><$list filter="[<stateTiddler>length[]match[0]]"><<qualify "$:/state/rimir/dasma/creation">></$list></$wikify>
-\define internalTarget() <$wikify name="stateTiddler" text=<<internalStateBase>>><$wikify name="targetTiddler" text=<<target>>><$wikify name="wfDraftFlow" text=<<draftFlow>>><$list filter="[<wfDraftFlow>match[yes]]">{{{[<stateTiddler>get[draft.of]]}}}</$list><$list filter="[<wfDraftFlow>!match[yes]][<targetTiddler>length[]!match[0]]+[count[]match[2]]"><<targetTiddler>></$list><$list filter="[<wfDraftFlow>!match[yes]][<targetTiddler>length[]match[0]]+[count[]match[2]]">{{{[<stateTiddler>get[tmp_realm]]}}}/prototype-elements/<$list filter="[<stateTiddler>get[tmp_uname]length[]!match[0]]" emptyMessage="""<$list filter="[<stateTiddler>get[tmp_key]length[]!match[0]]" emptyMessage="<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>">{{{[<stateTiddler>get[tmp_key]]}}}</$list>""">{{{[<stateTiddler>get[tmp_uname]]}}}</$list></$list></$wikify></$wikify></$wikify>
+\define internalTarget() <$wikify name="stateTiddler" text=<<internalStateBase>>><$wikify name="targetTiddler" text=<<target>>><$wikify name="wfDraftFlow" text=<<draftFlow>>><$list filter="[<wfDraftFlow>match[yes]]">{{{[<stateTiddler>get[draft.of]]}}}</$list><$list filter="[<wfDraftFlow>!match[yes]][<targetTiddler>length[]!match[0]]+[count[]match[2]]"><<targetTiddler>></$list><$list filter="[<wfDraftFlow>!match[yes]][<targetTiddler>length[]match[0]]+[count[]match[2]]">{{{[<stateTiddler>get[tmp_storage]]}}}/prototype-elements/<$wikify name="wfUid" text="<<stateFieldName-uid>>"><$list filter="[<stateTiddler>get<wfUid>length[]!match[0]]" emptyMessage="<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>">{{{[<stateTiddler>get<wfUid>]}}}</$list></$wikify></$list></$wikify></$wikify></$wikify>
 
 \define addStaticFields() <$wikify name="targetTiddler" text=<<internalTarget>>><$action-setfield $tiddler="$(targetTiddler)$" tags="prototypeOne"/></$wikify>
 
@@ -22,7 +22,7 @@ type: text/vnd.tiddlywiki
 
 \define validEditor() <$wikify name="valids" text=<<validEditorComponentsList>>><$list filter="[enlist<valids>match[no]else[yes]]"><<currentTiddler>></$list></$wikify>
 
-\define fieldNames() <$list filter=<<is-create-filter>>>realm caption description proto.refs2 proto.refs proto.ref2 proto.ref uname key</$list><$list filter=<<is-modify-filter>>> caption description proto.refs2 proto.refs proto.ref2 proto.ref uname key</$list>
+\define fieldNames() <$list filter=<<is-create-filter>>>storage caption description proto.refs2 proto.refs proto.ref2 proto.ref uname uid</$list><$list filter=<<is-modify-filter>>>storage caption description proto.refs2 proto.refs proto.ref2 proto.ref uname uid</$list>
 
 \define draftFlow() <$list filter="[<stateTiddler>has[draft.of]]" emptyMessage="no">yes</$list>
 

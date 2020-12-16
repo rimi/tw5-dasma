@@ -88,8 +88,7 @@ const NARROWERS = {
 }
 
 const VALIDATORS = {
-	"dasma/validators/globally-unique-nospace": "$:/plugins/rimir/dasma/templates/validators/global-unique-value",
-	"dasma/validators/unique-nospace": "$:/plugins/rimir/dasma/templates/validators/unique-value",
+	"dasma/validators/unique-key": "$:/plugins/rimir/dasma/templates/validators/global-unique-value",
 	"dasma/validators/phone": "TODO",
 	"dasma/validators/e-mail": "TODO",
 	"dasma/validators/date-in-past": "TODO"
@@ -366,14 +365,14 @@ GeneratorWidget.prototype.createTitleTemplate = function(editorDescription, edit
 	const template = editorDescription["title-template"] || DEFAULT_TITLE_TEMPLATE;
 	const tmplvars = {
 		"_now": "<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>",
-		"_uname_OR_key_OR_now": "<$list filter=\"[<stateTiddler>get[tmp_uname]length[]!match[0]]\" emptyMessage=\"\"\"<$list filter=\"[<stateTiddler>get[tmp_key]length[]!match[0]]\" emptyMessage=\"<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>\">{{{[<stateTiddler>get[tmp_key]]}}}</$list>\"\"\">{{{[<stateTiddler>get[tmp_uname]]}}}</$list>",
+		"_uid_OR_now": "<$wikify name=\"wfUid\" text=\"<<stateFieldName-uid>>\"><$list filter=\"[<stateTiddler>get<wfUid>length[]!match[0]]\" emptyMessage=\"<<now '[UTC]YYYY0MM0DD0hh0mm0ssXXX'>>\">{{{[<stateTiddler>get<wfUid>]}}}</$list></$wikify>",
 		"editorId": editorDescription.id
 	}
 	for (var i = 0; i < editorComponentInfos.length; i++) {
 		const compInfo = editorComponentInfos[i];
 		tmplvars[compInfo.fieldName] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]]}}}";
 		//TODO make all existing fields in referenced tiddlers available - not like the following static caption
-		tmplvars[compInfo.fieldName+"/key"] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]get[key]]}}}";
+		tmplvars[compInfo.fieldName+"/uid"] = "{{{[<stateTiddler>get[tmp_" + compInfo.fieldName + "]get[uid]]}}}";
 	}
 	return formatTemplate(template, tmplvars);
 }

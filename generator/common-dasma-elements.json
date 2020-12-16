@@ -4,6 +4,7 @@
 			"id": "dasma/field/caption",
 			"fieldName": "caption",
 			"caption": "Caption",
+			"description": "Human readable name of this entity",
 			"mandatory": true,
 			"displayPrevious": true,
 			"editor": {
@@ -14,22 +15,33 @@
 			"id": "dasma/field/uname",
 			"fieldName": "uname",
 			"caption": "Globally Unique Name",
+			"description": "Wiki-wide unique name that can be 'remembered' by humans and used e.g. inside of texts. May change over time.",
 			"editor": {
 				"component": "dasma/component/singleline",
 				"config": {
-					"validationComponent": "dasma/validators/globally-unique-nospace"
+					"validationComponent": "dasma/validators/unique-key"
 				}
 			}
 		},
 		{
-			"id": "dasma/field/key",
-			"fieldName": "key",
-			"caption": "Locally Unique Key",
+			"id": "dasma/field/uid",
+			"fieldName": "uid",
+			"mandatory": true,
+			"caption": "Globally Unique ID",
+			"description": "Wiki-wide unique id that can (but does not need to) be 'remembered' by humans and used e.g. inside of texts. Does NOT change over time -> therefor CAN be generated.",
 			"editor": {
 				"component": "dasma/component/singleline",
 				"config": {
-					"validationComponent": "dasma/validators/unique-nospace"
+					"validationComponent": "dasma/validators/unique-key"
 				}
+			}
+		},
+		{
+			"id": "dasma/field/title-infix",
+			"fieldName": "tinfix",
+			"caption": "Title Infix",
+			"editor": {
+				"component": "dasma/component/singleline"
 			}
 		},
 		{
@@ -49,13 +61,12 @@
 			}
 		},
 		{
-			"id": "dasma/field/realm",
-			"transient": true,
+			"id": "dasma/field/storage",
 			"mandatory": true,
-			"fieldName": "realm.ref",
-			"caption": "Realm",
+			"fieldName": "storage.ref",
+			"caption": "Storage",
 			"options": {
-				"tags": ["realm"]
+				"tags": ["storage"]
 			},
 			"editor": {
 				"component": "dasma/component/radio"
