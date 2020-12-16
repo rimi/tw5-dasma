@@ -1,13 +1,13 @@
 caption: Prototype: Locally Unique Key
-created: 20201216080426982
-modified: 20201216080428265
+created: 20201216092754158
+modified: 20201216092754359
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/key
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-key() $(stateTiddler)$
 
-\define stateFieldPrefix() tmp_
+\define stateFieldPrefix() <$list filter="[<draftFlow>match[no]]">tmp_</$list>
 
 \define stateFieldName-key() $(stateFieldPrefix)$key
 \define targetFieldName-key() key
@@ -19,7 +19,7 @@ type: text/vnd.tiddlywiki
 
 \define previous-value-key() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-key)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
-\define current-value-key() <$vars rimir:dasma:tiddler="$(stateTiddler-key)$" rimir:dasma:field="$(stateFieldName-key)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
+\define current-value-key() <$wikify name="wfStateFieldName" text=<<stateFieldName-key>>><$vars rimir:dasma:tiddler=<<stateTiddler-key>> rimir:dasma:field=<<wfStateFieldName>>><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars></$wikify>
 
 \define display-narrow-key() no
 \define narrowStateTiddler-key() $(stateTiddler-key)$/narrowTiddlers/$(targetFieldName-key)$
@@ -41,19 +41,23 @@ type: text/vnd.tiddlywiki
 \define display-validate-key() yes
 \define validateStateTiddler-key() $(stateTiddler-key)$/validateTiddlers/$(targetFieldName-key)$
 \define validate-key()
+<$wikify name="wfStateFieldName" text=<<stateFieldName-key>>>
 <$wikify name="theValue" text="""$(current-value-key)$""">
-<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-key)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-key)$" rimir:dasma:currentTiddler="$(stateTiddler-key)$" rimir:dasma:currentField="$(stateFieldName-key)$">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-key)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-key)$" rimir:dasma:currentTiddler="$(stateTiddler-key)$" rimir:dasma:currentField=<<wfStateFieldName>>>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/validators/unique-value"/>
 </$vars>
+</$wikify>
 </$wikify>
 \end
 
 \define display-info-key() no
 \define infoStateTiddler-key() $(stateTiddler-key)$/infoTiddlers/$(targetFieldName-key)$
 \define info-key()
-<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-key)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-key)$" rimir:dasma:currentTiddler="$(stateTiddler-key)$" rimir:dasma:currentField="$(stateFieldName-key)$">
+<$wikify name="wfStateFieldName" text=<<stateFieldName-key>>>
+<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-key)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-key)$" rimir:dasma:currentTiddler="$(stateTiddler-key)$" rimir:dasma:currentField=<<wfStateFieldName>>>
 <$transclude tiddler="TBD"/>
 </$vars>
+</$wikify>
 \end
 
 \define display-previous-key() no
@@ -75,11 +79,14 @@ type: text/vnd.tiddlywiki
 \end
 
 \define readonly-key() no
+
 \define edit-key()
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-key>match[no]]+[first[]]">
-<$vars rimir:dasma:tiddler="$(stateTiddler-key)$" rimir:dasma:field="$(stateFieldName-key)$" rimir:dasma:filter="[is[]]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-key>>>
+<$vars rimir:dasma:tiddler="$(stateTiddler-key)$" rimir:dasma:field=<<wfStateFieldName>> rimir:dasma:filter="[is[]]" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/edittextwidget-singlelined"/>
 </$vars>
+</$wikify>
 </$list>
 <$list filter="[<targetTiddler>is[tiddler]]">
 <$list filter="[<readonly-key>match[yes]]">
@@ -95,9 +102,11 @@ type: text/vnd.tiddlywiki
 \define save-key()
 <$wikify name="currentValue" text=<<current-value-key>>>
 <$list filter="[<currentValue>length[]!match[0]][<transient-key>!match[yes]]+[count[]match[2]]">
-<$vars rimir:dasma:sourceTiddler="$(stateTiddler-key)$" rimir:dasma:sourceField="$(stateFieldName-key)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-key)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-key>>>
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-key)$" rimir:dasma:sourceField=<<wfStateFieldName>> rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-key)$" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
+</$wikify>
 </$list>
 <$list filter="[<currentValue>length[]match[0]]">
 <$action-deletefield $tiddler=<<targetTiddler>> $field=<<targetFieldName-key>>/>
@@ -106,7 +115,9 @@ type: text/vnd.tiddlywiki
 \end
 
 \define load-key()
-<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-key)$" rimir:dasma:targetTiddler="$(stateTiddler-key)$" rimir:dasma:targetField="$(stateFieldName-key)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-key>>>
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-key)$" rimir:dasma:targetTiddler="$(stateTiddler-key)$" rimir:dasma:targetField=<<wfStateFieldName>> rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
+</$wikify>
 \end

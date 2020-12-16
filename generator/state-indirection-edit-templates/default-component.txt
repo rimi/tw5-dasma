@@ -1,6 +1,6 @@
 \\define stateTiddler-${this.fieldName}() ${this.stateTiddlerName}
 
-\\define stateFieldPrefix() tmp_
+\\define stateFieldPrefix() <$list filter="[<draftFlow>match[no]]">tmp_</$list>
 
 \\define stateFieldName-${this.fieldName}() $(stateFieldPrefix)$${this.fieldName}
 \\define targetFieldName-${this.fieldName}() ${this.fieldName}
@@ -12,7 +12,7 @@
 
 \\define previous-value-${this.fieldName}() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-${this.fieldName})$"><$transclude tiddler="${this.previousValueReader.component}"/></$vars>
 
-\\define current-value-${this.fieldName}() <$vars rimir:dasma:tiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:field="$(stateFieldName-${this.fieldName})$"><$transclude tiddler="${this.currentValueReader.component}"/></$vars>
+\\define current-value-${this.fieldName}() <$vars rimir:dasma:tiddler=<<stateTiddler-${this.fieldName}>> rimir:dasma:field=<<wfStateFieldName>>><$transclude tiddler="${this.currentValueReader.component}"/></$vars>
 
 \\define display-narrow-${this.fieldName}() ${this.narrowing.display}
 \\define narrowStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/narrowTiddlers/$(targetFieldName-${this.fieldName})$
@@ -35,7 +35,7 @@
 \\define validateStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/validateTiddlers/$(targetFieldName-${this.fieldName})$
 \\define validate-${this.fieldName}()
 <$wikify name="theValue" text="""$(current-value-${this.fieldName})$""">
-<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-${this.fieldName})$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-${this.fieldName})$" rimir:dasma:currentTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:currentField="$(stateFieldName-${this.fieldName})$">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-${this.fieldName})$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-${this.fieldName})$" rimir:dasma:currentTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:currentField=<<wfStateFieldName>>>
 <$transclude tiddler="${this.validation.component}"/>
 </$vars>
 </$wikify>
@@ -44,7 +44,7 @@
 \\define display-info-${this.fieldName}() ${this.information.display}
 \\define infoStateTiddler-${this.fieldName}() $(stateTiddler-${this.fieldName})$/infoTiddlers/$(targetFieldName-${this.fieldName})$
 \\define info-${this.fieldName}()
-<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-${this.fieldName})$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-${this.fieldName})$" rimir:dasma:currentTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:currentField="$(stateFieldName-${this.fieldName})$">
+<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-${this.fieldName})$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-${this.fieldName})$" rimir:dasma:currentTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:currentField=<<wfStateFieldName>>>
 <$transclude tiddler="${this.information.component}"/>
 </$vars>
 \\end
@@ -68,9 +68,10 @@
 \\end
 
 \\define readonly-${this.fieldName}() ${this.readonlyRenderer.display}
+
 \\define edit-${this.fieldName}()
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-${this.fieldName}>match[no]]+[first[]]">
-<$vars rimir:dasma:tiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:field="$(stateFieldName-${this.fieldName})$" rimir:dasma:filter="${this.edit.filter}" ${this.edit.customFields}>
+<$vars rimir:dasma:tiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:field=<<wfStateFieldName>> rimir:dasma:filter="${this.edit.filter}" ${this.edit.customFields}>
 <$transclude tiddler="${this.edit.component}"/>
 </$vars>
 </$list>
@@ -88,7 +89,7 @@
 \\define save-${this.fieldName}()
 <$wikify name="currentValue" text=<<current-value-${this.fieldName}>>>
 <$list filter="[<currentValue>length[]!match[0]][<transient-${this.fieldName}>!match[yes]]+[count[]match[2]]">
-<$vars rimir:dasma:sourceTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:sourceField="$(stateFieldName-${this.fieldName})$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-${this.fieldName})$" ${this.save.customFields}>
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:sourceField=<<wfStateFieldName>> rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-${this.fieldName})$" ${this.save.customFields}>
 <$transclude tiddler="${this.save.component}"/>
 </$vars>
 </$list>
@@ -99,7 +100,7 @@
 \\end
 
 \\define load-${this.fieldName}()
-<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-${this.fieldName})$" rimir:dasma:targetTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:targetField="$(stateFieldName-${this.fieldName})$" ${this.load.customFields}>
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-${this.fieldName})$" rimir:dasma:targetTiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:targetField=<<wfStateFieldName>> ${this.load.customFields}>
 <$transclude tiddler="${this.load.component}"/>
 </$vars>
 \\end

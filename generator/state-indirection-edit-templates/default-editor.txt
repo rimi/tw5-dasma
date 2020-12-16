@@ -18,7 +18,9 @@
 <$wikify name="targetTiddler" text=<<internalTarget>>>
 <$wikify name="stateTiddler" text=<<internalStateBase>>>
 <$wikify name="fields" text=<<fieldNames>>>
+<$wikify name="draftFlow" text="yes">
 <<editor>>
+</$wikify>
 </$wikify>
 </$wikify>
 </$wikify>

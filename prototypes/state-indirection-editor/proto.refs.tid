@@ -1,13 +1,13 @@
 caption: Prototype: Component: proto.refs (MultiSelect)
-created: 20201216080426979
-modified: 20201216080428179
+created: 20201216092754156
+modified: 20201216092754402
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.refs
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-proto.refs() $(stateTiddler)$
 
-\define stateFieldPrefix() tmp_
+\define stateFieldPrefix() <$list filter="[<draftFlow>match[no]]">tmp_</$list>
 
 \define stateFieldName-proto.refs() $(stateFieldPrefix)$proto.refs
 \define targetFieldName-proto.refs() proto.refs
@@ -19,7 +19,7 @@ type: text/vnd.tiddlywiki
 
 \define previous-value-proto.refs() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-proto.refs)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
-\define current-value-proto.refs() <$vars rimir:dasma:tiddler="$(stateTiddler-proto.refs)$" rimir:dasma:field="$(stateFieldName-proto.refs)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
+\define current-value-proto.refs() <$wikify name="wfStateFieldName" text=<<stateFieldName-proto.refs>>><$vars rimir:dasma:tiddler=<<stateTiddler-proto.refs>> rimir:dasma:field=<<wfStateFieldName>>><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars></$wikify>
 
 \define display-narrow-proto.refs() yes
 \define narrowStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/narrowTiddlers/$(targetFieldName-proto.refs)$
@@ -41,19 +41,23 @@ type: text/vnd.tiddlywiki
 \define display-validate-proto.refs() no
 \define validateStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/validateTiddlers/$(targetFieldName-proto.refs)$
 \define validate-proto.refs()
+<$wikify name="wfStateFieldName" text=<<stateFieldName-proto.refs>>>
 <$wikify name="theValue" text="""$(current-value-proto.refs)$""">
-<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-proto.refs)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-proto.refs)$" rimir:dasma:currentTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:currentField="$(stateFieldName-proto.refs)$">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-proto.refs)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-proto.refs)$" rimir:dasma:currentTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:currentField=<<wfStateFieldName>>>
 <$transclude tiddler="NONE"/>
 </$vars>
+</$wikify>
 </$wikify>
 \end
 
 \define display-info-proto.refs() no
 \define infoStateTiddler-proto.refs() $(stateTiddler-proto.refs)$/infoTiddlers/$(targetFieldName-proto.refs)$
 \define info-proto.refs()
-<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-proto.refs)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-proto.refs)$" rimir:dasma:currentTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:currentField="$(stateFieldName-proto.refs)$">
+<$wikify name="wfStateFieldName" text=<<stateFieldName-proto.refs>>>
+<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-proto.refs)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-proto.refs)$" rimir:dasma:currentTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:currentField=<<wfStateFieldName>>>
 <$transclude tiddler="TBD"/>
 </$vars>
+</$wikify>
 \end
 
 \define display-previous-proto.refs() yes
@@ -75,11 +79,14 @@ type: text/vnd.tiddlywiki
 \end
 
 \define readonly-proto.refs() no
+
 \define edit-proto.refs()
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-proto.refs>match[no]]+[first[]]">
-<$vars rimir:dasma:tiddler="$(stateTiddler-proto.refs)$" rimir:dasma:field="$(stateFieldName-proto.refs)$" rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]+[subfilter<narrow-filter-proto.refs>]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-proto.refs>>>
+<$vars rimir:dasma:tiddler="$(stateTiddler-proto.refs)$" rimir:dasma:field=<<wfStateFieldName>> rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]+[subfilter<narrow-filter-proto.refs>]" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget"/>
 </$vars>
+</$wikify>
 </$list>
 <$list filter="[<targetTiddler>is[tiddler]]">
 <$list filter="[<readonly-proto.refs>match[yes]]">
@@ -95,9 +102,11 @@ type: text/vnd.tiddlywiki
 \define save-proto.refs()
 <$wikify name="currentValue" text=<<current-value-proto.refs>>>
 <$list filter="[<currentValue>length[]!match[0]][<transient-proto.refs>!match[yes]]+[count[]match[2]]">
-<$vars rimir:dasma:sourceTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:sourceField="$(stateFieldName-proto.refs)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-proto.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-proto.refs>>>
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:sourceField=<<wfStateFieldName>> rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-proto.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
+</$wikify>
 </$list>
 <$list filter="[<currentValue>length[]match[0]]">
 <$action-deletefield $tiddler=<<targetTiddler>> $field=<<targetFieldName-proto.refs>>/>
@@ -106,7 +115,9 @@ type: text/vnd.tiddlywiki
 \end
 
 \define load-proto.refs()
-<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-proto.refs)$" rimir:dasma:targetTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:targetField="$(stateFieldName-proto.refs)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-proto.refs>>>
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-proto.refs)$" rimir:dasma:targetTiddler="$(stateTiddler-proto.refs)$" rimir:dasma:targetField=<<wfStateFieldName>> rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
+</$wikify>
 \end

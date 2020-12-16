@@ -28,7 +28,7 @@ const TIDDLER_CREATION_STATE_BASE= "$:/state/rimir/dasma/creation";
 const DEFAULT_TITLE_TEMPLATE = "data/${this.editorId}/${this._now}";
 	
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
-const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/$(stateFieldName-${this.fieldName})$";
+const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/${this.fieldName}";
 
 const FORCE_GENERATION = false;
 

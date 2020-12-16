@@ -1,13 +1,13 @@
 caption: Prototype: Component: realm (Radio) / UNCHANGEABLE
-created: 20201216080426973
-modified: 20201216080427999
+created: 20201216092754154
+modified: 20201216092754431
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/realm
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-realm() $(stateTiddler)$
 
-\define stateFieldPrefix() tmp_
+\define stateFieldPrefix() <$list filter="[<draftFlow>match[no]]">tmp_</$list>
 
 \define stateFieldName-realm() $(stateFieldPrefix)$realm
 \define targetFieldName-realm() realm
@@ -19,7 +19,7 @@ type: text/vnd.tiddlywiki
 
 \define previous-value-realm() <$vars rimir:dasma:tiddler="$(targetTiddler)$" rimir:dasma:field="$(targetFieldName-realm)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
 
-\define current-value-realm() <$vars rimir:dasma:tiddler="$(stateTiddler-realm)$" rimir:dasma:field="$(stateFieldName-realm)$"><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars>
+\define current-value-realm() <$wikify name="wfStateFieldName" text=<<stateFieldName-realm>>><$vars rimir:dasma:tiddler=<<stateTiddler-realm>> rimir:dasma:field=<<wfStateFieldName>>><$transclude tiddler="$:/plugins/rimir/dasma/templates/value-readers/read-field"/></$vars></$wikify>
 
 \define display-narrow-realm() yes
 \define narrowStateTiddler-realm() $(stateTiddler-realm)$/narrowTiddlers/$(targetFieldName-realm)$
@@ -41,19 +41,23 @@ type: text/vnd.tiddlywiki
 \define display-validate-realm() no
 \define validateStateTiddler-realm() $(stateTiddler-realm)$/validateTiddlers/$(targetFieldName-realm)$
 \define validate-realm()
+<$wikify name="wfStateFieldName" text=<<stateFieldName-realm>>>
 <$wikify name="theValue" text="""$(current-value-realm)$""">
-<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-realm)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-realm)$" rimir:dasma:currentTiddler="$(stateTiddler-realm)$" rimir:dasma:currentField="$(stateFieldName-realm)$">
+<$vars rimir:dasma:value=<<theValue>> rimir:dasma:internalStateTiddler="$(validateStateTiddler-realm)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-realm)$" rimir:dasma:currentTiddler="$(stateTiddler-realm)$" rimir:dasma:currentField=<<wfStateFieldName>>>
 <$transclude tiddler="NONE"/>
 </$vars>
+</$wikify>
 </$wikify>
 \end
 
 \define display-info-realm() no
 \define infoStateTiddler-realm() $(stateTiddler-realm)$/infoTiddlers/$(targetFieldName-realm)$
 \define info-realm()
-<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-realm)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-realm)$" rimir:dasma:currentTiddler="$(stateTiddler-realm)$" rimir:dasma:currentField="$(stateFieldName-realm)$">
+<$wikify name="wfStateFieldName" text=<<stateFieldName-realm>>>
+<$vars rimir:dasma:internalStateTiddler="$(infoStateTiddler-realm)$" rimir:dasma:previousTiddler="$(targetTiddler)$" rimir:dasma:previousField="$(targetFieldName-realm)$" rimir:dasma:currentTiddler="$(stateTiddler-realm)$" rimir:dasma:currentField=<<wfStateFieldName>>>
 <$transclude tiddler="TBD"/>
 </$vars>
+</$wikify>
 \end
 
 \define display-previous-realm() no
@@ -75,11 +79,14 @@ type: text/vnd.tiddlywiki
 \end
 
 \define readonly-realm() no
+
 \define edit-realm()
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-realm>match[no]]+[first[]]">
-<$vars rimir:dasma:tiddler="$(stateTiddler-realm)$" rimir:dasma:field="$(stateFieldName-realm)$" rimir:dasma:filter="[tag[realm]]+[subfilter<narrow-filter-realm>]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-realm>>>
+<$vars rimir:dasma:tiddler="$(stateTiddler-realm)$" rimir:dasma:field=<<wfStateFieldName>> rimir:dasma:filter="[tag[realm]]+[subfilter<narrow-filter-realm>]" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/radiowidget"/>
 </$vars>
+</$wikify>
 </$list>
 <$list filter="[<targetTiddler>is[tiddler]]">
 <$list filter="[<readonly-realm>match[yes]]">
@@ -95,9 +102,11 @@ type: text/vnd.tiddlywiki
 \define save-realm()
 <$wikify name="currentValue" text=<<current-value-realm>>>
 <$list filter="[<currentValue>length[]!match[0]][<transient-realm>!match[yes]]+[count[]match[2]]">
-<$vars rimir:dasma:sourceTiddler="$(stateTiddler-realm)$" rimir:dasma:sourceField="$(stateFieldName-realm)$" rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-realm)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-realm>>>
+<$vars rimir:dasma:sourceTiddler="$(stateTiddler-realm)$" rimir:dasma:sourceField=<<wfStateFieldName>> rimir:dasma:targetTiddler="$(targetTiddler)$" rimir:dasma:targetField="$(targetFieldName-realm)$" rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
+</$wikify>
 </$list>
 <$list filter="[<currentValue>length[]match[0]]">
 <$action-deletefield $tiddler=<<targetTiddler>> $field=<<targetFieldName-realm>>/>
@@ -106,7 +115,9 @@ type: text/vnd.tiddlywiki
 \end
 
 \define load-realm()
-<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-realm)$" rimir:dasma:targetTiddler="$(stateTiddler-realm)$" rimir:dasma:targetField="$(stateFieldName-realm)$" rimir:dasma:custom:numOfVisibleElements='3'>
+<$wikify name="wfStateFieldName" text=<<stateFieldName-realm>>>
+<$vars rimir:dasma:sourceTiddler="$(targetTiddler)$" rimir:dasma:sourceField="$(targetFieldName-realm)$" rimir:dasma:targetTiddler="$(stateTiddler-realm)$" rimir:dasma:targetField=<<wfStateFieldName>> rimir:dasma:custom:numOfVisibleElements='3'>
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/actions/copy-field-to-field"/>
 </$vars>
+</$wikify>
 \end
