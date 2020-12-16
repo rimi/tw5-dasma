@@ -1,8 +1,8 @@
 caption: Prototype: Globally Unique Name
 created: 20201216155809050
-modified: 20201216155809311
+modified: 20201216165735871
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/uname
-tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/state-indirection
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/fields
 type: text/vnd.tiddlywiki
 
 \define stateTiddler-uname() $(stateTiddler)$
