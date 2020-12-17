@@ -91,6 +91,7 @@ const VALIDATORS = {
 	"dasma/validators/unique-key": "$:/plugins/rimir/dasma/templates/validators/global-unique-value",
 	"dasma/validators/phone": "TODO",
 	"dasma/validators/e-mail": "TODO",
+	"dasma/validators/url": "TODO",
 	"dasma/validators/date-in-past": "TODO"
 }
 

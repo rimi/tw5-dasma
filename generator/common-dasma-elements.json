@@ -95,6 +95,17 @@
 			}
 		},
 		{
+			"id": "dasma/field/url",
+			"fieldName": "url",
+			"caption": "URL",
+			"editor": {
+				"component": "dasma/component/singleline",
+				"config": {
+					"validationComponent": "dasma/validators/url"
+				}
+			}
+		},
+		{
 			"id": "dasma/field/date",
 			"fieldName": "date",
 			"caption": "Date",
