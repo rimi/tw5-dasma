@@ -1,6 +1,6 @@
 caption: Prototype: Globally Unique Name
-created: 20201216155809050
-modified: 20201216165735871
+created: 20201217122824602
+modified: 20201217122825174
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/uname
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/fields
 type: text/vnd.tiddlywiki
@@ -84,7 +84,9 @@ type: text/vnd.tiddlywiki
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-uname>match[no]]+[first[]]">
 <$wikify name="wfStateFieldName" text=<<stateFieldName-uname>>>
 <$vars rimir:dasma:tiddler="$(stateTiddler-uname)$" rimir:dasma:field=<<wfStateFieldName>> rimir:dasma:filter="[is[]]" rimir:dasma:custom:numOfVisibleElements='3'>
+<$set name="referenceField" value="uid">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/edittextwidget-singlelined"/>
+</$set>
 </$vars>
 </$wikify>
 </$list>
@@ -92,7 +94,9 @@ type: text/vnd.tiddlywiki
 <$list filter="[<readonly-uname>match[yes]]">
 <$wikify name="theValue" text="""$(previous-value-uname)$""">
 <$vars rimir:dasma:value=<<theValue>>>
+<$set name="referenceField" value="uid">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/simple-renderer"/>
+</$set>
 </$vars>
 </$wikify>
 </$list>

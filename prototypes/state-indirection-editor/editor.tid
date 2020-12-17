@@ -1,7 +1,7 @@
 caption: Prototype-Editor
-created: 20201216190415515
+created: 20201217121627037
 dasma.supported-tag: prototypeOne
-modified: 20201216190415540
+modified: 20201217121627074
 tags: dasma:editor
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/editor
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping
@@ -27,6 +27,8 @@ type: text/vnd.tiddlywiki
 \define fieldNames() <$list filter=<<is-create-filter>>>storage caption description proto.refs2 proto.refs proto.ref2 proto.ref uname uid</$list><$list filter=<<is-modify-filter>>>storage caption description proto.refs2 proto.refs proto.ref2 proto.ref uname uid</$list>
 
 \define draftFlow() <$list filter="[<stateTiddler>has[draft.of]]" emptyMessage="no">yes</$list>
+
+\define referenceField() uid
 
 <$wikify name="targetTiddler" text=<<internalTarget>>>
 <$wikify name="stateTiddler" text=<<internalStateBase>>>
