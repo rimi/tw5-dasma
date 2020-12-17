@@ -297,12 +297,12 @@ GeneratorWidget.prototype.regeneratePrototype = function() {
 }
 	
 /*
-Loads all custom structs (tagged with 'dasma:struct') and generates the components and the editor
+Loads all custom structs (tagged with 'dasma:desc') and generates the components and the editor
 */
 GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	var self = this;
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
-	$tw.utils.each($tw.wiki.filterTiddlers("[tag[dasma:struct]]"),function(title) {
+	$tw.utils.each($tw.wiki.filterTiddlers("[tag[dasma:desc]]"),function(title) {
 		const generatedComponents = [];
 		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
 		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
