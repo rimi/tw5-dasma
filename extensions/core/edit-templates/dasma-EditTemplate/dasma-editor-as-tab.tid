@@ -1,6 +1,6 @@
 caption: DASMA Edit-Template - DASMA-Editor-Tab
 created: 20201215073940924
-modified: 20201216150207955
+modified: 20201217200654470
 tags: 
 title: $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/dasma-editor-as-tab
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/extensions/core/edit-templates
@@ -12,6 +12,7 @@ type: text/vnd.tiddlywiki
 <$list filter="[<currentTiddler>tags[]]" variable="tiddlerTag">
 <$list filter="[tag[dasma:editor]dasma.supported-tag<tiddlerTag>]" variable="editor">
 <$vars stateBase=<<currentTiddler>>>
+<$transclude tiddler="$:/core/ui/EditTemplate/title"/>
 <$transclude tiddler=<<editor>>/>
 </$vars>
 </$list>
