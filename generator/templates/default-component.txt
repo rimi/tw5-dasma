@@ -77,7 +77,9 @@
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-${this.fieldName}>match[no]]+[first[]]">
 <$wikify name="wfStateFieldName" text=<<stateFieldName-${this.fieldName}>>>
 <$vars rimir:dasma:tiddler="$(stateTiddler-${this.fieldName})$" rimir:dasma:field=<<wfStateFieldName>> rimir:dasma:filter="${this.edit.filter}" ${this.edit.customFields}>
+<$set name="referenceField" value="${this.referenceField}">
 <$transclude tiddler="${this.edit.component}"/>
+</$set>
 </$vars>
 </$wikify>
 </$list>
@@ -85,7 +87,9 @@
 <$list filter="[<readonly-${this.fieldName}>match[yes]]">
 <$wikify name="theValue" text="""$(previous-value-${this.fieldName})$""">
 <$vars rimir:dasma:value=<<theValue>>>
+<$set name="referenceField" value="${this.referenceField}">
 <$transclude tiddler="${this.readonlyRenderer.component}"/>
+</$set>
 </$vars>
 </$wikify>
 </$list>

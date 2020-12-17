@@ -19,6 +19,8 @@
 
 \\define draftFlow() <$list filter="[<stateTiddler>has[draft.of]]" emptyMessage="no">yes</$list>
 
+\\define referenceField() ${this.referenceField}
+
 <$wikify name="targetTiddler" text=<<internalTarget>>>
 <$wikify name="stateTiddler" text=<<internalStateBase>>>
 <$wikify name="fields" text=<<fieldNames>>>

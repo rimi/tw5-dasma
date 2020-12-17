@@ -31,6 +31,7 @@ const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/${this.fieldName}";
 
 const FORCE_GENERATION = false;
+const DEFAULT_REFERENCE_FIELD = "uid";
 
 const COMPONENT_CONFIGURATION = {
 	"dasma/component/singleline": {
@@ -180,6 +181,10 @@ GeneratorWidget.prototype.getCommonDasmaDescriptions = function() {
 
 GeneratorWidget.prototype.getEditorRenderTiddlers = function() {
 	return "$:/plugins/rimir/dasma/templates/editors/table-based-editor " + COMMON_EDITOR_MACROS;
+}
+	
+GeneratorWidget.prototype.getDefaultReferenceField = function() {
+	return DEFAULT_REFERENCE_FIELD;
 }
 	
 GeneratorWidget.prototype.getBaseGeneratorOutputNamespace = function(editorDescription) {
@@ -342,6 +347,7 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		createHeadline: editorDescription.headline["on-create"] || "CREATE PLACEHOLDER",
 		modifyHeadline: editorDescription.headline["on-modify"] || "MODIFY PLACEHOLDER",
 		imports: this.getEditorRenderTiddlers() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
+		referenceField: this.getDefaultReferenceField(),
 		creationFieldNames: this.createEditorComponentsCreationFieldNamesList(editorComponentInfos),
 		modificationFieldNames: this.createEditorComponentsModificationFieldNamesList(editorComponentInfos),
 		staticFieldAssignments: this.createEditorComponentsStaticFieldAssignments(editorDescription),
@@ -373,7 +379,7 @@ GeneratorWidget.prototype.createTitleTemplate = function(editorDescription, edit
 		const compInfo = editorComponentInfos[i];
 		tmplvars[compInfo.fieldName] = "<$wikify name=\"wfStateFieldName\" text=\"<<stateFieldName-" + compInfo.fieldName + ">>\">{{{[<stateTiddler>get<wfStateFieldName>]}}}</$wikify>";
 		//TODO make all existing fields in referenced tiddlers available - not like the following static caption
-		tmplvars[compInfo.fieldName+"/uid"] = "<$wikify name=\"wfStateFieldName\" text=\"<<stateFieldName-" + compInfo.fieldName + ">>\">{{{[<stateTiddler>get<wfStateFieldName>get[uid]]}}}</$wikify>";
+		tmplvars[compInfo.fieldName+"/uid"] = "<$wikify name=\"wfStateFieldName\" text=\"<<stateFieldName-" + compInfo.fieldName + ">>\">{{{[<stateTiddler>get<wfStateFieldName>listed<referenceField>get[uid]]}}}</$wikify>";
 	}
 	return formatTemplate(template, tmplvars);
 }
@@ -416,6 +422,7 @@ GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, c
 		caption: fieldDescription.caption,
 		mandatory: fieldDescription.mandatory ? "yes" : "no",
 		transient: fieldDescription.transient ? "yes" : "no",
+		referenceField: fieldDescription.referenceField || this.getDefaultReferenceField(),
 		currentValueReader: {
 			component: componentConfiguration.currentValueReaderComponent ? VALUE_READERS[componentConfiguration.currentValueReaderComponent] : (componentConfiguration.defaultValueReaderComponent ? VALUE_READERS[componentConfiguration.defaultValueReaderComponent] : VALUE_READERS[DEFAULT_VALUE_READER])
 		},
