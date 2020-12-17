@@ -1,6 +1,6 @@
 caption: Single SelectWidget
 created: 20201123184844202
-modified: 20201209183341243
+modified: 20201217120843648
 tags: 
 title: $:/plugins/rimir/dasma/templates/widgets/single-selectwidget
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editor-components
@@ -8,6 +8,6 @@ type: text/vnd.tiddlywiki
 
 <$select tiddler=<<rimir:dasma:tiddler>> field=<<rimir:dasma:field>>>
 <$list filter=<<rimir:dasma:filter>>>
-<option value=<<currentTiddler>>><<rimir:name>></option>
+<option value={{{[<currentTiddler>get<referenceField>]}}}><<rimir:name>></option>
 </$list>
 </$select>

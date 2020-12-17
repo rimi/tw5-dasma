@@ -1,11 +1,11 @@
 caption: CheckboxWidget
 created: 20201123185240896
-modified: 20201209183318214
+modified: 20201217120814673
 tags: 
 title: $:/plugins/rimir/dasma/templates/widgets/checkboxwidget
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/templates/editor-components
 type: text/vnd.tiddlywiki
 
 <$list filter=<<rimir:dasma:filter>>>
-<$checkbox tiddler=<<rimir:dasma:tiddler>> index=<<currentTiddler>> checked="selected" unchecked="" default=""> <<rimir:name>></$checkbox><br/>
+<$checkbox tiddler=<<rimir:dasma:tiddler>> index={{{[<currentTiddler>get<referenceField>]}}} checked="selected" unchecked="" default=""> <<rimir:name>></$checkbox><br/>
 </$list>
