@@ -354,8 +354,8 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		newTitleTemplate: this.createTitleTemplate(editorDescription, editorComponentInfos)
 	};
 	const newText = formatTemplate(editorTemplate, editorConfig);
-	var fields = {
-		title: "DEFINEME/" + editorTemplate.id,
+	const fields = {
+		title: "DEFINEME/" + editorDescription.id,
 		text: newText,
 		created: NOW,
 		modified: NOW,
