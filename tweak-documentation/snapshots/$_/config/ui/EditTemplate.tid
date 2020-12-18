@@ -1,0 +1,10 @@
+created: 20201218143708731
+modified: 20201218144922645
+tags: tweak:snapshot
+title: $:/plugins/rimir/dasma/tweak-documentation/snapshots/$:/config/ui/EditTemplate
+tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/tweak-documentation/snapshots
+tweak.orig-title: $:/config/ui/EditTemplate
+tweak.orig-version: 5.1.23-prerelease
+type: text/vnd.tiddlywiki
+
+$:/core/ui/EditTemplate

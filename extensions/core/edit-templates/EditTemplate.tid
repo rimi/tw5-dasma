@@ -1,7 +1,7 @@
 caption: Config: Use DASMA EditTemplate
 created: 20201214205218371
-modified: 20201218135927245
-tags: 
+modified: 20201218144453236
+tags: tweak:overwrite
 title: $:/config/ui/EditTemplate
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/extensions/core/edit-templates
 type: text/vnd.tiddlywiki
