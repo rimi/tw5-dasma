@@ -1,6 +1,6 @@
 caption: Prototype: Component: proto.refs (MultiSelect)
-created: 20201217122824600
-modified: 20201217122825060
+created: 20201218091527988
+modified: 20201218091528247
 title: $:/plugins/rimir/dasma/prototypes/state-indirection-editor/proto.refs
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/prototyping/fields
 type: text/vnd.tiddlywiki
@@ -84,7 +84,7 @@ type: text/vnd.tiddlywiki
 <$list filter="[<targetTiddler>!is[tiddler]][<readonly-proto.refs>match[no]]+[first[]]">
 <$wikify name="wfStateFieldName" text=<<stateFieldName-proto.refs>>>
 <$vars rimir:dasma:tiddler="$(stateTiddler-proto.refs)$" rimir:dasma:field=<<wfStateFieldName>> rimir:dasma:filter="[prefix[$:/plugins/rimir/dasma/prototypes]]+[subfilter<narrow-filter-proto.refs>]" rimir:dasma:custom:numOfVisibleElements='3'>
-<$set name="referenceField" value="uid">
+<$set name="referenceField" value="title">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/widgets/multi-selectwidget"/>
 </$set>
 </$vars>
@@ -94,7 +94,7 @@ type: text/vnd.tiddlywiki
 <$list filter="[<readonly-proto.refs>match[yes]]">
 <$wikify name="theValue" text="""$(previous-value-proto.refs)$""">
 <$vars rimir:dasma:value=<<theValue>>>
-<$set name="referenceField" value="uid">
+<$set name="referenceField" value="title">
 <$transclude tiddler="$:/plugins/rimir/dasma/templates/renderers/list-as-ul-name-renderer"/>
 </$set>
 </$vars>

@@ -31,7 +31,7 @@ const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/${this.fieldName}";
 
 const FORCE_GENERATION = false;
-const DEFAULT_REFERENCE_FIELD = "uid";
+const DEFAULT_REFERENCE_FIELD = "title";
 
 const COMPONENT_CONFIGURATION = {
 	"dasma/component/singleline": {
@@ -365,6 +365,15 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 	const mergedFields = deepmerge.all([fields, customFieldOverwrites]);
 	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(mergedFields.title) || !$tw.wiki.checkTiddlerText(mergedFields.title, newText)){
 		$tw.wiki.addTiddler(new $tw.Tiddler(mergedFields));
+	}
+	if(editorDescription["fs-path-tmpl"]){
+		// if tiddlers are NOT created based on its title
+		const tagFields = {
+			title: editorDescription.id,
+			"tmpl.fs-path": editorDescription["fs-path-tmpl"],
+			tags: "dasma:type"
+		}
+		$tw.wiki.addTiddler(new $tw.Tiddler(tagFields));
 	}
 }
 
