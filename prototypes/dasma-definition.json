@@ -6,7 +6,7 @@
 	},
 	"title-template": "${this.storage}/prototype-elements/${this._uid_OR_now}",
 	"staticFieldAssignments": {
-		"tags": "prototypeOne"
+		
 	},
 	"fields": [
 		{

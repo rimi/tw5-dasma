@@ -387,12 +387,18 @@ GeneratorWidget.prototype.createTitleTemplate = function(editorDescription, edit
 GeneratorWidget.prototype.createEditorComponentsStaticFieldAssignments = function(editorDescription) {
 	let result = "";
 	let first = true;
-	if(editorDescription.staticFieldAssignments){
-		for (var prop in editorDescription.staticFieldAssignments) {
-			if(!first) result += " ";
-			result += prop + "=\"" + editorDescription.staticFieldAssignments[prop] + "\"";
-			first = false;
-		}
+	if(!editorDescription.staticFieldAssignments){
+		editorDescription.staticFieldAssignments = {};
+	}
+	if(editorDescription.staticFieldAssignments.tags){
+		editorDescription.staticFieldAssignments.tags += " " + editorDescription.id;
+	}else{
+		editorDescription.staticFieldAssignments.tags = editorDescription.id;
+	}
+	for (var prop in editorDescription.staticFieldAssignments) {
+		if(!first) result += " ";
+		result += prop + "=\"" + editorDescription.staticFieldAssignments[prop] + "\"";
+		first = false;
 	}
 	return result;
 }
