@@ -1,9 +1,10 @@
 caption: DASMA Edit-Template - Original-Tab
 created: 20201214210050030
-modified: 20201218144730540
+modified: 20201219143010052
 tags: tweak:copy
 title: $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/original-as-tab
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/extensions/core/edit-templates
+tweak.desc: $:/plugins/rimir/dasma/tweak-documentation/dasma-edit-template
 tweak.orig-title: $:/core/ui/EditTemplate
 type: text/vnd.tiddlywiki
 

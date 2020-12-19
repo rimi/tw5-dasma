@@ -1,16 +1,12 @@
 caption: Tweak-Set: dasma EditTemplate
 created: 20201218135843779
-modified: 20201218184857814
+modified: 20201219142708148
 tags: tweak:desc
 title: $:/plugins/rimir/dasma/tweak-documentation/dasma-edit-template
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/tweak-documentation
 tweak.refs: $:/config/ui/EditTemplate $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/original-as-tab
-tweak.snapshot.refs: $:/plugins/rimir/dasma/tweak-documentation/snapshots/$:/core/ui/EditTemplate $:/plugins/rimir/dasma/tweak-documentation/snapshots/$:/config/ui/EditTemplate
+tweak.snapshot.refs: $:/rimir/snapshots4tweaks/$:/core/ui/EditTemplate $:/rimir/snapshots4tweaks/$:/config/ui/EditTemplate
 type: text/vnd.tiddlywiki
 
 # changed contents of `$:/config/ui/EditTemplate` from `$:/core/ui/EditTemplate` to `$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate`
 # copied parts of `$:/core/ui/EditTemplate` (5.1.23-prerelease) into `$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate` and `$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/original-as-tab`
-
-<<rimir:details caption:"DIFF for Text only => SHOULD not contain any changes!" renderTemplate:"$:/plugins/rimir/twedo/differ/snapshot-vs-shadow-text">>
-
-<<rimir:details caption:"DIFF for ALL fields => SHOULD not contain any relevant changes!" renderTemplate:"$:/plugins/rimir/twedo/differ/snapshot-vs-shadow-full">>
