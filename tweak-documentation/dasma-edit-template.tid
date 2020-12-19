@@ -1,11 +1,9 @@
 caption: Tweak-Set: dasma EditTemplate
 created: 20201218135843779
-modified: 20201219142708148
+modified: 20201219155156214
 tags: tweak:desc
 title: $:/plugins/rimir/dasma/tweak-documentation/dasma-edit-template
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/tweak-documentation
-tweak.refs: $:/config/ui/EditTemplate $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate $:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/original-as-tab
-tweak.snapshot.refs: $:/rimir/snapshots4tweaks/$:/core/ui/EditTemplate $:/rimir/snapshots4tweaks/$:/config/ui/EditTemplate
 type: text/vnd.tiddlywiki
 
 # changed contents of `$:/config/ui/EditTemplate` from `$:/core/ui/EditTemplate` to `$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate`
