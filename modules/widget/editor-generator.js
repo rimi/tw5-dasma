@@ -149,7 +149,6 @@ GeneratorWidget.prototype.render = function(parent,nextSibling) {
 	var domNode = this.document.createElement("button");
 	// Add a click event handler
 	domNode.addEventListener("click",function (event) {
-		//self.generateCommonDasmaDefinitions();
 		self.regeneratePrototype();
 		self.generateCustomDefinitions();
 		return true;
@@ -203,17 +202,6 @@ GeneratorWidget.prototype.getFieldsTreeLinkingPath = function(editorDescription)
 	return this.getEditorTreeLinkingPath(editorDescription) + "/fields";
 }
 
-/*
-!DEPRECATED! (not used as editor-components anymore, but left for testing-purposes as part of generateCommonDasmaDefinitions-functionality)
-*/
-GeneratorWidget.prototype.createCommonFieldOverwrites = function(fieldDescription) {
-	return {
-		title: this.getBaseGeneratorOutputNamespace() + "/dasma-common/" + fieldDescription.id,
-		"tocp.main-parent.ref": "#:/wiki/extensions/dasma/generated/common",
-		caption: "Common Editor-Component: " + fieldDescription.caption
-	}
-}
-	
 GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/" + fieldDescription.fieldName,
@@ -327,18 +315,6 @@ GeneratorWidget.prototype.mergeWithCommonDescription = function(fieldDescription
 	}
 	return result;
 }
-	
-/*
-!DEPRECATED! (not used as editor-components anymore, but left for testing-purposes)
-Generates editor-component-tiddlers for the COMMON dasma-elements
-*/
-GeneratorWidget.prototype.generateCommonDasmaDefinitions = function() {
-	var self = this;
-	const commonDasmaElements = this.getCommonDasmaDescriptions();
-	commonDasmaElements.fields.forEach(function (fieldDescription, index) {
-		self.generateEditorComponent(fieldDescription, self.createCommonFieldOverwrites(fieldDescription));
-	});
-};
 	
 GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription, editorComponentInfos, customFieldOverwrites) {
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
