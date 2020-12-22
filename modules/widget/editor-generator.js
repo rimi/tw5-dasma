@@ -32,9 +32,12 @@ const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/${th
 
 const FORCE_GENERATION = false;
 const DEFAULT_REFERENCE_FIELD = "title";
-	
+
+const DEFAULT_TREE_LINK_BASE = "#:/rimir/extensions/dasma/generated";
 const DEFAULT_TOC_LINKING_FIELD_NAME = "tocp.rimir.parent.ref";
 const TOC_LINKING_ENABLED = true;
+	
+const DEFAULT_OUTPUT_NAMING_BASE = "$:/rimir/extensions/dasma/generated";
 
 const COMPONENT_CONFIGURATION = {
 	"dasma/component/singleline": {
@@ -190,11 +193,11 @@ GeneratorWidget.prototype.getDefaultReferenceField = function() {
 }
 	
 GeneratorWidget.prototype.getBaseGeneratorOutputNamespace = function(editorDescription) {
-	return "$:/rimir/extensions/dasma/generated" + (editorDescription ? "/" + editorDescription.id : "");
+	return (editorDescription["generator-config"] && editorDescription["generator-config"]["output-naming-base"] ? editorDescription["generator-config"]["output-naming-base"] : DEFAULT_OUTPUT_NAMING_BASE) + (editorDescription ? "/" + editorDescription.id : "");
 }
 
 GeneratorWidget.prototype.getBaseTreeLinkingPath = function(editorDescription) {
-	return "#:/rimir/extensions/dasma/generated";
+	return editorDescription["generator-config"] && editorDescription["generator-config"]["tree-link-base"] ? editorDescription["generator-config"]["tree-link-base"] : DEFAULT_TREE_LINK_BASE;
 }
 	
 GeneratorWidget.prototype.getEditorTreeLinkingPath = function(editorDescription) {
@@ -206,7 +209,7 @@ GeneratorWidget.prototype.getFieldsTreeLinkingPath = function(editorDescription)
 }
 	
 GeneratorWidget.prototype.getTreeLinkingFieldName = function(editorDescription) {
-	return DEFAULT_TOC_LINKING_FIELD_NAME;
+	return editorDescription["generator-config"] && editorDescription["generator-config"]["toc-field-name"] ? editorDescription["generator-config"]["toc-field-name"] : DEFAULT_TOC_LINKING_FIELD_NAME;
 }
 
 /*
