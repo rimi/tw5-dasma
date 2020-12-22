@@ -30,7 +30,7 @@ const DEFAULT_TITLE_TEMPLATE = "data/${this.editorId}/${this._now}";
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/${this.fieldName}";
 
-const FORCE_GENERATION = false;
+const FORCE_GENERATION = true;
 const DEFAULT_REFERENCE_FIELD = "title";
 
 const COMPONENT_CONFIGURATION = {
@@ -190,18 +190,25 @@ GeneratorWidget.prototype.getBaseGeneratorOutputNamespace = function(editorDescr
 	return "$:/rimir/extensions/dasma/generated" + (editorDescription ? "/" + editorDescription.id : "");
 }
 
-GeneratorWidget.prototype.getBaseTreeLinkingPath = function() {
+GeneratorWidget.prototype.getBaseTreeLinkingPath = function(editorDescription) {
 	return "#:/rimir/extensions/dasma/generated";
 }
 	
 GeneratorWidget.prototype.getEditorTreeLinkingPath = function(editorDescription) {
-	return this.getBaseTreeLinkingPath() + "/" + editorDescription.id;
+	return this.getBaseTreeLinkingPath(editorDescription) + "/" + editorDescription.id;
 }
 	
 GeneratorWidget.prototype.getFieldsTreeLinkingPath = function(editorDescription) {
 	return this.getEditorTreeLinkingPath(editorDescription) + "/fields";
 }
+	
+GeneratorWidget.prototype.getTreeLinkingFieldName = function(editorDescription) {
+	return "tocp.rimir.parent.ref";
+}
 
+/*
+BEGIN PROTOTYPE GENERATION SPECIFIC
+*/
 GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/" + fieldDescription.fieldName,
@@ -209,7 +216,7 @@ GeneratorWidget.prototype.createPrototypeFieldOverwrites = function(fieldDescrip
 		caption: "Prototype: " + fieldDescription.caption
 	}
 }
-	
+
 GeneratorWidget.prototype.createPrototypeEditorOverwrites = function(editorDescription) {
 	return {
 		title: PROTOTYPE_GENERATOR_NAMESPACE + "/editor",
@@ -220,55 +227,6 @@ GeneratorWidget.prototype.createPrototypeEditorOverwrites = function(editorDescr
 	}
 }
 	
-GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescription, editorDescription) {
-	return {
-		title: this.getBaseGeneratorOutputNamespace(editorDescription) + "/" + fieldDescription.fieldName,
-		"tocp.rimir.parent.ref": this.getFieldsTreeLinkingPath(editorDescription),
-		caption: "Editor-Component: " + fieldDescription.caption
-	}
-}
-	
-GeneratorWidget.prototype.createCustomEditorOverwrites = function(editorDescription) {
-	return {
-		title: this.getBaseGeneratorOutputNamespace(editorDescription),
-		"tocp.rimir.parent.ref": this.getEditorTreeLinkingPath(editorDescription),
-		caption: "Editor: " + editorDescription.id,
-		tags: ["dasma:editor"],
-		"dasma.supported-tag": editorDescription.id
-	}
-}
-	
-GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
-	const baseLink = this.getBaseTreeLinkingPath();
-	const editorTreeLink = this.getEditorTreeLinkingPath(editorDescription);
-	const fieldsTreeLink = this.getFieldsTreeLinkingPath(editorDescription);
-	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
-	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(editorTreeLink)){
-		var editorLink = {
-			title: editorTreeLink,
-			"tocp.rimir.parent.ref": baseLink,
-			caption: editorDescription.id,
-			created: NOW,
-			modified: NOW,
-			bag: "default",
-			type: "text/vnd.tiddlywiki"
-		};
-		$tw.wiki.addTiddler(new $tw.Tiddler(editorLink));
-	}
-	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(fieldsTreeLink)){
-		var fieldLink = {
-			title: fieldsTreeLink,
-			"tocp.rimir.parent.ref": editorTreeLink,
-			caption: "fields",
-			created: NOW,
-			modified: NOW,
-			bag: "default",
-			type: "text/vnd.tiddlywiki"
-		};
-		$tw.wiki.addTiddler(new $tw.Tiddler(fieldLink));
-	}
-}
-
 /*
 Regenerates the Prototype (intented to play with/enhance the current implementation)
 */
@@ -284,6 +242,61 @@ GeneratorWidget.prototype.regeneratePrototype = function() {
 	this.generateEditorEntryPoint(prototypeStruct, generatedComponents, this.createPrototypeEditorOverwrites(prototypeStruct));
 }
 	
+/*
+END PROTOTYPE GENERATION SPECIFIC
+*/
+	
+GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescription, editorDescription) {
+	const result = {
+		title: this.getBaseGeneratorOutputNamespace(editorDescription) + "/" + fieldDescription.fieldName,
+		caption: "Editor-Component: " + fieldDescription.caption
+	};
+	result[this.getTreeLinkingFieldName(editorDescription)] = this.getFieldsTreeLinkingPath(editorDescription);
+	return result;
+}
+	
+GeneratorWidget.prototype.createCustomEditorOverwrites = function(editorDescription) {
+	const result = {
+		title: this.getBaseGeneratorOutputNamespace(editorDescription),
+		caption: "Editor: " + editorDescription.id,
+		tags: ["dasma:editor"],
+		"dasma.supported-tag": editorDescription.id
+	};
+	result[this.getTreeLinkingFieldName(editorDescription)] = this.getEditorTreeLinkingPath(editorDescription);
+	return result;
+}
+	
+GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
+	const baseLink = this.getBaseTreeLinkingPath(editorDescription);
+	const editorTreeLink = this.getEditorTreeLinkingPath(editorDescription);
+	const fieldsTreeLink = this.getFieldsTreeLinkingPath(editorDescription);
+	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
+	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(editorTreeLink)){
+		var editorLink = {
+			title: editorTreeLink,
+			caption: editorDescription.id,
+			created: NOW,
+			modified: NOW,
+			bag: "default",
+			type: "text/vnd.tiddlywiki"
+		};
+		editorLink[this.getTreeLinkingFieldName(editorDescription)] = baseLink;
+		$tw.wiki.addTiddler(new $tw.Tiddler(editorLink));
+	}
+	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(fieldsTreeLink)){
+		var fieldLink = {
+			title: fieldsTreeLink,
+			caption: "fields",
+			created: NOW,
+			modified: NOW,
+			bag: "default",
+			type: "text/vnd.tiddlywiki"
+		};
+		fieldLink[this.getTreeLinkingFieldName(editorDescription)] = editorTreeLink;
+		$tw.wiki.addTiddler(new $tw.Tiddler(fieldLink));
+	}
+}
+
 /*
 Loads all custom structs (tagged with 'dasma:desc') and generates the components and the editor
 */
