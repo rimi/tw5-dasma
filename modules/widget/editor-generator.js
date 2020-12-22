@@ -30,8 +30,11 @@ const DEFAULT_TITLE_TEMPLATE = "data/${this.editorId}/${this._now}";
 const DEFAULT_STATETIDDLER_NAME = "$(stateTiddler)$";
 const INDEX_STATETIDDLER_NAME = DEFAULT_STATETIDDLER_NAME + "/indexTiddlers/${this.fieldName}";
 
-const FORCE_GENERATION = true;
+const FORCE_GENERATION = false;
 const DEFAULT_REFERENCE_FIELD = "title";
+	
+const DEFAULT_TOC_LINKING_FIELD_NAME = "tocp.rimir.parent.ref";
+const TOC_LINKING_ENABLED = true;
 
 const COMPONENT_CONFIGURATION = {
 	"dasma/component/singleline": {
@@ -203,7 +206,7 @@ GeneratorWidget.prototype.getFieldsTreeLinkingPath = function(editorDescription)
 }
 	
 GeneratorWidget.prototype.getTreeLinkingFieldName = function(editorDescription) {
-	return "tocp.rimir.parent.ref";
+	return DEFAULT_TOC_LINKING_FIELD_NAME;
 }
 
 /*
@@ -251,7 +254,9 @@ GeneratorWidget.prototype.createCustomFieldOverwrites = function(fieldDescriptio
 		title: this.getBaseGeneratorOutputNamespace(editorDescription) + "/" + fieldDescription.fieldName,
 		caption: "Editor-Component: " + fieldDescription.caption
 	};
-	result[this.getTreeLinkingFieldName(editorDescription)] = this.getFieldsTreeLinkingPath(editorDescription);
+	if(TOC_LINKING_ENABLED){
+		result[this.getTreeLinkingFieldName(editorDescription)] = this.getFieldsTreeLinkingPath(editorDescription);
+	}
 	return result;
 }
 	
@@ -262,7 +267,9 @@ GeneratorWidget.prototype.createCustomEditorOverwrites = function(editorDescript
 		tags: ["dasma:editor"],
 		"dasma.supported-tag": editorDescription.id
 	};
-	result[this.getTreeLinkingFieldName(editorDescription)] = this.getEditorTreeLinkingPath(editorDescription);
+	if(TOC_LINKING_ENABLED){
+		result[this.getTreeLinkingFieldName(editorDescription)] = this.getEditorTreeLinkingPath(editorDescription);
+	}
 	return result;
 }
 	
@@ -280,7 +287,9 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 			bag: "default",
 			type: "text/vnd.tiddlywiki"
 		};
-		editorLink[this.getTreeLinkingFieldName(editorDescription)] = baseLink;
+		if(TOC_LINKING_ENABLED){
+			editorLink[this.getTreeLinkingFieldName(editorDescription)] = baseLink;
+		}
 		$tw.wiki.addTiddler(new $tw.Tiddler(editorLink));
 	}
 	if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(fieldsTreeLink)){
@@ -292,7 +301,9 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 			bag: "default",
 			type: "text/vnd.tiddlywiki"
 		};
-		fieldLink[this.getTreeLinkingFieldName(editorDescription)] = editorTreeLink;
+		if(TOC_LINKING_ENABLED){
+			fieldLink[this.getTreeLinkingFieldName(editorDescription)] = editorTreeLink;
+		}
 		$tw.wiki.addTiddler(new $tw.Tiddler(fieldLink));
 	}
 }
@@ -356,7 +367,7 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		$tw.wiki.addTiddler(new $tw.Tiddler(mergedFields));
 	}
 	if(editorDescription["fs-path-tmpl"]){
-		// if tiddlers are NOT created based on its title
+		// if tiddler-files are NOT created based on its title
 		const tagFields = {
 			title: editorDescription.id,
 			"tmpl.fs-path": editorDescription["fs-path-tmpl"],
