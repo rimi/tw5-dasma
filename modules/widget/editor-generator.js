@@ -376,7 +376,9 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 			"tmpl.fs-path": editorDescription["fs-path-tmpl"],
 			tags: "dasma:type"
 		}
-		$tw.wiki.addTiddler(new $tw.Tiddler(tagFields));
+		if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(tagFields.title)) {
+			$tw.wiki.addTiddler(new $tw.Tiddler(tagFields));
+		}
 	}
 }
 
