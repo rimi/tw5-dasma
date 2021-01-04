@@ -1,10 +1,9 @@
-caption: Tweak-Set: dasma EditTemplate
+caption: Integrate DASMA-Editor as additional Tab into TW5s default EditTemplate
 created: 20201218135843779
-modified: 20201219155156214
+modified: 20210103144352689
 tags: tweak:desc
 title: $:/plugins/rimir/dasma/tweak-documentation/dasma-edit-template
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/tweak-documentation
 type: text/vnd.tiddlywiki
 
-# changed contents of `$:/config/ui/EditTemplate` from `$:/core/ui/EditTemplate` to `$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate`
-# copied parts of `$:/core/ui/EditTemplate` (5.1.23-prerelease) into `$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate` and `$:/plugins/rimir/dasma/extensions/core/edit-templates/dasma-EditTemplate/original-as-tab`
+!! Integrate DASMA-Editor into TW5s default ~EditTemplate
