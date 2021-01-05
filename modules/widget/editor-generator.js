@@ -373,7 +373,7 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 		// if tiddler-files are NOT created based on its title
 		const tagFields = {
 			title: editorDescription.id,
-			"tmpl.fs-path": editorDescription["fs-path-tmpl"],
+			"fs-path.tmpl": editorDescription["fs-path-tmpl"],
 			tags: "dasma:type"
 		}
 		if(this.isForceGeneration() || !$tw.wiki.tiddlerExists(tagFields.title)) {
