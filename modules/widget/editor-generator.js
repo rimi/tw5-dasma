@@ -319,7 +319,24 @@ Loads all custom structs and generates the components and the editor
 GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	var self = this;
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
-	$tw.utils.each($tw.wiki.filterTiddlers(TYPE_DESCRIPTIONS_FILTER),function(title) {
+
+	const definitions = this.readCustomDefinitions();
+	console.log("CUSTOM DEFS:");
+	console.log(definitions);
+
+	for(let prop in definitions){
+		const generatedComponents = [];
+		const dasmaStruct = definitions[prop];
+		self.ensureContentTreeLinks(dasmaStruct);
+		$tw.utils.each(dasmaStruct.fields, function(fieldDescription) {
+			const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
+			generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription, dasmaStruct)));
+		});
+		self.generateEditorEntryPoint(dasmaStruct, generatedComponents, self.createCustomEditorOverwrites(dasmaStruct));
+	}
+
+
+	/*$tw.utils.each($tw.wiki.filterTiddlers(TYPE_DESCRIPTIONS_FILTER),function(title) {
 		const generatedComponents = [];
 		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
 		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
@@ -329,7 +346,76 @@ GeneratorWidget.prototype.generateCustomDefinitions = function() {
 			generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription, dasmaStruct)));
 		});
 		self.generateEditorEntryPoint(dasmaStruct, generatedComponents, self.createCustomEditorOverwrites(dasmaStruct));
+	});*/
+}
+
+GeneratorWidget.prototype.readCustomDefinitions = function() {
+	const originalDescriptions = {
+		"simpleAbstractDescriptions" : {},
+		"derivedAbstractDescriptions" : {},
+		"simpleDescriptions" : {},
+		"derivedDescriptions" : {}
+	};
+	const result = {};
+	$tw.utils.each($tw.wiki.filterTiddlers(TYPE_DESCRIPTIONS_FILTER),function(title) {
+		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
+		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
+		if(dasmaStruct.abstract){
+			if (dasmaStruct.derivesFrom) {
+				originalDescriptions.derivedAbstractDescriptions[dasmaStruct.id] = dasmaStruct;
+			}else{
+				originalDescriptions.simpleAbstractDescriptions[dasmaStruct.id] = dasmaStruct;
+			}
+		} else if (dasmaStruct.derivesFrom){
+			originalDescriptions.derivedDescriptions[dasmaStruct.id] = dasmaStruct;
+		} else {
+			originalDescriptions.simpleDescriptions[dasmaStruct.id] = dasmaStruct;
+		}
 	});
+
+	for(let prop in originalDescriptions.simpleDescriptions){
+		//copy over all initially existing simple descriptions
+		result[prop] = originalDescriptions.simpleDescriptions[prop];
+	}
+
+	for(let prop in originalDescriptions.derivedDescriptions){
+		result[prop] = this.flattenDescriptionHierarchy(originalDescriptions.derivedDescriptions[prop], originalDescriptions);
+	}
+
+	return result;
+}
+
+GeneratorWidget.prototype.flattenDescriptionHierarchy = function(description, originalDescriptions){
+	let result = description;
+	const derivedFromId = description.derivesFrom;
+	if(derivedFromId) {
+		if (originalDescriptions.simpleAbstractDescriptions[derivedFromId]) {
+			result = this.mergeDescriptions(originalDescriptions.simpleAbstractDescriptions[derivedFromId], description);
+		} else if (originalDescriptions.derivedAbstractDescriptions[derivedFromId]) {
+			result = this.mergeDescriptions(this.flattenDescriptionHierarchy(originalDescriptions.simpleAbstractDescriptions[derivedFromId], originalDescriptions), description);
+		} else if (originalDescriptions.simpleDescriptions[derivedFromId]) {
+			result = this.mergeDescriptions(originalDescriptions.simpleDescriptions[derivedFromId], description);
+		} else {
+			result = this.mergeDescriptions(this.flattenDescriptionHierarchy(originalDescriptions.simpleDescriptions[derivedFromId], originalDescriptions), description);
+		}
+	}
+	return result;
+
+}
+
+GeneratorWidget.prototype.mergeDescriptions = function(parentDesc, childDesc){
+	const result = deepmerge.all([parentDesc, childDesc]);
+	result.fields = [];
+	for (const fieldDescription of parentDesc.fields) {
+		result.fields.push(fieldDescription);
+	}
+	for (const fieldDescription of childDesc.fields) {
+		result.fields.push(fieldDescription);
+	}
+	//remove inheritance information if any
+	delete result.abstract;
+	delete result.derivesFrom;
+	return result;
 }
 
 GeneratorWidget.prototype.mergeWithCommonDescription = function(fieldDescription, commonDasmaElements) {
