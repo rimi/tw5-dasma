@@ -37,6 +37,8 @@ const DEFAULT_TREE_LINK_BASE = "#:/rimir/extensions/dasma/generated";
 const DEFAULT_TOC_LINKING_FIELD_NAME = "tocp.rimir.parent.ref";
 const TOC_LINKING_ENABLED = true;
 	
+const TYPE_DESCRIPTIONS_FILTER = "[tag[dasma:desc]]";
+	
 const DEFAULT_OUTPUT_NAMING_BASE = "$:/rimir/extensions/dasma/generated";
 
 const COMPONENT_CONFIGURATION = {
@@ -312,12 +314,12 @@ GeneratorWidget.prototype.ensureContentTreeLinks = function(editorDescription) {
 }
 
 /*
-Loads all custom structs (tagged with 'dasma:desc') and generates the components and the editor
+Loads all custom structs and generates the components and the editor
 */
 GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	var self = this;
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
-	$tw.utils.each($tw.wiki.filterTiddlers("[tag[dasma:desc]]"),function(title) {
+	$tw.utils.each($tw.wiki.filterTiddlers(TYPE_DESCRIPTIONS_FILTER),function(title) {
 		const generatedComponents = [];
 		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
 		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
