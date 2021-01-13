@@ -349,8 +349,8 @@ GeneratorWidget.prototype.generateEditorEntryPoint = function(editorDescription,
 	const NOW = $tw.utils.formatDateString(new Date(), "[UTC]YYYY0MM0DD0hh0mm0ss0XXX");
 	const editorTemplate = $tw.wiki.getTiddler(DEFAULT_EDITOR_TEMPLATE).fields["text"];
 	const editorConfig = {
-		createHeadline: editorDescription.headline["on-create"] || "CREATE PLACEHOLDER",
-		modifyHeadline: editorDescription.headline["on-modify"] || "MODIFY PLACEHOLDER",
+		createHeadline: (editorDescription && editorDescription.headline) ? editorDescription.headline["on-create"] : "CREATE PLACEHOLDER",
+		modifyHeadline: (editorDescription && editorDescription.headline) ? editorDescription.headline["on-modify"] : "MODIFY PLACEHOLDER",
 		imports: this.getEditorRenderTiddlers() + " " + this.createEditorComponentsTitlesList(editorComponentInfos),
 		referenceField: this.getDefaultReferenceField(),
 		creationFieldNames: this.createEditorComponentsCreationFieldNamesList(editorComponentInfos),
