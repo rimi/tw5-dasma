@@ -321,8 +321,8 @@ GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	const commonDasmaElements = this.getCommonDasmaDescriptions();
 
 	const definitions = this.readCustomDefinitions();
-	console.log("CUSTOM DEFS:");
-	console.log(definitions);
+	//console.log("CUSTOM DEFS:");
+	//console.log(definitions);
 
 	for(let prop in definitions){
 		const generatedComponents = [];
