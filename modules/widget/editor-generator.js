@@ -392,7 +392,7 @@ GeneratorWidget.prototype.flattenDescriptionHierarchy = function(description, or
 		if (originalDescriptions.simpleAbstractDescriptions[derivedFromId]) {
 			result = this.mergeDescriptions(originalDescriptions.simpleAbstractDescriptions[derivedFromId], description);
 		} else if (originalDescriptions.derivedAbstractDescriptions[derivedFromId]) {
-			result = this.mergeDescriptions(this.flattenDescriptionHierarchy(originalDescriptions.simpleAbstractDescriptions[derivedFromId], originalDescriptions), description);
+			result = this.mergeDescriptions(this.flattenDescriptionHierarchy(originalDescriptions.derivedAbstractDescriptions[derivedFromId], originalDescriptions), description);
 		} else if (originalDescriptions.simpleDescriptions[derivedFromId]) {
 			result = this.mergeDescriptions(originalDescriptions.simpleDescriptions[derivedFromId], description);
 		} else {
