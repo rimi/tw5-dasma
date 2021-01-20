@@ -334,19 +334,6 @@ GeneratorWidget.prototype.generateCustomDefinitions = function() {
 		});
 		self.generateEditorEntryPoint(dasmaStruct, generatedComponents, self.createCustomEditorOverwrites(dasmaStruct));
 	}
-
-
-	/*$tw.utils.each($tw.wiki.filterTiddlers(TYPE_DESCRIPTIONS_FILTER),function(title) {
-		const generatedComponents = [];
-		const dasmaStructTiddler = $tw.wiki.getTiddler(title);
-		const dasmaStruct = JSON.parse(dasmaStructTiddler.fields["text"]);
-		self.ensureContentTreeLinks(dasmaStruct);
-		$tw.utils.each(dasmaStruct.fields, function(fieldDescription) {
-			const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
-			generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription, dasmaStruct)));
-		});
-		self.generateEditorEntryPoint(dasmaStruct, generatedComponents, self.createCustomEditorOverwrites(dasmaStruct));
-	});*/
 }
 
 GeneratorWidget.prototype.readCustomDefinitions = function() {
