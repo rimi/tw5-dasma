@@ -407,10 +407,10 @@ GeneratorWidget.prototype.mergeDescriptions = function(parentDesc, childDesc){
 
 GeneratorWidget.prototype.mergeWithCommonDescription = function(fieldDescription, commonDasmaElements) {
 	let result = fieldDescription;
-	if(fieldDescription["dasma-id.ref"]){
-		let commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["dasma-id.ref"])[0];
+	if(fieldDescription["id.ref"]){
+		let commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["id.ref"])[0];
 		if(!commonFieldDescription){
-			commonFieldDescription = commonDasmaElements.templates.filter(x => x.id === fieldDescription["dasma-id.ref"])[0];
+			commonFieldDescription = commonDasmaElements.templates.filter(x => x.id === fieldDescription["id.ref"])[0];
 		}
 		commonFieldDescription ? commonFieldDescription : {};
 		result = deepmerge.all([commonFieldDescription, fieldDescription]);

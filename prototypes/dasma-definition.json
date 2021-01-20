@@ -10,22 +10,22 @@
 	},
 	"fields": [
 		{
-			"dasma-id.ref": "dasma/field/storage",
+			"id.ref": "dasma/field/storage",
 			"fieldName": "storage",
 			"caption": "Component: storage (Radio)"
 		},
 		{
-			"dasma-id.ref": "dasma/field/caption",
+			"id.ref": "dasma/field/caption",
 			"caption": "Component: caption (SingleLinedText)",
 			"displayPrevious": true
 		},
 		{
-			"dasma-id.ref": "dasma/field/description",
+			"id.ref": "dasma/field/description",
 			"caption": "Component: description (MultiLinedText)",
 			"displayPrevious": true
 		},
 		{
-			"dasma-id.ref": "dasma/field/generic-checkboxes",
+			"id.ref": "dasma/field/generic-checkboxes",
 			"fieldName": "proto.refs2",
 			"caption": "Component: proto.refs2 (Checkbox)",
 			"displayPrevious": true,
@@ -34,7 +34,7 @@
 			}
 		},
 		{
-			"dasma-id.ref": "dasma/field/generic-multiselect",
+			"id.ref": "dasma/field/generic-multiselect",
 			"fieldName": "proto.refs",
 			"caption": "Component: proto.refs (MultiSelect)",
 			"displayCurrent": true,
@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			"dasma-id.ref": "dasma/field/generic-radio",
+			"id.ref": "dasma/field/generic-radio",
 			"fieldName": "proto.ref2",
 			"caption": "Component: proto.ref2 (Radio)",
 			"displayPrevious": true,
@@ -53,7 +53,7 @@
 			}
 		},
 		{
-			"dasma-id.ref": "dasma/field/generic-select",
+			"id.ref": "dasma/field/generic-select",
 			"fieldName": "proto.ref",
 			"caption": "Component: proto.ref (SingleSelect)",
 			"displayCurrent": true,
@@ -63,10 +63,10 @@
 			}
 		},
 		{
-			"dasma-id.ref": "dasma/field/uname"
+			"id.ref": "dasma/field/uname"
 		},
 		{
-			"dasma-id.ref": "dasma/field/uid"
+			"id.ref": "dasma/field/uid"
 		}
 	],
 	"actions": {
