@@ -37,14 +37,6 @@
 			}
 		},
 		{
-			"id": "dasma/field/title-infix",
-			"fieldName": "tinfix",
-			"caption": "Title Infix",
-			"editor": {
-				"component": "dasma/component/singleline"
-			}
-		},
-		{
 			"id": "dasma/field/description",
 			"fieldName": "description",
 			"caption": "Description",
