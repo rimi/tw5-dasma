@@ -155,6 +155,10 @@ GeneratorWidget.prototype.render = function(parent,nextSibling) {
 	this.execute();
 	// Create element
 	var domNode = this.document.createElement("button");
+	this.processingMessages = {
+		messages: [],
+		validationFailures: {}
+	};
 	// Add a click event handler
 	domNode.addEventListener("click",function (event) {
 		self.regeneratePrototype();
@@ -181,7 +185,7 @@ GeneratorWidget.prototype.isForceGeneration = function() {
 /*
 Loads the common DASMA data (structs etc.) and returns it as Object
 */
-GeneratorWidget.prototype.getCommonDasmaDescriptions = function() {
+GeneratorWidget.prototype.getPredefinedEditorComponentDescriptions = function() {
 	const commonDasmaElementsJSON = $tw.wiki.getTiddler(COMMON_DASMA_DESCRIPTIONS).fields["text"];
 	return JSON.parse(commonDasmaElementsJSON);
 }
@@ -241,7 +245,7 @@ Regenerates the Prototype (intented to play with/enhance the current implementat
 GeneratorWidget.prototype.regeneratePrototype = function() {
 	var self = this;
 	const generatedComponents = [];
-	const commonDasmaElements = this.getCommonDasmaDescriptions();
+	const commonDasmaElements = this.getPredefinedEditorComponentDescriptions();
 	const prototypeStruct = JSON.parse($tw.wiki.getTiddler(PROTOTYPE_DASMA_DESCRIPTIONS).fields["text"]);
 	$tw.utils.each(prototypeStruct.fields, function(fieldDescription) {
 		const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
@@ -318,18 +322,20 @@ Loads all custom structs and generates the components and the editor
 */
 GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	var self = this;
-	const commonDasmaElements = this.getCommonDasmaDescriptions();
+	const predefinedEditorComponentDescriptions = this.getPredefinedEditorComponentDescriptions();
 
 	const definitions = this.readCustomDefinitions();
 	//console.log("CUSTOM DEFS:");
 	//console.log(definitions);
+
+	const predefinedEditorComponents = this.generatePredefinedEditorComponents(predefinedEditorComponentDescriptions);
 
 	for(let prop in definitions){
 		const generatedComponents = [];
 		const dasmaStruct = definitions[prop];
 		self.ensureContentTreeLinks(dasmaStruct);
 		$tw.utils.each(dasmaStruct.fields, function(fieldDescription) {
-			const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, commonDasmaElements);
+			const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, predefinedEditorComponentDescriptions);
 			generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription, dasmaStruct)));
 		});
 		self.generateEditorEntryPoint(dasmaStruct, generatedComponents, self.createCustomEditorOverwrites(dasmaStruct));
@@ -407,13 +413,19 @@ GeneratorWidget.prototype.mergeDescriptions = function(parentDesc, childDesc){
 
 GeneratorWidget.prototype.mergeWithCommonDescription = function(fieldDescription, commonDasmaElements) {
 	let result = fieldDescription;
-	if(fieldDescription["id.ref"]){
-		let commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["id.ref"])[0];
-		if(!commonFieldDescription){
-			commonFieldDescription = commonDasmaElements.templates.filter(x => x.id === fieldDescription["id.ref"])[0];
+	if(fieldDescription !== null) {
+		if (typeof fieldDescription === "string"){
+
+		}else if (typeof fieldDescription === "object" && fieldDescription["id.ref"]) {
+			let commonFieldDescription = commonDasmaElements.fields.filter(x => x.id === fieldDescription["id.ref"])[0];
+			if (!commonFieldDescription) {
+				commonFieldDescription = commonDasmaElements.templates.filter(x => x.id === fieldDescription["id.ref"])[0];
+			}
+			commonFieldDescription ? commonFieldDescription : {};
+			result = deepmerge.all([commonFieldDescription, fieldDescription]);
+		}else{
+			this.processingMessages.messages.push("UNKNOWN fieldDescription detected: " + JSON.stringify(fieldDescription));
 		}
-		commonFieldDescription ? commonFieldDescription : {};
-		result = deepmerge.all([commonFieldDescription, fieldDescription]);
 	}
 	return result;
 }
@@ -502,6 +514,10 @@ GeneratorWidget.prototype.createEditorComponentsCreationFieldNamesList = functio
 
 GeneratorWidget.prototype.createEditorComponentsModificationFieldNamesList = function(editorComponentInfos) {
 	return editorComponentInfos.map(function(elem){return elem.showOnModification ? elem.fieldName : "";}).join(" ");
+}
+
+GeneratorWidget.prototype.generatePredefinedEditorComponents = function(predefinedEditorComponentDescriptions){
+	//TODO
 }
 	
 GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {
