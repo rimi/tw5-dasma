@@ -19,7 +19,7 @@ const DEFAULT_EDITOR_TEMPLATE = "$:/plugins/rimir/dasma/generator/templates/defa
 	
 const COMMON_EDITOR_MACROS = "$:/plugins/rimir/dasma/templates/editors/common-editor-macros";
 	
-const COMMON_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/generator/common-dasma-elements";
+const COMMON_DESCRIPTIONS_FILTER = "[tag[dasma:common-desc]]";
 
 const PROTOTYPE_DASMA_DESCRIPTIONS = "$:/plugins/rimir/dasma/prototypes/dasma-definition";
 const PROTOTYPE_GENERATOR_NAMESPACE = "$:/plugins/rimir/dasma/prototypes/state-indirection-editor";
@@ -186,8 +186,25 @@ GeneratorWidget.prototype.isForceGeneration = function() {
 Loads the common DASMA data (structs etc.) and returns it as Object
 */
 GeneratorWidget.prototype.getPredefinedEditorComponentDescriptions = function() {
-	const commonDasmaElementsJSON = $tw.wiki.getTiddler(COMMON_DASMA_DESCRIPTIONS).fields["text"];
-	return JSON.parse(commonDasmaElementsJSON);
+	const result = {
+		fields: [],
+		templates: []
+	};
+	$tw.utils.each($tw.wiki.filterTiddlers(COMMON_DESCRIPTIONS_FILTER),function(title) {
+		const commonDescriptionTiddler = $tw.wiki.getTiddler(title);
+		const commonDescription = JSON.parse(commonDescriptionTiddler.fields["text"]);
+		if(commonDescription.fields){
+			for (const fieldDescription of commonDescription.fields) {
+				result.fields.push(fieldDescription);
+			}
+		}
+		if(commonDescription.templates){
+			for (const fieldDescription of commonDescription.templates) {
+				result.templates.push(fieldDescription);
+			}
+		}
+	});
+	return result;
 }
 
 GeneratorWidget.prototype.getEditorRenderTiddlers = function() {
@@ -517,7 +534,7 @@ GeneratorWidget.prototype.createEditorComponentsModificationFieldNamesList = fun
 }
 
 GeneratorWidget.prototype.generatePredefinedEditorComponents = function(predefinedEditorComponentDescriptions){
-	//TODO
+	
 }
 	
 GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {

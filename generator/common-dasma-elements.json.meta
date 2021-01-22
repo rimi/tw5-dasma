@@ -1,7 +1,7 @@
 caption: Common DASMA-Elements
 created: 20201128175934800
-modified: 20210120202452094
-tags: 
+modified: 20210122164646792
+tags: dasma:common-desc
 title: $:/plugins/rimir/dasma/generator/common-dasma-elements
 tocp.dasma-plugin-parent.ref: #:/p/dasma/#:/generator
 type: application/json
