@@ -37,6 +37,51 @@
 			}
 		},
 		{
+			"id": "dasma/field/topic",
+			"fieldName": "topic.ref",
+			"mandatory": true,
+			"caption": "Topic",
+			"options": {
+				"tags": ["topic"]
+			},
+			"editor": {
+				"component": "dasma/component/select"
+			}
+		},
+		{
+			"id": "dasma/field/person",
+			"fieldName": "person.ref",
+			"caption": "Person",
+			"options": {
+				"tags": ["person"]
+			},
+			"editor": {
+				"component": "dasma/component/select"
+			}
+		},
+		{
+			"id": "dasma/field/participants",
+			"fieldName": "participant.refs",
+			"caption": "Participants",
+			"options": {
+				"tags": ["person"]
+			},
+			"editor": {
+				"component": "dasma/component/multiselect"
+			}
+		},
+		{
+			"id": "dasma/field/company",
+			"fieldName": "company.ref",
+			"caption": "Company",
+			"options": {
+				"tags": ["company"]
+			},
+			"editor": {
+				"component": "dasma/component/select"
+			}
+		},
+		{
 			"id": "dasma/field/description",
 			"fieldName": "description",
 			"caption": "Description",
@@ -48,6 +93,14 @@
 			"id": "dasma/field/note",
 			"fieldName": "note",
 			"caption": "Note",
+			"editor": {
+				"component": "dasma/component/multiline"
+			}
+		},
+		{
+			"id": "dasma/field/text",
+			"fieldName": "text",
+			"caption": "Text",
 			"editor": {
 				"component": "dasma/component/multiline"
 			}

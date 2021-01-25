@@ -342,8 +342,6 @@ GeneratorWidget.prototype.generateCustomDefinitions = function() {
 	const predefinedEditorComponentDescriptions = this.getPredefinedEditorComponentDescriptions();
 
 	const definitions = this.readCustomDefinitions();
-	//console.log("CUSTOM DEFS:");
-	//console.log(definitions);
 
 	const predefinedEditorComponents = this.generatePredefinedEditorComponents(predefinedEditorComponentDescriptions);
 
@@ -352,8 +350,16 @@ GeneratorWidget.prototype.generateCustomDefinitions = function() {
 		const dasmaStruct = definitions[prop];
 		self.ensureContentTreeLinks(dasmaStruct);
 		$tw.utils.each(dasmaStruct.fields, function(fieldDescription) {
-			const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, predefinedEditorComponentDescriptions);
-			generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription, dasmaStruct)));
+			if(typeof fieldDescription === "object") {
+				const finalFieldDescription = self.mergeWithCommonDescription(fieldDescription, predefinedEditorComponentDescriptions);
+				generatedComponents.push(self.generateEditorComponent(finalFieldDescription, self.createCustomFieldOverwrites(finalFieldDescription, dasmaStruct)));
+			}else if(typeof fieldDescription === "string"){
+				//TODO check that predefined editor-component MUST exist!
+				generatedComponents.push(predefinedEditorComponents[fieldDescription]);
+			}else{
+				//TODO gen error-message
+				//Should never happen!
+			}
 		});
 		self.generateEditorEntryPoint(dasmaStruct, generatedComponents, self.createCustomEditorOverwrites(dasmaStruct));
 	}
@@ -414,12 +420,17 @@ GeneratorWidget.prototype.flattenDescriptionHierarchy = function(description, or
 }
 
 GeneratorWidget.prototype.mergeDescriptions = function(parentDesc, childDesc){
+	// No need to merge fields (just union-ed afterwards)
+	const parentFields = parentDesc.fields;
+	const childFields = childDesc.fields;
+	parentDesc.fields = [];
+	childDesc.fields = [];
 	const result = deepmerge.all([parentDesc, childDesc]);
 	result.fields = [];
-	for (const fieldDescription of parentDesc.fields) {
+	for (const fieldDescription of parentFields) {
 		result.fields.push(fieldDescription);
 	}
-	for (const fieldDescription of childDesc.fields) {
+	for (const fieldDescription of childFields) {
 		result.fields.push(fieldDescription);
 	}
 	//remove inheritance information if any
@@ -534,7 +545,24 @@ GeneratorWidget.prototype.createEditorComponentsModificationFieldNamesList = fun
 }
 
 GeneratorWidget.prototype.generatePredefinedEditorComponents = function(predefinedEditorComponentDescriptions){
-	
+	const result = {};
+	const self = this;
+	$tw.utils.each(predefinedEditorComponentDescriptions.fields, function(fieldDescription) {
+		let componentDesc = self.generateEditorComponent(fieldDescription, self.createPredefinedFieldOverwrites(fieldDescription));
+		result[fieldDescription.id] = componentDesc;
+	});
+	return result;
+}
+
+GeneratorWidget.prototype.createPredefinedFieldOverwrites = function(fieldDescription){
+	const result = {
+		title: DEFAULT_OUTPUT_NAMING_BASE + "/predefined-fields/" + fieldDescription.id,
+		caption: "Editor-Component: " + fieldDescription.caption
+	};
+	if(TOC_LINKING_ENABLED){
+		result["tocp.dasma-plugin-parent.ref"] = "#:/p/dasma/#:/generator/predef-fields";
+	}
+	return result;
 }
 	
 GeneratorWidget.prototype.generateEditorComponent = function(fieldDescription, customFieldOverwrites) {
