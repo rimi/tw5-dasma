@@ -420,17 +420,16 @@ GeneratorWidget.prototype.flattenDescriptionHierarchy = function(description, or
 }
 
 GeneratorWidget.prototype.mergeDescriptions = function(parentDesc, childDesc){
-	// No need to merge fields (just union-ed afterwards)
-	const parentFields = parentDesc.fields;
-	const childFields = childDesc.fields;
-	parentDesc.fields = [];
-	childDesc.fields = [];
-	const result = deepmerge.all([parentDesc, childDesc]);
+	const parentClone = JSON.parse(JSON.stringify(parentDesc));
+	const childClone = JSON.parse(JSON.stringify(childDesc));
+	parentClone.fields = [];
+	childClone.fields = [];
+	const result = deepmerge.all([parentClone, childClone]);
 	result.fields = [];
-	for (const fieldDescription of parentFields) {
+	for (const fieldDescription of parentDesc.fields) {
 		result.fields.push(fieldDescription);
 	}
-	for (const fieldDescription of childFields) {
+	for (const fieldDescription of childDesc.fields) {
 		result.fields.push(fieldDescription);
 	}
 	//remove inheritance information if any
