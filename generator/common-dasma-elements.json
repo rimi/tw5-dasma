@@ -71,6 +71,17 @@
 			}
 		},
 		{
+			"id": "dasma/field/stakeholders",
+			"fieldName": "stakeholder.refs",
+			"caption": "Stakeholder",
+			"options": {
+				"tags": ["person"]
+			},
+			"editor": {
+				"component": "dasma/component/multiselect"
+			}
+		},
+		{
 			"id": "dasma/field/company",
 			"fieldName": "company.ref",
 			"caption": "Company",
